@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Piso
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: 'Sky '
+    uniqueID: 3997326279
+    locked: 0
+  - name: FarBuildings
+    uniqueID: 3971260025
+    locked: 0
+  - name: MidBuildings
+    uniqueID: 3050939209
+    locked: 0
+  - name: Bridge
+    uniqueID: 4009543629
+    locked: 0
+  - name: Foreground
+    uniqueID: 1561872467
+    locked: 0
+  - name: Piso
+    uniqueID: 2220181583
+    locked: 0
+  - name: Oscuridad
+    uniqueID: 3116595047
+    locked: 0
