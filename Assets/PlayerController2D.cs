@@ -7,7 +7,7 @@ public class PlayerController2D : MonoBehaviour
 {
     [Header("Movimiento")]
     public float moveSpeed = 4f;
-    public float jumpForce = 9f;
+    public float jumpForce = 4f;
 
     [Header("Doble salto")]
     // Tildalo en el Inspector para poder saltar una vez mas en el aire.
@@ -35,6 +35,12 @@ public class PlayerController2D : MonoBehaviour
     public string runStateName = "Run_Player";
     public string climbStateName = "ppescalera";
 
+    [Header("Animacion salto")]
+    [Tooltip("Arrastra aca el clip de salto. En el Animator crea un estado con el MISMO nombre que el clip.")]
+    public AnimationClip animacionSalto;
+    [Tooltip("Si el estado en el Animator tiene otro nombre, escribil o aca. Si esta vacio, usa el nombre del clip.")]
+    public string jumpStateName = "";
+
     [Header("Escalera")]
     public float climbSpeed = 3f;
     public string nombreEscalera = "Escalera";
@@ -52,6 +58,7 @@ public class PlayerController2D : MonoBehaviour
     private float gravedadOriginal = 3f;
     private bool transicionNivel;
     private GameObject pantallaNivel2;
+    private bool estabaEnPiso = true;
 
     void Awake()
     {
@@ -110,6 +117,10 @@ public class PlayerController2D : MonoBehaviour
         if (isGrounded)
             saltosExtraRestantes = dobleSaltoActivado ? 1 : 0;
 
+        if (!estabaEnPiso && isGrounded && !enEscalera)
+            ReanudarCaminar();
+        estabaEnPiso = isGrounded;
+
         if (Input.GetButtonDown("Jump") && !enEscalera)
         {
             if (isGrounded)
@@ -140,6 +151,11 @@ public class PlayerController2D : MonoBehaviour
             if (enEscalera)
             {
                 animator.speed = isMoving ? 1f : 0f;
+            }
+            else if (!isGrounded && TieneAnimacionSalto())
+            {
+                // No pisar el clip de salto con la caminata mientras esta en el aire.
+                animator.speed = 1f;
             }
             else
             {
@@ -197,6 +213,28 @@ public class PlayerController2D : MonoBehaviour
     void Saltar(float fuerza)
     {
         rb.velocity = new Vector2(rb.velocity.x, fuerza);
+        ReproducirSalto();
+    }
+
+    bool TieneAnimacionSalto()
+    {
+        return !string.IsNullOrEmpty(NombreEstadoSalto());
+    }
+
+    string NombreEstadoSalto()
+    {
+        if (!string.IsNullOrEmpty(jumpStateName))
+            return jumpStateName;
+        if (animacionSalto != null)
+            return animacionSalto.name;
+        return "";
+    }
+
+    void ReproducirSalto()
+    {
+        if (animator == null || !TieneAnimacionSalto()) return;
+        animator.Play(NombreEstadoSalto(), 0, 0f);
+        animator.speed = 1f;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -359,6 +397,7 @@ public class PlayerController2D : MonoBehaviour
         saltosExtraRestantes = dobleSaltoActivado ? 1 : 0;
         escaleraActual = null;
         enEscalera = false;
+        estabaEnPiso = true;
         ReanudarCaminar();
 
         LuzFondoInteractiva luces = GetComponent<LuzFondoInteractiva>();
