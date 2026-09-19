@@ -4,67 +4,102 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [Header("Objetivo")]
-    public Transform target;                 // aca va la nina (Pp)
-    public float smoothTime = 0.2f;
+    public Transform target;
+    public float smoothTime = 0.12f;
     public Vector3 offset = new Vector3(0f, 1f, -10f);
 
-    [Header("Encuadre fijo")]
-    // Con esto activado, siempre ves la misma cantidad de mundo a lo ancho,
-    // sin importar el tamano de la ventana. Ojo: en ventanas muy anchas
-    // vas a ver MENOS a lo alto (es el precio de fijar el ancho).
-    public bool anchoFijo = true;
-    public float anchoVisible = 20f;         // en unidades del mundo
+    [Header("Zoom")]
+    public float zoom = 5.5f;
 
-    [Header("Limites del nivel")]
+    [Header("Limites de los assets")]
+    [Tooltip("La vista no sale de este rectangulo: bordes izq/der y piso del arte.")]
     public bool limitarALimites = true;
-    public float minX = -20f;
-    public float maxX = 20f;
-    public float minY = -10f;
-    public float maxY = 10f;
+    public float minX = -10.6f;
+    public float maxX = 41f;
+    public float minY = -5f;
+    public float maxY = 7f;
 
-    private Vector3 velocity;
-    private Camera cam;
+    Camera cam;
+    Vector3 velocity;
+    bool yaEncadre;
 
     void Awake()
     {
         cam = GetComponent<Camera>();
+        EncadrarYa();
     }
 
     void LateUpdate()
     {
+        if (!yaEncadre)
+        {
+            EncadrarYa();
+            yaEncadre = true;
+            return;
+        }
+
+        Vector3 desired = PosicionDeseada();
+        if (desired.z > 0f) return;
+
+        if (smoothTime <= 0.0001f)
+            transform.position = desired;
+        else
+            transform.position = Vector3.SmoothDamp(transform.position, desired, ref velocity, smoothTime);
+    }
+
+    void EncadrarYa()
+    {
+        Vector3 desired = PosicionDeseada();
+        if (desired.z > 0f) return;
+        transform.position = desired;
+        velocity = Vector3.zero;
+    }
+
+    Vector3 PosicionDeseada()
+    {
         if (cam == null) cam = GetComponent<Camera>();
 
-        if (anchoFijo && cam.orthographic && cam.aspect > 0f)
-            cam.orthographicSize = anchoVisible / (2f * cam.aspect);
+        if (target == null)
+        {
+            GameObject pp = GameObject.Find("Pp");
+            if (pp != null) target = pp.transform;
+        }
 
-        if (target == null) return;
+        transform.localScale = Vector3.one;
+
+        if (cam != null && cam.orthographic)
+            cam.orthographicSize = zoom < 1f ? 5.5f : zoom;
+
+        if (target == null)
+            return new Vector3(0f, 0f, 1f);
 
         Vector3 desired = target.position + offset;
+        desired.z = -10f;
 
-        if (limitarALimites && cam.orthographic)
+        if (limitarALimites && cam != null && cam.orthographic)
         {
             float halfH = cam.orthographicSize;
             float halfW = halfH * cam.aspect;
-
-            // Si el nivel es mas chico que lo que entra en pantalla,
-            // centramos en vez de forzar un clamp imposible.
-            float loX = minX + halfW, hiX = maxX - halfW;
-            desired.x = (loX > hiX) ? (minX + maxX) * 0.5f : Mathf.Clamp(desired.x, loX, hiX);
-
-            float loY = minY + halfH, hiY = maxY - halfH;
-            desired.y = (loY > hiY) ? (minY + maxY) * 0.5f : Mathf.Clamp(desired.y, loY, hiY);
+            desired.x = ClampEje(desired.x, minX, maxX, halfW);
+            desired.y = ClampEje(desired.y, minY, maxY, halfH);
         }
 
-        desired.z = offset.z;
-        transform.position = Vector3.SmoothDamp(transform.position, desired, ref velocity, smoothTime);
+        return desired;
     }
 
-    // Dibuja el rectangulo de limites en la ventana Scene al seleccionar la camara.
+    static float ClampEje(float centro, float minMundo, float maxMundo, float mitad)
+    {
+        float lo = minMundo + mitad;
+        float hi = maxMundo - mitad;
+        if (hi < lo)
+            return (minMundo + maxMundo) * 0.5f;
+        return Mathf.Clamp(centro, lo, hi);
+    }
+
     void OnDrawGizmosSelected()
     {
-        if (!limitarALimites) return;
         Gizmos.color = Color.yellow;
-        Vector3 centro = new Vector3((minX + maxX) * 0.5f, (minY + maxY) * 0.5f, 0f);
-        Gizmos.DrawWireCube(centro, new Vector3(maxX - minX, maxY - minY, 0.1f));
+        Vector3 c = new Vector3((minX + maxX) * 0.5f, (minY + maxY) * 0.5f, 0f);
+        Gizmos.DrawWireCube(c, new Vector3(maxX - minX, maxY - minY, 0f));
     }
 }

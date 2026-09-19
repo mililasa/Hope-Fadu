@@ -19,6 +19,9 @@ public class HandChaser : MonoBehaviour
 
     [Header("Agarre")]
     public float radioAgarre = 0.5f;
+    [Tooltip("0 = punta de los dedos. 0.2 = mas atras, a la altura de los nudillos.")]
+    [Range(0f, 0.5f)]
+    public float atrasoHastaNudillos = 0.22f;
 
     private enum Fase { Esperar, Estirar, Retractar, Inactiva }
     private Fase fase = Fase.Esperar;
@@ -160,7 +163,7 @@ public class HandChaser : MonoBehaviour
     bool IntentarAgarre()
     {
         if (yaAgarro || target == null) return false;
-        if (Vector2.Distance(PuntaDeLosDedos(), target.position) > radioAgarre)
+        if (Vector2.Distance(PuntoDeAgarre(), target.position) > radioAgarre)
             return false;
 
         yaAgarro = true;
@@ -200,7 +203,19 @@ public class HandChaser : MonoBehaviour
 
     public Vector3 PuntaDeLosDedos()
     {
-        return transform.position + transform.right * (anchoSprite * escalaX);
+        return transform.position + transform.right * LargoActual();
+    }
+
+    public Vector3 PuntoDeAgarre()
+    {
+        float largo = LargoActual();
+        float atraso = Mathf.Clamp01(atrasoHastaNudillos);
+        return transform.position + transform.right * (largo * (1f - atraso));
+    }
+
+    float LargoActual()
+    {
+        return anchoSprite * escalaX;
     }
 
     void CambiarFase(Fase nueva)
@@ -220,10 +235,10 @@ public class HandChaser : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
-        Vector3 punta = Application.isPlaying
-            ? PuntaDeLosDedos()
-            : transform.position + transform.right * (ancho * transform.localScale.x);
-        Gizmos.DrawWireSphere(punta, radioAgarre);
+        Vector3 agarre = Application.isPlaying
+            ? PuntoDeAgarre()
+            : transform.position + transform.right * (ancho * transform.localScale.x * (1f - Mathf.Clamp01(atrasoHastaNudillos)));
+        Gizmos.DrawWireSphere(agarre, radioAgarre);
 
         if (primeraLuz != null)
         {
