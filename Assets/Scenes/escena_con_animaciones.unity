@@ -329,6 +329,8 @@ MonoBehaviour:
   spriteMiraALaDerecha: 1
   runStateName: Run_Player
   climbStateName: ppescalera
+  animacionSalto: {fileID: 0}
+  jumpStateName: 
   climbSpeed: 3
   nombreEscalera: Escalera
 --- !u!95 &154405058
@@ -460,7 +462,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 1.25}
+  m_Size: {x: 0.46875, y: 0.71875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -1173,8 +1175,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1244028087
-  m_SortingLayer: 3
+  m_SortingLayerID: -323707271
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1046617912, guid: 6dab0044a9cfa8e42bcf4077c8893f0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1184,7 +1186,7 @@ SpriteRenderer:
   m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1773428102 &518348386
@@ -1545,6 +1547,8 @@ MonoBehaviour:
   spriteMiraALaDerecha: 1
   runStateName: caminar
   climbStateName: saltar
+  animacionSalto: {fileID: 0}
+  jumpStateName: 
   climbSpeed: 3
   nombreEscalera: Escalera
 --- !u!70 &735836187
@@ -1658,7 +1662,7 @@ SpriteRenderer:
   m_Size: {x: 0.71875, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &735836190
