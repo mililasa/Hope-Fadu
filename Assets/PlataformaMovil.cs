@@ -28,6 +28,6 @@ public class PlataformaMovil : MonoBehaviour
 
     void Update ()
     {
-        platform.transform.position = Vector3.MoveTowards(platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
+        platform.transform.position = UnityEngine.Vector3.MoveTowards(platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
     }
 }
