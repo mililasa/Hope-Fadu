@@ -1,60 +1,72 @@
 using UnityEngine;
 
-// La mano mantiene el tamano seteado en el Inspector.
-// Se estira despacio hacia Pp, hasta el empty de la primera luz.
-// Si la punta la alcanza, Pp vuelve al check point y la mano se retrae.
-// Si Pp llega a la luz o la mano termina el estirado sin agarrarla, sigue.
+// La mano se queda en su transform de escena.
+// Cuando Pp pasa "primer persecución" apunta a Pp y se estira hacia él.
+// El largo máximo llega hasta "final persecución".
+// Si los nudillos tocan a Pp, vuelve al check point.
+// Si Pp pasa el final sin ser tocado, se retracta y termina.
 public class HandChaser : MonoBehaviour
 {
     [Header("Referencias")]
-    public Transform target;          // Pp
-    public Transform primeraLuz;      // empty que marca hasta donde llega
+    public Transform target;
+    public Transform inicioPersecucion;
+    public Transform finalPersecucion;
     public Transform checkPoint;
 
     [Header("Movimiento")]
     public float velocidadDeApuntado = 1.2f;
-    public float velocidadEstirado = 0.25f;      // unidades de escala por segundo
+    public float velocidadEstirado = 1.27f;
     public float velocidadRetraccion = 0.7f;
-    public float demoraAntesDeEstirar = 1.2f;
 
     [Header("Agarre")]
-    public float radioAgarre = 0.5f;
+    [Tooltip("Hijo de la mano. Arrastralo en Scene para mover el circulo.")]
+    public Transform puntoAgarre;
+    public float radioAgarre = 0.45f;
 
     private enum Fase { Esperar, Estirar, Retractar, Inactiva }
     private Fase fase = Fase.Esperar;
 
-    private SpriteRenderer sr;
     private Vector3 escalaSeteada;
+    private Vector3 posicionFija;
     private float rotacionSeteada;
-    private float anchoSprite = 5f;
     private float escalaX;
     private float anguloActual;
-    private float cronometro;
     private bool yaAgarro;
-    private bool luzEncendida;
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
         escalaSeteada = transform.localScale;
+        posicionFija = transform.position;
         rotacionSeteada = transform.eulerAngles.z;
         anguloActual = rotacionSeteada;
         escalaX = escalaSeteada.x;
 
-        if (sr != null && sr.sprite != null)
-            anchoSprite = sr.sprite.bounds.size.x;
+        if (inicioPersecucion == null)
+            inicioPersecucion = BuscarTransform("primer persecución", "primer persecucion");
 
-        if (primeraLuz == null)
-        {
-            GameObject luz = GameObject.Find("PrimeraLuz");
-            if (luz != null) primeraLuz = luz.transform;
-        }
+        if (finalPersecucion == null)
+            finalPersecucion = BuscarTransform("final persecución", "final persecucion");
 
         if (checkPoint == null)
         {
             GameObject cp = GameObject.Find("CheckPoint");
             if (cp != null) checkPoint = cp.transform;
         }
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.gravityScale = 0f;
+            rb.freezeRotation = false;
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        }
+
+        CapsuleCollider2D capsula = GetComponent<CapsuleCollider2D>();
+        if (capsula != null)
+            capsula.enabled = false;
+
+        AsegurarPuntoAgarre();
     }
 
     void Start()
@@ -66,54 +78,33 @@ public class HandChaser : MonoBehaviour
     {
         if (target == null) return;
 
-        cronometro += Time.deltaTime;
-        Apuntar();
-
         switch (fase)
         {
             case Fase.Esperar:
                 escalaX = escalaSeteada.x;
-                if (luzEncendida)
-                {
-                    CambiarFase(Fase.Inactiva);
-                    break;
-                }
-                if (cronometro >= demoraAntesDeEstirar && !JugadorPasoLaLuz())
+                if (JugadorPaso(inicioPersecucion))
                     CambiarFase(Fase.Estirar);
                 break;
 
             case Fase.Estirar:
-                if (luzEncendida || JugadorPasoLaLuz())
+                if (JugadorPaso(finalPersecucion))
                 {
                     CambiarFase(Fase.Retractar);
                     break;
                 }
 
-                escalaX = Mathf.MoveTowards(escalaX, EscalaXHastaLaLuz(), Time.deltaTime * velocidadEstirado);
-                if (IntentarAgarre())
-                    break;
-
-                if (Mathf.Abs(escalaX - EscalaXHastaLaLuz()) < 0.01f)
-                    CambiarFase(Fase.Retractar);
+                Apuntar();
+                escalaX = Mathf.MoveTowards(escalaX, EscalaXObjetivo(), Time.deltaTime * velocidadEstirado);
+                IntentarAgarre();
                 break;
 
             case Fase.Retractar:
+                if (!yaAgarro && !JugadorPaso(finalPersecucion))
+                    Apuntar();
                 escalaX = Mathf.MoveTowards(escalaX, escalaSeteada.x, Time.deltaTime * velocidadRetraccion);
-                if (!yaAgarro && !luzEncendida)
-                    IntentarAgarre();
 
                 if (Mathf.Abs(escalaX - escalaSeteada.x) < 0.01f)
-                {
-                    if (yaAgarro && !luzEncendida)
-                    {
-                        yaAgarro = false;
-                        CambiarFase(Fase.Esperar);
-                    }
-                    else
-                    {
-                        CambiarFase(Fase.Inactiva);
-                    }
-                }
+                    CambiarFase(yaAgarro ? Fase.Esperar : Fase.Inactiva);
                 break;
 
             case Fase.Inactiva:
@@ -126,41 +117,50 @@ public class HandChaser : MonoBehaviour
 
     void Apuntar()
     {
-        if (fase == Fase.Inactiva) return;
+        Vector2 hacia = (Vector2)target.position - (Vector2)posicionFija;
+        if (hacia.sqrMagnitude < 0.0001f) return;
 
-        Vector3 mira = target.position;
-        if (primeraLuz != null && JugadorPasoLaLuz())
-            mira = primeraLuz.position;
-
-        Vector2 hacia = mira - transform.position;
         float deseado = Mathf.Atan2(hacia.y, hacia.x) * Mathf.Rad2Deg;
         anguloActual = Mathf.LerpAngle(anguloActual, deseado, Time.deltaTime * velocidadDeApuntado);
     }
 
-    float EscalaXHastaLaLuz()
+    float EscalaXObjetivo()
     {
-        if (primeraLuz == null) return escalaSeteada.x;
-
-        float distLuz = Vector2.Distance(transform.position, primeraLuz.position);
-        return Mathf.Max(escalaSeteada.x, distLuz / Mathf.Max(0.01f, anchoSprite));
+        float hastaJugador = EscalaXParaAlcanzar(target.position);
+        if (finalPersecucion == null)
+            return hastaJugador;
+        return Mathf.Min(hastaJugador, EscalaXParaAlcanzar(finalPersecucion.position));
     }
 
-    bool JugadorPasoLaLuz()
+    float EscalaXParaAlcanzar(Vector3 destino)
     {
-        if (primeraLuz == null) return false;
-        Vector2 origen = transform.position;
-        Vector2 eje = ((Vector2)primeraLuz.position - origen).normalized;
-        if (eje.sqrMagnitude < 0.0001f) return false;
+        float largoDeseado = Vector2.Distance(posicionFija, destino);
+        float alcanceEscala1 = Mathf.Max(0.01f, AlcanceLocal());
+        return Mathf.Max(escalaSeteada.x, largoDeseado / alcanceEscala1);
+    }
 
-        float hastaLuz = Vector2.Dot((Vector2)primeraLuz.position - origen, eje);
-        float hastaJugador = Vector2.Dot((Vector2)target.position - origen, eje);
-        return hastaJugador > hastaLuz;
+    bool JugadorPaso(Transform marca)
+    {
+        if (marca == null || target == null) return false;
+        Vector2 eje = EjePersecucion();
+        return Vector2.Dot((Vector2)target.position - (Vector2)marca.position, eje) >= 0f;
+    }
+
+    Vector2 EjePersecucion()
+    {
+        if (inicioPersecucion != null && finalPersecucion != null)
+        {
+            Vector2 eje = (Vector2)finalPersecucion.position - (Vector2)inicioPersecucion.position;
+            if (eje.sqrMagnitude > 0.0001f)
+                return eje.normalized;
+        }
+        return Vector2.right;
     }
 
     bool IntentarAgarre()
     {
         if (yaAgarro || target == null) return false;
-        if (Vector2.Distance(PuntaDeLosDedos(), target.position) > radioAgarre)
+        if (Vector2.Distance(Nudillos(), target.position) > radioAgarre)
             return false;
 
         yaAgarro = true;
@@ -176,13 +176,46 @@ public class HandChaser : MonoBehaviour
 
     void Aplicar()
     {
+        transform.position = posicionFija;
         transform.rotation = Quaternion.Euler(0f, 0f, anguloActual);
         transform.localScale = new Vector3(escalaX, escalaSeteada.y, escalaSeteada.z);
     }
 
+    public Vector3 Nudillos()
+    {
+        if (puntoAgarre != null)
+            return puntoAgarre.position;
+        return transform.position;
+    }
+
+    float AlcanceLocal()
+    {
+        if (puntoAgarre == null)
+            return 1f;
+        Vector3 local = puntoAgarre.localPosition;
+        local.z = 0f;
+        return Mathf.Max(0.01f, local.magnitude);
+    }
+
+    void AsegurarPuntoAgarre()
+    {
+        if (puntoAgarre != null) return;
+
+        Transform existente = transform.Find("Agarre");
+        if (existente != null)
+        {
+            puntoAgarre = existente;
+            return;
+        }
+
+        GameObject go = new GameObject("Agarre");
+        go.transform.SetParent(transform, false);
+        go.transform.localPosition = new Vector3(2.2f, -1.1f, 0f);
+        puntoAgarre = go.transform;
+    }
+
     public void Reiniciar()
     {
-        luzEncendida = false;
         yaAgarro = false;
         escalaX = escalaSeteada.x;
         anguloActual = rotacionSeteada;
@@ -192,44 +225,46 @@ public class HandChaser : MonoBehaviour
 
     public void RetractarPorLuz()
     {
-        luzEncendida = true;
-        yaAgarro = false;
-        if (fase != Fase.Inactiva)
-            CambiarFase(Fase.Retractar);
-    }
-
-    public Vector3 PuntaDeLosDedos()
-    {
-        return transform.position + transform.right * (anchoSprite * escalaX);
+        // La persecución ya no se corta con la primera luz.
     }
 
     void CambiarFase(Fase nueva)
     {
+        if (nueva == Fase.Esperar)
+            yaAgarro = false;
         fase = nueva;
-        cronometro = 0f;
     }
 
-    void OnDrawGizmosSelected()
+    static Transform BuscarTransform(params string[] nombres)
     {
-        float ancho = anchoSprite;
-        if (!Application.isPlaying)
+        for (int i = 0; i < nombres.Length; i++)
         {
-            SpriteRenderer r = GetComponent<SpriteRenderer>();
-            if (r != null && r.sprite != null)
-                ancho = r.sprite.bounds.size.x;
+            GameObject go = GameObject.Find(nombres[i]);
+            if (go != null) return go.transform;
         }
+        return null;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (puntoAgarre == null)
+            puntoAgarre = transform.Find("Agarre");
+        if (puntoAgarre == null)
+            return;
 
         Gizmos.color = Color.red;
-        Vector3 punta = Application.isPlaying
-            ? PuntaDeLosDedos()
-            : transform.position + transform.right * (ancho * transform.localScale.x);
-        Gizmos.DrawWireSphere(punta, radioAgarre);
+        Gizmos.DrawWireSphere(puntoAgarre.position, radioAgarre);
 
-        if (primeraLuz != null)
+        if (inicioPersecucion != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(inicioPersecucion.position, 0.25f);
+        }
+        if (finalPersecucion != null)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, primeraLuz.position);
-            Gizmos.DrawWireSphere(primeraLuz.position, 0.25f);
+            Gizmos.DrawWireSphere(finalPersecucion.position, 0.25f);
+            Gizmos.DrawLine(transform.position, finalPersecucion.position);
         }
     }
 }

@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// Cerca de PrimeraLuz: E activa luzfondo.
+// Cerca de PrimeraLuz: E activa luzfondo y muestra Oscuridad (1).
 // Cerca de SegundaLuz: E activa luzfondo (1).
+// Oscuridad (1) empieza oculta y no choca con Oscuridad del personaje.
 // No modifica layers ni los objetos, solo los prende.
 public class LuzFondoInteractiva : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class LuzFondoInteractiva : MonoBehaviour
     public GameObject luzfondo;
     public Transform segundaLuz;
     public GameObject luzfondo1;
+    public GameObject oscuridad1;
     public float radioInteraccion = 2.5f;
     public string textoPrompt = "E para interactuar";
 
     private Transform pp;
     private Text prompt;
+    private GameObject oscuridadJugador;
 
     void Start()
     {
@@ -44,8 +47,34 @@ public class LuzFondoInteractiva : MonoBehaviour
             if (luzfondo1 == null) luzfondo1 = GameObject.Find("luzfondo(1)");
         }
 
+        if (oscuridad1 == null)
+        {
+            oscuridad1 = GameObject.Find("Oscuridad (1)");
+            if (oscuridad1 == null) oscuridad1 = GameObject.Find("Oscuridad(1)");
+        }
+
+        GameObject ppGO = GameObject.Find("Pp");
+        if (ppGO != null)
+        {
+            Transform t = ppGO.transform.Find("Oscuridad");
+            if (t != null) oscuridadJugador = t.gameObject;
+        }
+        if (oscuridadJugador == null) oscuridadJugador = GameObject.Find("Oscuridad");
+
         if (luzfondo != null) luzfondo.SetActive(false);
         if (luzfondo1 != null) luzfondo1.SetActive(false);
+        if (oscuridad1 != null)
+        {
+            oscuridad1.SetActive(false);
+            HacerNoColisionable(oscuridad1);
+        }
+
+        if (oscuridadJugador != null && oscuridadJugador.GetComponent<OscuridadFusion>() == null)
+        {
+            OscuridadFusion fusion = oscuridadJugador.AddComponent<OscuridadFusion>();
+            if (oscuridad1 != null)
+                fusion.Configurar(oscuridad1.GetComponent<SpriteRenderer>());
+        }
 
         CrearPrompt();
     }
@@ -77,6 +106,7 @@ public class LuzFondoInteractiva : MonoBehaviour
     {
         if (luzfondo != null) luzfondo.SetActive(false);
         if (luzfondo1 != null) luzfondo1.SetActive(false);
+        if (oscuridad1 != null) oscuridad1.SetActive(false);
         if (prompt != null) prompt.gameObject.SetActive(false);
     }
 
@@ -86,8 +116,39 @@ public class LuzFondoInteractiva : MonoBehaviour
 
         if (luz == luzfondo)
         {
+            if (oscuridad1 != null)
+            {
+                oscuridad1.SetActive(true);
+                HacerNoColisionable(oscuridad1);
+                IgnorarChoqueConOscuridad();
+            }
+
             HandChaser mano = FindObjectOfType<HandChaser>();
             if (mano != null) mano.RetractarPorLuz();
+        }
+    }
+
+    void HacerNoColisionable(GameObject go)
+    {
+        if (go == null) return;
+        Collider2D[] cols = go.GetComponentsInChildren<Collider2D>(true);
+        for (int i = 0; i < cols.Length; i++)
+            cols[i].isTrigger = true;
+    }
+
+    void IgnorarChoqueConOscuridad()
+    {
+        if (oscuridad1 == null || oscuridadJugador == null) return;
+
+        Collider2D[] a = oscuridad1.GetComponentsInChildren<Collider2D>(true);
+        Collider2D[] b = oscuridadJugador.GetComponentsInChildren<Collider2D>(true);
+        for (int i = 0; i < a.Length; i++)
+        {
+            for (int j = 0; j < b.Length; j++)
+            {
+                if (a[i] != null && b[j] != null)
+                    Physics2D.IgnoreCollision(a[i], b[j], true);
+            }
         }
     }
 

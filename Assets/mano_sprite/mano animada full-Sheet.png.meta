@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e773bc8e910f7de4bb35ff6e3f9acf8a
+guid: 0ae3c620595214a4ab0b8d67582114ae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_0"
+      name: mano animada full-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58d6da0c644857246ade040866cca4ab
-      internalID: -236375617
+      spriteID: 0d904121744549e4da5cfa79107ba691
+      internalID: 1405560591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_1"
+      name: mano animada full-Sheet_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 434
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48bc7f57971795b42a5d816c92de721b
-      internalID: -254583962
+      spriteID: f7f2c2eee1ec20740a4d604bbb661d6b
+      internalID: 1607854382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_2"
+      name: mano animada full-Sheet_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 868
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed96357e027230140974960cd47c1362
-      internalID: -1396955413
+      spriteID: f8cad7c3849dea94e8dbe491f775c8a9
+      internalID: -1748765454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_3"
+      name: mano animada full-Sheet_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 1302
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2c9febf829dea24cb7ba744a0aeddcb
-      internalID: -1146038760
+      spriteID: 474667963431ff14ba6870edad9e57d4
+      internalID: 1097225674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_4"
+      name: mano animada full-Sheet_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 1736
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77eb22798f233574a8aa4a0ad818fd2e
-      internalID: -416052428
+      spriteID: 56c9bb0f631f92649bc79d42fea0d01d
+      internalID: -460344443
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_5"
+      name: mano animada full-Sheet_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 2170
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b64bc20e796b7b346b1514b5a1cf8089
-      internalID: -306764340
+      spriteID: 2afd59475ce032141b15c67e350be38f
+      internalID: -161296759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_6"
+      name: mano animada full-Sheet_6
       rect:
         serializedVersion: 2
-        x: 480
+        x: 2604
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3bac3c27f67f7c4798ef193f5497890
-      internalID: -166051
+      spriteID: c8ec0618356f6994bb03b691fa596296
+      internalID: -2125665161
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_7"
+      name: mano animada full-Sheet_7
       rect:
         serializedVersion: 2
-        x: 560
+        x: 3038
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ababf94ace3af6e4d84ac6c0aaa69a26
-      internalID: 1799905061
+      spriteID: f1a92905a8051bc4b85fa56e262d6ee0
+      internalID: -122721516
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_8"
+      name: mano animada full-Sheet_8
       rect:
         serializedVersion: 2
-        x: 640
+        x: 3472
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,20 +279,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1067c08b9e9c42c4a9bdc05e2ed8bde1
-      internalID: -481559596
+      spriteID: 247a9645092d0224b96c2af99c95ef1c
+      internalID: -1438566580
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_9"
+      name: mano animada full-Sheet_9
       rect:
         serializedVersion: 2
-        x: 720
+        x: 3906
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,20 +300,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7299b57783fc2c848852e6f82e5e573d
-      internalID: -1397612095
+      spriteID: 04cf42c9a423c9743ad827fbccc7bfbb
+      internalID: 1169885409
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_10"
+      name: mano animada full-Sheet_10
       rect:
         serializedVersion: 2
-        x: 800
+        x: 4340
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,20 +321,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 560761d6dd8d710459fa71128792717b
-      internalID: 1791006461
+      spriteID: 1256beb83d5b2ab42b75a61b6344cdd6
+      internalID: 2043964274
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_11"
+      name: mano animada full-Sheet_11
       rect:
         serializedVersion: 2
-        x: 880
+        x: 4774
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,20 +342,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2dc983ffeae2124fb609679170f8181
-      internalID: -1691143121
+      spriteID: 254ee64003836ae4a82c0cf0a30044c6
+      internalID: 2047729602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_12"
+      name: mano animada full-Sheet_12
       rect:
         serializedVersion: 2
-        x: 960
+        x: 5208
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -363,20 +363,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc8b6539784a9d84bb1d8f2ebbc75415
-      internalID: 657102284
+      spriteID: 9793ae2bdea51884891e7ac96dd15418
+      internalID: 1074698150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_13"
+      name: mano animada full-Sheet_13
       rect:
         serializedVersion: 2
-        x: 1040
+        x: 5642
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -384,20 +384,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65b5a346360ec234cb07d094ff6519f9
-      internalID: 1918182814
+      spriteID: 6bc6bddd0fe49854cb0f2bcba071b4de
+      internalID: 340968264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_14"
+      name: mano animada full-Sheet_14
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 6076
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -405,20 +405,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 243fbc2ef0a283345aba0ca36b1bd08c
-      internalID: -1142995630
+      spriteID: ded77cb2b1dfcb84b8b62da26c3d32c8
+      internalID: -278059221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_15"
+      name: mano animada full-Sheet_15
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 6510
         y: 0
-        width: 80
-        height: 32
+        width: 434
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -426,155 +426,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbd5f830156e13346bd7dcf23e0953c5
-      internalID: -1644185597
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_16"
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 546b9b69062e2db4e82ff0ec5664c055
-      internalID: -1700573854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_17"
-      rect:
-        serializedVersion: 2
-        x: 1360
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cbbb0fee423be3f438cbbb7e92ef9f45
-      internalID: -455822298
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_18"
-      rect:
-        serializedVersion: 2
-        x: 1440
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64930536ad8ff5d48bfb6f81f78b7a4d
-      internalID: -1384597837
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_19"
-      rect:
-        serializedVersion: 2
-        x: 1520
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2a86b51e60c16343bceddc2054ab5d7
-      internalID: 440617208
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_20"
-      rect:
-        serializedVersion: 2
-        x: 1600
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0999f942e1fad64d8f9fcf46eeb6213
-      internalID: -1641130938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_21"
-      rect:
-        serializedVersion: 2
-        x: 1680
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3bdc6f2c83df03448b4525c116c86db
-      internalID: -617675413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "plataforma m\xF3vil-Sheet_22"
-      rect:
-        serializedVersion: 2
-        x: 1760
-        y: 0
-        width: 80
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5327ce494a083704c99cd373775502f7
-      internalID: 885684702
+      spriteID: 3ac9850cb7efc62479e8cd02c38dbad6
+      internalID: -2011040541
       vertices: []
       indices: 
       edges: []
@@ -590,29 +443,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "plataforma m\xF3vil-Sheet_0": -236375617
-      "plataforma m\xF3vil-Sheet_1": -254583962
-      "plataforma m\xF3vil-Sheet_10": 1791006461
-      "plataforma m\xF3vil-Sheet_11": -1691143121
-      "plataforma m\xF3vil-Sheet_12": 657102284
-      "plataforma m\xF3vil-Sheet_13": 1918182814
-      "plataforma m\xF3vil-Sheet_14": -1142995630
-      "plataforma m\xF3vil-Sheet_15": -1644185597
-      "plataforma m\xF3vil-Sheet_16": -1700573854
-      "plataforma m\xF3vil-Sheet_17": -455822298
-      "plataforma m\xF3vil-Sheet_18": -1384597837
-      "plataforma m\xF3vil-Sheet_19": 440617208
-      "plataforma m\xF3vil-Sheet_2": -1396955413
-      "plataforma m\xF3vil-Sheet_20": -1641130938
-      "plataforma m\xF3vil-Sheet_21": -617675413
-      "plataforma m\xF3vil-Sheet_22": 885684702
-      "plataforma m\xF3vil-Sheet_3": -1146038760
-      "plataforma m\xF3vil-Sheet_4": -416052428
-      "plataforma m\xF3vil-Sheet_5": -306764340
-      "plataforma m\xF3vil-Sheet_6": -166051
-      "plataforma m\xF3vil-Sheet_7": 1799905061
-      "plataforma m\xF3vil-Sheet_8": -481559596
-      "plataforma m\xF3vil-Sheet_9": -1397612095
+      mano animada full-Sheet_0: 1405560591
+      mano animada full-Sheet_1: 1607854382
+      mano animada full-Sheet_10: 2043964274
+      mano animada full-Sheet_11: 2047729602
+      mano animada full-Sheet_12: 1074698150
+      mano animada full-Sheet_13: 340968264
+      mano animada full-Sheet_14: -278059221
+      mano animada full-Sheet_15: -2011040541
+      mano animada full-Sheet_2: -1748765454
+      mano animada full-Sheet_3: 1097225674
+      mano animada full-Sheet_4: -460344443
+      mano animada full-Sheet_5: -161296759
+      mano animada full-Sheet_6: -2125665161
+      mano animada full-Sheet_7: -122721516
+      mano animada full-Sheet_8: -1438566580
+      mano animada full-Sheet_9: 1169885409
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

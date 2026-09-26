@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 093397f4f7c9a8443a0cc7de7c6243d4
+guid: 14cf5cc72bfe729409218108be935268
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -97,181 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_0
+      name: Velas-sheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10247529a29a74a44888e6d7bedbca60
-      internalID: -765197032
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01d043bdbac59c54bbe0314935c2f473
-      internalID: 176998247
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 274
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74e35c559592469418e09f5a1a5f5a17
-      internalID: -2014943938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 411
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a59a04864f7db35418305b3be3c9a187
-      internalID: -391664291
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 548
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1063d431227173469596b111be0bef9
-      internalID: -1500420095
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 685
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f240417083c4e604fa65148528f85f53
-      internalID: 899208434
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 822
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68505cc8dad77794fa0c4b693a798847
-      internalID: -2142228565
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 959
-        y: 0
-        width: 137
-        height: 249
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f88d72460aa888049a821457f2c5bba2
-      internalID: 1666672505
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite_manos_arco_Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 1096
-        y: 0
-        width: 137
-        height: 249
+        x: 730
+        y: 320
+        width: 60
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,8 +111,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f7fc205303baa441af1adb50c55716a
-      internalID: 1136097092
+      spriteID: c34ebc1eb3cf7ba45a0c6bd3d40bc798
+      internalID: 2077337435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Velas-sheet_1
+      rect:
+        serializedVersion: 2
+        x: 2010
+        y: 320
+        width: 60
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edf618809098e1943820f8fecaa743d7
+      internalID: -996969300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Velas-sheet_2
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 319
+        width: 60
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a161ec631b26e468db6a72280a6dd7
+      internalID: -567102049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Velas-sheet_3
+      rect:
+        serializedVersion: 2
+        x: 3290
+        y: 320
+        width: 60
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 880c9afdfa38a1e4a9d3cea3971c2edd
+      internalID: -1689548940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Velas-sheet_4
+      rect:
+        serializedVersion: 2
+        x: 4565
+        y: 320
+        width: 70
+        height: 279
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99b1ccc721a5f5b4fa74a4df033db15a
+      internalID: -1669979324
       vertices: []
       indices: 
       edges: []
@@ -296,15 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sprite_manos_arco_Sheet_0: -765197032
-      sprite_manos_arco_Sheet_1: 176998247
-      sprite_manos_arco_Sheet_2: -2014943938
-      sprite_manos_arco_Sheet_3: -391664291
-      sprite_manos_arco_Sheet_4: -1500420095
-      sprite_manos_arco_Sheet_5: 899208434
-      sprite_manos_arco_Sheet_6: -2142228565
-      sprite_manos_arco_Sheet_7: 1666672505
-      sprite_manos_arco_Sheet_8: 1136097092
+      Velas-sheet_0: 2077337435
+      Velas-sheet_1: -996969300
+      Velas-sheet_2: -567102049
+      Velas-sheet_3: -1689548940
+      Velas-sheet_4: -1669979324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
