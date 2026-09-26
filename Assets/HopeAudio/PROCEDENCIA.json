@@ -1,0 +1,92 @@
+[
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Musica\\M - Musica Main\\A - Hope_Pulso_Continuo_Mano_Prueba_42s.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Musica\\A - Hope_Pulso_Continuo_Mano_Prueba_42s.wav",
+    "treatment": "Ciclo de 25.6 s tomado entre 3.2 y 28.8 s del pulso usado, sin fades de inicio/final del render.",
+    "sha256": "0730e535db3574edb06710e813ce9ee60e4d849c52e5113b830c09daac6acc74"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Pasos\\02_Paso_tierra_01.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\02_Paso_tierra_01.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "336f9e9ade37b03684b2b5e6fe99d8446fe61864945391ed4c89ec12a632015a"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Pasos\\02_Paso_tierra_02.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\02_Paso_tierra_02.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "6fb91e1b4fe2835cdb0363a669ef9bf985170a11d095dcfb1ccd39456d2a2b72"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Pasos\\02_Paso_tierra_03.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\02_Paso_tierra_03.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "ecbffad27242018bfad4e5ebf2a630c2e0b3cefb61279a1db1f274d0796a21e4"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Pasos\\02_Paso_tierra_04.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\02_Paso_tierra_04.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "6a7a90e38a6125b7a0e38601013f1f11b1c5aa54d35ecc9a5a8c55b74bf2de74"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Pasos\\02_Paso_tierra_05.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\02_Paso_tierra_05.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "c3ce9e821edc02b5f33cf6a927343673e8fcd656c2f3ce78d2c97692836e42c9"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - saltos\\04_Salto_roce.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\04_Salto_roce.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "42b7f6c121f13e82e8db4d1731e1765f4cce08915d4b9af746c51d6f61e7e7ce"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Apoyos\\03_Apoyo_tierra.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\03_Apoyo_tierra.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "46ebb59799bc15eb0fbf5c5c403ac3e49562523cd314824d7db911c109805c08"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F- Plataforma Pium\\09_Rebote_crrk_vuong_1.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\09_Rebote_crrk_vuong_1.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "b98b9aa6dc0fcd5d9f87da305983a4a9ca4af6d79933b3c3fe39187ab083fc78"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F- Plataforma Pium\\09_Rebote_crrk_vuong_2.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\09_Rebote_crrk_vuong_2.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "467d32870766786da8841269f7cc907a582d5418a6083759a8c636a6a3334589"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F- Plataforma Pium\\09_Rebote_crrk_vuong_3.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Foleys\\09_Rebote_crrk_vuong_3.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "ccf7e207e107136e95e9a0f7a2e308507e524631374b56b201a43092a92acf11"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F -FAROLES - chispa\\06_Chispa.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Mecanicas\\06_Chispa.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "1ce5dcc66c02dcc8570713014057da2fb435a1880917c48af84c20cd3ab585ca"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - FAROLES - encendido\\07_Farol_enciende.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Mecanicas\\07_Farol_enciende.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "f6bcce4b2faf342d2178e92eae8a276cb39b05e751c4275e2feeaec01efd429e"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Foleys\\F - Gas Fuego Faroles\\08_Farol_llama_CC_BY_3.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Mecanicas\\08_Farol_llama_CC_BY_3.wav",
+    "treatment": "Union circular con fundido de 0.4 s para repeticion de llama.",
+    "sha256": "a774e0c2934ac400f4ccd2be430259bf6f0c5fbf1d366d389f329065377e83f4"
+  },
+  {
+    "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\chaty\\Hope_Audio\\Biblioteca_Sonidos\\Mecanicas\\M - Checkpoint Farol\\11_Luz_motivo_propuesta.wav",
+    "asset": "Assets\\HopeAudio\\Clips\\Mecanicas\\11_Luz_motivo_propuesta.wav",
+    "treatment": "Copia exacta del archivo fuente de la biblioteca; ajustes de mezcla en HopeAudioSettings.",
+    "sha256": "7d9c7042064fb1584d271318561f5132d14c9d9abdb062d9f7e87a65c48577fa"
+  }
+]

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e34a66c2323572686af79821566c9d7, type: 3}
+  m_Name: HopeAudioSettings
+  m_EditorClassIdentifier: 
+  general: 0.8
+  musica: 0.12
+  foleys: 0.3
+  mecanicas: 0.25
+  pulsoContinuo: {fileID: 8300000, guid: 64ef1ae331255e9d89175ae973e7a8a4, type: 3}
+  musicaConFarol: 0.65
+  segundosAlivio: 2.5
+  pasos:
+  - {fileID: 8300000, guid: b34f3c482f9a5a32bbb039411791ba75, type: 3}
+  - {fileID: 8300000, guid: a3565a0851cc51cbbb57bd2552f3290a, type: 3}
+  - {fileID: 8300000, guid: c42808e69687580fb0873555f1f77b7e, type: 3}
+  - {fileID: 8300000, guid: 081cdb7b74cd5edd97ab726ddf4853db, type: 3}
+  - {fileID: 8300000, guid: 91d20e7e6d705cc88017dc59e5dad6e5, type: 3}
+  salto: {fileID: 8300000, guid: dfc03b93ac245072bab0ae321ccc1718, type: 3}
+  apoyo: {fileID: 8300000, guid: 2f2d15be22405e12b40d81a5a72f0eea, type: 3}
+  rebotes:
+  - {fileID: 8300000, guid: 39ec93b462215233a01fd31433a803a2, type: 3}
+  - {fileID: 8300000, guid: f1ba426a759c581a9971c2d733cb0b13, type: 3}
+  - {fileID: 8300000, guid: 4b5ea44177e654398b366818c7049476, type: 3}
+  distanciaEntrePasos: 1.15
+  volumenPaso: 0.65
+  volumenSalto: 0.3
+  volumenApoyo: 0.7
+  volumenRebote: 0.8
+  chispa: {fileID: 8300000, guid: b03c070c6f545cf480e88cc96ba61005, type: 3}
+  encendido: {fileID: 8300000, guid: 6feb41189cf6549a861d61d7c1cc70d6, type: 3}
+  llama: {fileID: 8300000, guid: 6c715fccdbc4594d8a39b2b31302b461, type: 3}
+  motivoLuz: {fileID: 8300000, guid: 279ae89cb3e352a4994ae7841b785692, type: 3}
+  volumenChispa: 0.7
+  volumenEncendido: 0.65
+  volumenLlama: 0.12
+  volumenMotivo: 0.35
+  distanciaFarol: 8
