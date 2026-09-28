@@ -91,7 +91,6 @@ public class PlayerController2D : MonoBehaviour
     private bool reproduciendoSalto;
     private Animator animatorHalo;
     private SpriteRenderer srHalo;
-    private bool tieneParametroSpeed;
     private enum FaseSalto { Nada, Subiendo, Flotando, Bajando }
     private FaseSalto faseSalto = FaseSalto.Nada;
     private float gravedadCaida;
@@ -118,7 +117,6 @@ public class PlayerController2D : MonoBehaviour
         AsegurarEscaleraTrigger();
         AsegurarColliderNivel2();
         CrearPantallaNivel2();
-        PrepararAnimator();
         PrepararHaloSalto();
         AplicarClipsDeAnimacion();
         if (TieneAnimacionEspera() && animator != null)
@@ -126,20 +124,6 @@ public class PlayerController2D : MonoBehaviour
             animator.Play(NombreEstadoEspera(), 0, 0f);
             animator.speed = 1f;
             enIdle = true;
-        }
-    }
-
-    void PrepararAnimator()
-    {
-        if (animator == null) return;
-        tieneParametroSpeed = false;
-        foreach (AnimatorControllerParameter p in animator.parameters)
-        {
-            if (p.name == "Speed")
-            {
-                tieneParametroSpeed = true;
-                break;
-            }
         }
     }
 
@@ -285,7 +269,7 @@ public class PlayerController2D : MonoBehaviour
             }
             else
             {
-                if (tieneParametroSpeed)
+                if (TieneParametroAnimator("Speed"))
                     animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
                 if (isMoving)
@@ -445,6 +429,17 @@ public class PlayerController2D : MonoBehaviour
         if (animacionEspera != null)
             return animacionEspera.name;
         return "";
+    }
+
+    bool TieneParametroAnimator(string nombre)
+    {
+        if (animator == null) return false;
+        foreach (AnimatorControllerParameter p in animator.parameters)
+        {
+            if (p.name == nombre)
+                return true;
+        }
+        return false;
     }
 
     string NombreEstadoSalto()

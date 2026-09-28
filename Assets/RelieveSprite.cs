@@ -30,13 +30,24 @@ public class RelieveSprite : MonoBehaviour
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        block = new MaterialPropertyBlock();
+        Asegurar();
+    }
+
+    void OnEnable()
+    {
+        Asegurar();
+    }
+
+    void Asegurar()
+    {
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        if (block == null) block = new MaterialPropertyBlock();
     }
 
     void LateUpdate()
     {
-        if (sr == null) return;
+        Asegurar();
+        if (sr == null || block == null) return;
         sr.GetPropertyBlock(block);
         block.SetFloat(IdLocal, recibirLuz ? intensidadRelieve : 0f);
         block.SetFloat(IdGrosorLocal, grosorContorno);
