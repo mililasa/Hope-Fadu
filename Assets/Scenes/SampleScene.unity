@@ -3780,8 +3780,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escalaBase: 2
-  amplitud: 4
-  velocidad: 1
+  amplitud: 0.02
+  velocidad: 0.05
   encendida: 1
   escalaApagada: 0.15
   suavidad: 4
