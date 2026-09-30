@@ -1498,10 +1498,10 @@ MonoBehaviour:
     m_Bits: 64
   spriteMiraALaDerecha: 1
   runStateName: caminar
-  animacionCaminar: {fileID: 0}
+  animacionCaminar: {fileID: 7400000, guid: 18a40c0c337d8d741a0248c3c71f5ba0, type: 2}
   climbStateName: ppescalera
   idleStateName: espera
-  animacionEspera: {fileID: 0}
+  animacionEspera: {fileID: 7400000, guid: 602cb98f9b4651f4290514342cb69996, type: 2}
   animacionSalto: {fileID: 7400000, guid: 80af89f2a8d2b924bac336c365a08ae1, type: 2}
   jumpStateName: saltar
   velocidadAnimacionSalto: 0.55
@@ -3848,7 +3848,6 @@ GameObject:
   - component: {fileID: 1308258488}
   - component: {fileID: 1308258489}
   - component: {fileID: 1308258490}
-  - component: {fileID: 1308258491}
   m_Layer: 0
   m_Name: Oscuridad
   m_TagString: Untagged
@@ -3941,18 +3940,6 @@ MonoBehaviour:
   encendida: 1
   escalaApagada: 0.15
   suavidad: 4
---- !u!114 &1308258491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308258487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a8f3e26b9d4e7a81c04d5e6f7a8b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1316347510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4206,9 +4193,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434822586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a8f3e26b9d4e7a81c04d5e6f7a8b90, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b7c19a2d8f4e6a9b3c5d7e1f0a2b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otroHalo: {fileID: 0}
 --- !u!114 &1434822589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4829,9 +4817,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1732488961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a8f3e26b9d4e7a81c04d5e6f7a8b90, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b7c19a2d8f4e6a9b3c5d7e1f0a2b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otroHalo: {fileID: 0}
 --- !u!114 &1732488964
 MonoBehaviour:
   m_ObjectHideFlags: 0

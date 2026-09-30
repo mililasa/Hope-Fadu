@@ -55,7 +55,7 @@ AnimatorStateMachine:
     m_Position: {x: 460, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8374898824633888984}
-    m_Position: {x: 495, y: 105, z: 0}
+    m_Position: {x: 500, y: 100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -73,7 +73,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: idle
+  m_Name: espera
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

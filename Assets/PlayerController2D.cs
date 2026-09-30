@@ -602,7 +602,7 @@ public class PlayerController2D : MonoBehaviour
         if (animator == null) return;
         if (TieneAnimacionEspera())
         {
-            animator.Play(NombreEstadoEspera(), 0, 0f);
+            animator.Play(NombreEstadoEspera(), 0, 0f);            
             animator.speed = 1f;
             enIdle = true;
         }
