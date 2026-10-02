@@ -98,6 +98,16 @@ public class PlayerController2D : MonoBehaviour
     private float tiempoFloteRestante;
     private bool enIdle;
 
+    public bool PuedeSonarPaso => isGrounded && !enEscalera && !transicionNivel &&
+        faseSalto == FaseSalto.Nada && Mathf.Abs(horizontalInput) > 0.01f;
+
+    HopeJumpLanding foleySalto;
+    public bool BloqueaFoleyDeSalto => enEscalera || transicionNivel;
+    public bool EnSueloParaFoley => isGrounded && faseSalto != FaseSalto.Subiendo;
+
+    HopeDistantSequence secuenciaLejana;
+    HopeLevelMusic musicaNivel;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -117,6 +127,16 @@ public class PlayerController2D : MonoBehaviour
         gravedadOriginal = rb.gravityScale;
         AsegurarEscaleraTrigger();
         AsegurarColliderNivel2();
+        if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
+        secuenciaLejana = GetComponent<HopeDistantSequence>();
+        if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
+        if (GetComponent<HopeLampRattle>() == null) gameObject.AddComponent<HopeLampRattle>();
+        foleySalto = GetComponent<HopeJumpLanding>();
+        if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+        if (GetComponent<HopeFootsteps>() == null) gameObject.AddComponent<HopeFootsteps>();
+        if (GetComponent<HopeLevelAmbience>() == null) gameObject.AddComponent<HopeLevelAmbience>();
+        musicaNivel = GetComponent<HopeLevelMusic>();
+        if (musicaNivel == null) musicaNivel = gameObject.AddComponent<HopeLevelMusic>();
         CrearPantallaNivel2();
         PrepararAnimator();
         PrepararHaloSalto();
@@ -319,7 +339,7 @@ public class PlayerController2D : MonoBehaviour
         wasMoving = isMoving;
 
         if (transform.position.y < alturaDeCaida && !transicionNivel)
-            VolverAlCheckPoint();
+            Morir();
     }
 
     void FixedUpdate()
@@ -355,7 +375,7 @@ public class PlayerController2D : MonoBehaviour
             saltosExtraRestantes = activo ? 1 : 0;
     }
 
-    void IniciarSalto(float altura)
+    void IniciarSalto(float altura, bool reproducirRoce = true)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -370,6 +390,7 @@ public class PlayerController2D : MonoBehaviour
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
+        if (foleySalto != null) foleySalto.Saltar(reproducirRoce);
     }
 
     float EscalaDeGravedad(float aceleracion)
@@ -530,6 +551,7 @@ public class PlayerController2D : MonoBehaviour
     {
         if (transicionNivel) yield break;
         transicionNivel = true;
+        if (musicaNivel != null) musicaNivel.CompletarNivel();
         SalirEscalera();
         rb.velocity = Vector2.zero;
         rb.gravityScale = gravedadOriginal;
@@ -624,15 +646,25 @@ public class PlayerController2D : MonoBehaviour
     void ImpulsarResorte()
     {
         float extra = Mathf.Max(1.5f, fuerzaResorte / 10f);
-        IniciarSalto(alturaSalto * extra);
+        IniciarSalto(alturaSalto * extra, false);
         if (dobleSaltoActivado)
             saltosExtraRestantes = 1;
+    }
+
+    public void Morir()
+    {
+        HopeDeathAudio audioMuerte = GetComponent<HopeDeathAudio>();
+        if (audioMuerte != null) audioMuerte.Reproducir();
+        VolverAlCheckPoint();
     }
 
     public void VolverAlCheckPoint()
     {
         if (checkPoint == null) return;
 
+        if (musicaNivel != null) musicaNivel.ReiniciarNivel();
+        if (foleySalto != null) foleySalto.Reiniciar();
+        if (secuenciaLejana != null) secuenciaLejana.Reiniciar();
         transform.position = checkPoint.position;
         rb.velocity = Vector2.zero;
         rb.gravityScale = gravedadOriginal;

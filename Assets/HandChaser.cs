@@ -25,6 +25,7 @@ public class HandChaser : MonoBehaviour
 
     private enum Fase { Esperar, Estirar, Retractar, Inactiva }
     private Fase fase = Fase.Esperar;
+    public bool PersecucionAudible => fase == Fase.Estirar || fase == Fase.Retractar;
 
     private Vector3 escalaSeteada;
     private Vector3 posicionFija;
@@ -67,6 +68,7 @@ public class HandChaser : MonoBehaviour
             capsula.enabled = false;
 
         AsegurarPuntoAgarre();
+        if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
     }
 
     void Start()
@@ -167,7 +169,7 @@ public class HandChaser : MonoBehaviour
 
         PlayerController2D pp = target.GetComponent<PlayerController2D>();
         if (pp != null)
-            pp.VolverAlCheckPoint();
+            pp.Morir();
         else if (checkPoint != null)
             target.position = checkPoint.position;
 
@@ -216,6 +218,8 @@ public class HandChaser : MonoBehaviour
 
     public void Reiniciar()
     {
+        HopeHandAudio audioMano = GetComponent<HopeHandAudio>();
+        if (audioMano != null) audioMano.Reiniciar();
         yaAgarro = false;
         escalaX = escalaSeteada.x;
         anguloActual = rotacionSeteada;

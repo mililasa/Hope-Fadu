@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14737fb646d05969b68050bcee81b039, type: 3}
+  m_Name: HopeAmbienceSettings
+  m_EditorClassIdentifier: 
+  viento: {fileID: 8300000, guid: e670b99c3f5256288a7d8c706aea461f, type: 3}
+  presion: {fileID: 8300000, guid: 6a75c7a74e0a5a8a8b7fca8f73694897, type: 3}
+  arcos: {fileID: 8300000, guid: 2504cab28ca253da962eed55d03e5427, type: 3}
+  volumenViento: 0.002
+  volumenPresion: 0.02611516
+  volumenArcos: 0.006067163
+  alcanceArcos: 4
+  fundidoArcos: 0.6
+  nombresArcos:
+  - arco_de_sombras_frente
+  - arco_de_sombras_frente 2
