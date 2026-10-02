@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a400a866673059d5a590cd50236db055, type: 3}
+  m_Name: HopeMusicSettings
+  m_EditorClassIdentifier: 
+  musicaMain: {fileID: 8300000, guid: 863c9521e20e5410841fefa202ce0115, type: 3}
+  pasoDeNivel: {fileID: 8300000, guid: 53d987feca7b5f2e8c0bc8db6aacde7f, type: 3}
+  volumenMain: 0.19952623
+  volumenPaso: 0.25703958
+  segundosFundido: 2
+  segundosAnticipacion: 2
+  inicioPaso: 34.048993
+  margenRetirada: 1
+  nombreSalida: Foreground
+  puntoPuertaLocal: {x: 72.4375, y: -5.3125}

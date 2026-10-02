@@ -1,0 +1,7 @@
+# Canal 10: F - Pasos
+
+Solo las cinco variantes 02_Paso_tierra del Reaper V2. AudioSource F - Pasos (canal 10) creado bajo Pp durante Play. No usa Loop ni Play On Awake: HopeFootsteps dispara cada pisada con PlayOneShot. PlayerController2D expone si Hope esta caminando en suelo, fuera de escalera, salto y transicion; el script mide avance horizontal real para evitar sonar quieto o bloqueado. Reinicia la cuenta al saltar, detenerse o detectar un desplazamiento brusco. No agrega sonidos de aterrizaje ni escalera. Las colas de pisadas ya disparadas pueden terminar naturalmente.
+
+Configuracion persistente: Resources/HopeFootstepSettings.asset. Volumen Canal viene del fader de Reaper (0,12589254). Volumen Fragmento varia entre 0,194984 y 0,25704, sin repetir el mismo WAV inmediatamente. Ganancia efectiva aproximada 0,0245–0,0324. Master omitido de forma coherente con musica y ambientes. WAV originales sin normalizar. Cadencia inicial 0,29 s a velocidad normal, convertida a distancia recorrida; no son eventos exactos de contacto de pie en la animacion.
+
+Para aprender: fuera de Play seleccionar la configuracion, variar Volumen Canal, iniciar Play, desplegar Pp y seleccionar F - Pasos (canal 10). AudioClip puede verse vacio: PlayOneShot recibe el clip desde el script y no necesita asignarlo al campo. Loop permanece apagado. Probar caminar, detenerse, saltar, escalera, pared, caer y reaparecer. Ajustes hechos a objetos temporales en Play no persisten.
