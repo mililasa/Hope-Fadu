@@ -15,9 +15,9 @@ MonoBehaviour:
   viento: {fileID: 8300000, guid: e670b99c3f5256288a7d8c706aea461f, type: 3}
   presion: {fileID: 8300000, guid: 6a75c7a74e0a5a8a8b7fca8f73694897, type: 3}
   arcos: {fileID: 8300000, guid: 2504cab28ca253da962eed55d03e5427, type: 3}
-  volumenViento: 0.002
-  volumenPresion: 0.02611516
-  volumenArcos: 0.006067163
+  volumenViento: 0.007
+  volumenPresion: 0.169
+  volumenArcos: 0.062
   alcanceArcos: 4
   fundidoArcos: 0.6
   nombresArcos:

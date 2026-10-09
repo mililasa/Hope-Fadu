@@ -30,6 +30,7 @@ public sealed class HopeDistantSequence : MonoBehaviour
         var objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         var fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;

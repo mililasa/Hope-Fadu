@@ -12,6 +12,7 @@ public sealed class HopeDeathAudio : MonoBehaviour
         var objeto = new GameObject("M - Muerte - 8bit Death Whirl");
         objeto.transform.SetParent(transform, false);
         fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Mecanicas);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;

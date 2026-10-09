@@ -18,6 +18,7 @@ public sealed class HopeCheckpointAudio : MonoBehaviour
         var go = new GameObject(nombre);
         go.transform.SetParent(transform, false);
         var fuente = go.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Mecanicas);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HopeJumpSettings
   m_EditorClassIdentifier: 
   sonido: {fileID: 8300000, guid: 6ea7e96461a952b687753c99f348538b, type: 3}
-  volumenCanal: 0.272
-  volumenFragmento: 0.07
+  volumenCanal: 0.145
+  volumenFragmento: 0.153

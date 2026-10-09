@@ -290,12 +290,12 @@ public class PlayerController2D : MonoBehaviour
         {
             if (isGrounded)
             {
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, false);
             }
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, true);
             }
         }
 
@@ -481,7 +481,7 @@ public class PlayerController2D : MonoBehaviour
             saltosExtraRestantes = activo ? 1 : 0;
     }
 
-    void IniciarSalto(float altura)
+    void IniciarSalto(float altura, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -496,7 +496,7 @@ public class PlayerController2D : MonoBehaviour
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
-        if (foleySalto != null) foleySalto.Saltar();
+        if (foleySalto != null) foleySalto.Saltar(dobleSalto);
     }
 
     float EscalaDeGravedad(float aceleracion)

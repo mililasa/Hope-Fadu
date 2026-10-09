@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HopeCapeSettings
   m_EditorClassIdentifier: 
   sonido: {fileID: 8300000, guid: 6123e28c360b4fbc862aaea6c2e5dab2, type: 3}
-  volumenCanal: 0.316
-  volumenFragmento: 0.31
+  volumenCanal: 0.827
+  volumenFragmento: 0.817
