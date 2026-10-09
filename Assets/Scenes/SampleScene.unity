@@ -4030,7 +4030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFinal: 0
   extinguishOffset: {x: 0, y: 0.4, z: 0}
-  ciclosChispita: 0
+  ciclosChispita: 2
   textoCartelE: Encender con E
   segundosPrendidoLibre: 6
 --- !u!61 &1054705960
