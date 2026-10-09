@@ -3764,7 +3764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &970776231
 Transform:
   m_ObjectHideFlags: 0
@@ -3863,7 +3863,8 @@ Animation:
   m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 2e096235c75189c41a022dba19282570, type: 2}
-  m_Animations: []
+  m_Animations:
+  - {fileID: 7400000, guid: 2e096235c75189c41a022dba19282570, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -3902,7 +3903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFinal: 0
   extinguishOffset: {x: 0, y: 0.4, z: 0}
-  ciclosChispita: 2
+  ciclosChispita: 0
   textoCartelE: Encender con E
   segundosPrendidoLibre: 6
 --- !u!61 &1054705960
