@@ -3757,13 +3757,14 @@ GameObject:
   - component: {fileID: 970776231}
   - component: {fileID: 970776233}
   - component: {fileID: 970776232}
+  - component: {fileID: 970776234}
   m_Layer: 0
   m_Name: Chispita
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &970776231
 Transform:
   m_ObjectHideFlags: 0
@@ -3852,6 +3853,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!111 &970776234
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970776230}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 2e096235c75189c41a022dba19282570, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1054705958
 GameObject:
   m_ObjectHideFlags: 0
