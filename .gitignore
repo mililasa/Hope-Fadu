@@ -43,4 +43,6 @@ desktop.ini
 
 # Cursor
 .cursor/
-*.meta
+
+# Builds locales
+HOPE_BUILD_*.zip

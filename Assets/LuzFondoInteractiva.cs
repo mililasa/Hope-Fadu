@@ -73,8 +73,19 @@ public class LuzFondoInteractiva : MonoBehaviour
         return Vector2.Distance(pp.position, zona.position) <= radioInteraccion;
     }
 
+    void ReiniciarAudioFarol(Transform zona)
+    {
+        if (zona == null) return;
+        HopeLanternAudio audioFarol = zona.GetComponent<HopeLanternAudio>();
+        if (audioFarol != null) audioFarol.Reiniciar();
+        HopeCheckpointAudio checkpointAudio = zona.GetComponent<HopeCheckpointAudio>();
+        if (checkpointAudio != null) checkpointAudio.Reiniciar();
+    }
+
     public void Reiniciar()
     {
+        ReiniciarAudioFarol(primeraLuz);
+        ReiniciarAudioFarol(segundaLuz);
         if (luzfondo != null) luzfondo.SetActive(false);
         if (luzfondo1 != null) luzfondo1.SetActive(false);
         if (prompt != null) prompt.gameObject.SetActive(false);
@@ -83,6 +94,16 @@ public class LuzFondoInteractiva : MonoBehaviour
     void Activar(GameObject luz)
     {
         luz.SetActive(true);
+        Transform zonaAudio = luz == luzfondo ? primeraLuz : segundaLuz;
+        if (zonaAudio != null)
+        {
+            HopeLanternAudio audioFarol = zonaAudio.GetComponent<HopeLanternAudio>();
+            if (audioFarol == null) audioFarol = zonaAudio.gameObject.AddComponent<HopeLanternAudio>();
+            audioFarol.Encender(luz, pp);
+            HopeCheckpointAudio checkpointAudio = zonaAudio.GetComponent<HopeCheckpointAudio>();
+            if (checkpointAudio == null) checkpointAudio = zonaAudio.gameObject.AddComponent<HopeCheckpointAudio>();
+            checkpointAudio.Activar(luz, luz == luzfondo);
+        }
 
         if (luz == luzfondo)
         {

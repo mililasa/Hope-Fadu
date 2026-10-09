@@ -53,6 +53,8 @@ Shader "Hope/SpriteLuzRelieve"
             float _HopePlano;
             float _HopeGrosorContorno;
             float _HopeUmbralContorno;
+            float4 _HopeHalos[8];
+            float _HopeHaloCount;
 
             struct appdata
             {
@@ -77,6 +79,28 @@ Shader "Hope/SpriteLuzRelieve"
                 o.color = v.color * _Color;
                 o.worldXY = mul(unity_ObjectToWorld, v.vertex).xy;
                 return o;
+            }
+
+            float HaloUno(float2 worldXY, float4 halo, float activo)
+            {
+                float r = max(halo.z, 0.01);
+                float d = length(worldXY - halo.xy);
+                return (1.0 - smoothstep(r * 0.36, r, d)) * activo;
+            }
+
+            float ExtraHalo(float2 worldXY)
+            {
+                float n = _HopeHaloCount;
+                float a = 0;
+                a = max(a, HaloUno(worldXY, _HopeHalos[0], step(0.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[1], step(1.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[2], step(2.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[3], step(3.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[4], step(4.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[5], step(5.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[6], step(6.5, n)));
+                a = max(a, HaloUno(worldXY, _HopeHalos[7], step(7.5, n)));
+                return a;
             }
 
             float Altura(float2 uv)
@@ -106,6 +130,7 @@ Shader "Hope/SpriteLuzRelieve"
                 float radio = max(_HopeLightRadius, 0.01);
                 float nAtten = saturate(1.0 - dist / radio);
                 float atten = smoothstep(0.0, max(_HopeSuave, 0.05), nAtten);
+                atten = max(atten, ExtraHalo(i.worldXY));
                 float2 toLight = dist > 0.0001 ? delta / dist : float2(0, 1);
 
                 float grosor = max(_HopeGrosorContorno, 0.25) * max(_GrosorLocal, 0.25);
