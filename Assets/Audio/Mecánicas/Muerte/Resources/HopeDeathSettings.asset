@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32669cde0e65a518fa2e5041353c496, type: 3}
+  m_Name: HopeDeathSettings
+  m_EditorClassIdentifier: 
+  sonidoCaida: {fileID: 8300000, guid: 802a1a8ab4c55b04bead016b73b22819, type: 3}
+  volumenCaida: 0.18
+  sonidoMano: {fileID: 8300000, guid: 57b4e850ffb024a4fb393aa7f7ef2b67, type: 3}
+  volumenMano: 0.18
