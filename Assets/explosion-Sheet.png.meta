@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 246058ff5cc465349bd0b070af13a89b
+guid: 063294617e4ba4149a32272fb3f8f35f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chispita-Sheet_0
+      name: explosion-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dcd12b110a492d64cbbee28f24dda1de
-      internalID: -2111715017
+      spriteID: c1bacf68e70138e4ca4907e305438f8a
+      internalID: 577344990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_1
+      name: explosion-Sheet_1
       rect:
         serializedVersion: 2
-        x: 20
+        x: 240
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b51baac91a44f442838737ecbb345d2
-      internalID: -1867000396
+      spriteID: 922d2f679560f39478a168c350ba8352
+      internalID: -1402241126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_2
+      name: explosion-Sheet_2
       rect:
         serializedVersion: 2
-        x: 40
+        x: 480
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02fe3ba755e5b67458dfca751e2d0c84
-      internalID: -815734523
+      spriteID: 438824af5c987674ba1c071b6c838052
+      internalID: -869276216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_3
+      name: explosion-Sheet_3
       rect:
         serializedVersion: 2
-        x: 80
+        x: 720
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 968f290931217204aa377be29332a87f
-      internalID: -1440316051
+      spriteID: 6bf55c187a460f4499363867fe0b5839
+      internalID: -603925821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_4
+      name: explosion-Sheet_4
       rect:
         serializedVersion: 2
-        x: 100
+        x: 960
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af79a50b1a5c6c442af539b2bdbcf1c9
-      internalID: -312489334
+      spriteID: 2387f99d23a69384cbdc5f8137af08b4
+      internalID: -645771033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_5
+      name: explosion-Sheet_5
       rect:
         serializedVersion: 2
-        x: 120
+        x: 1200
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62e639c89320dbd4ba6a53997d24ed90
-      internalID: 1678214167
+      spriteID: 7fa24313955b1f14dbbc8f3698fb9cb5
+      internalID: 573779362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_6
+      name: explosion-Sheet_6
       rect:
         serializedVersion: 2
-        x: 140
+        x: 1440
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +237,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4b925d1b6e78a442b5080a32d4c79dc
-      internalID: 1081720032
+      spriteID: 89223d1462688264ba4f4af52e7f2c35
+      internalID: 666420139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chispita-Sheet_7
+      name: explosion-Sheet_7
       rect:
         serializedVersion: 2
-        x: 60
+        x: 1680
         y: 0
-        width: 20
-        height: 19
+        width: 240
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b787319eb019346a52968518d3d3b5
+      internalID: 1368452524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 240
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6624c68d4e3a643baba3ab9eb633c2
+      internalID: -1070256381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 0
+        width: 240
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,8 +300,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 645fc120d26627b408922ddaaf0f6a62
-      internalID: 518875361
+      spriteID: a48b41dc1f47b0047bad818394aab1d5
+      internalID: -1572703895
       vertices: []
       indices: 
       edges: []
@@ -275,14 +317,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      chispita-Sheet_0: -2111715017
-      chispita-Sheet_1: -1867000396
-      chispita-Sheet_2: -815734523
-      chispita-Sheet_3: -1440316051
-      chispita-Sheet_4: -312489334
-      chispita-Sheet_5: 1678214167
-      chispita-Sheet_6: 1081720032
-      chispita-Sheet_7: 518875361
+      explosion-Sheet_0: 577344990
+      explosion-Sheet_1: -1402241126
+      explosion-Sheet_2: -869276216
+      explosion-Sheet_3: -603925821
+      explosion-Sheet_4: -645771033
+      explosion-Sheet_5: 573779362
+      explosion-Sheet_6: 666420139
+      explosion-Sheet_7: 1368452524
+      explosion-Sheet_8: -1070256381
+      explosion-Sheet_9: -1572703895
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
