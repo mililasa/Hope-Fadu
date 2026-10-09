@@ -37,6 +37,7 @@ public sealed class HopeLevelAmbience : MonoBehaviour
         GameObject objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         AudioSource fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Ambientes);
         fuente.playOnAwake = false;
         fuente.loop = true;
         fuente.spatialBlend = 0f;
