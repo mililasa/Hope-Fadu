@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40ca11e36c89f0d43abb5009d82f171a
+guid: 3e2cc554b05abf646930dbb8fd7b9bbb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 320
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -102,8 +102,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed20ea1887e26eb4fa37024330a76400
-      internalID: -1736262282
+      spriteID: 8c6018a8cf30cc64dacd46c3e1861aed
+      internalID: 603454923
       vertices: []
       indices: 
       edges: []
@@ -121,10 +121,10 @@ TextureImporter:
       name: Hope-Descanso-Sheet_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 320
         y: 0
-        width: 32
-        height: 32
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b35950312efacd14491b922233b3fadb
-      internalID: 1039197626
+      spriteID: 46359f3a509dc8a42af20a2373652ea6
+      internalID: -164360380
       vertices: []
       indices: 
       edges: []
@@ -142,10 +142,10 @@ TextureImporter:
       name: Hope-Descanso-Sheet_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 640
         y: 0
-        width: 32
-        height: 32
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b84453f11b21d134bb79a0b2a8344e66
-      internalID: -146374925
+      spriteID: fde0e7fad78e764408566d5867a86e4a
+      internalID: -1097874392
       vertices: []
       indices: 
       edges: []
@@ -163,10 +163,10 @@ TextureImporter:
       name: Hope-Descanso-Sheet_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 960
         y: 0
-        width: 32
-        height: 32
+        width: 320
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da839b402534049499fb4ba4cea4b020
-      internalID: -1994096286
+      spriteID: 0fcb04c8bcd98ac43bbd53b1b19a6e3f
+      internalID: -2031840505
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hope-Descanso-Sheet_0: -1736262282
-      Hope-Descanso-Sheet_1: 1039197626
-      Hope-Descanso-Sheet_2: -146374925
-      Hope-Descanso-Sheet_3: -1994096286
+      Hope-Descanso-Sheet_0: 603454923
+      Hope-Descanso-Sheet_1: -164360380
+      Hope-Descanso-Sheet_2: -1097874392
+      Hope-Descanso-Sheet_3: -2031840505
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

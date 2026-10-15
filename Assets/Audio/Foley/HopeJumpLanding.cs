@@ -7,6 +7,8 @@ public sealed class HopeJumpLanding : MonoBehaviour
     AudioSource fuenteApoyo, fuenteSalto, fuenteCapa;
     PlayerController2D jugador;
     float tiempoAire, ignorarHasta;
+    Coroutine reproduccionCapaPendiente;
+    const float retardoCapaDobleSalto = 0.01f;
 
     void Awake()
     {
@@ -17,6 +19,9 @@ public sealed class HopeJumpLanding : MonoBehaviour
         fuenteApoyo = Crear("F - Apoyos (canal 11)");
         fuenteSalto = Crear("F - Saltos (canal 12)");
         fuenteCapa = Crear("F - Capa durante salto");
+        AudioLowPassFilter filtroCapa = fuenteCapa.gameObject.AddComponent<AudioLowPassFilter>();
+        filtroCapa.cutoffFrequency = 3500f;
+        filtroCapa.lowpassResonanceQ = 1f;
         if (apoyos == null || saltos == null || capa == null)
             Debug.LogWarning("Hope: falta la configuracion de apoyos o saltos.", this);
         Reiniciar();
@@ -27,6 +32,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
         GameObject objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         AudioSource fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;
@@ -51,10 +57,19 @@ public sealed class HopeJumpLanding : MonoBehaviour
         }
     }
 
-    public void Saltar(bool reproducirSaltoNormal = true)
+    public void Saltar(bool dobleSalto = false)
     {
-        if (reproducirSaltoNormal) Reproducir(fuenteSalto, saltos);
+        Reproducir(fuenteSalto, saltos);
+        if (!dobleSalto) return;
         if (fuenteCapa != null) fuenteCapa.Stop();
+        if (reproduccionCapaPendiente != null) StopCoroutine(reproduccionCapaPendiente);
+        reproduccionCapaPendiente = StartCoroutine(ReproducirCapaConRetardo());
+    }
+
+    System.Collections.IEnumerator ReproducirCapaConRetardo()
+    {
+        yield return new WaitForSecondsRealtime(retardoCapaDobleSalto);
+        reproduccionCapaPendiente = null;
         Reproducir(fuenteCapa, capa);
     }
 
@@ -64,6 +79,11 @@ public sealed class HopeJumpLanding : MonoBehaviour
         ignorarHasta = Time.time + 0.15f;
         if (fuenteApoyo != null) fuenteApoyo.Stop();
         if (fuenteSalto != null) fuenteSalto.Stop();
+        if (reproduccionCapaPendiente != null)
+        {
+            StopCoroutine(reproduccionCapaPendiente);
+            reproduccionCapaPendiente = null;
+        }
         if (fuenteCapa != null) fuenteCapa.Stop();
     }
 

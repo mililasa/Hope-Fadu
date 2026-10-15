@@ -24,6 +24,7 @@ public sealed class HopeLanternAudio : MonoBehaviour
         var objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         var fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = loop;
         fuente.spatialBlend = 0f;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -49,9 +50,13 @@ public class PlayerController2D : MonoBehaviour
 
     [Header("Animacion idle")]
     [Tooltip("Nombre del estado de idle en el Animator.")]
-    public string idleStateName = "espera";
-    [Tooltip("Clip de idle (espera).")]
-    public AnimationClip animacionEspera;
+    public string idleStateName = "idle";
+    [Tooltip("Clip de idle.")]
+    [FormerlySerializedAs("animacionEspera")]
+    public AnimationClip animacionIdle;
+    [Tooltip("Clip de prender farol (prendefarol).")]
+    public AnimationClip animacionPrendeFarol;
+    public string prendeFarolStateName = "prendefarol";
 
     [Header("Animacion salto")]
     [Tooltip("Arrastra aca el clip de salto. En el Animator crea un estado con el MISMO nombre que el clip.")]
@@ -91,22 +96,27 @@ public class PlayerController2D : MonoBehaviour
     private bool reproduciendoSalto;
     private Animator animatorHalo;
     private SpriteRenderer srHalo;
-    private bool tieneParametroSpeed;
     private enum FaseSalto { Nada, Subiendo, Flotando, Bajando }
     private FaseSalto faseSalto = FaseSalto.Nada;
     private float gravedadCaida;
     private float tiempoFloteRestante;
     private bool enIdle;
 
-    public bool PuedeSonarPaso => isGrounded && !enEscalera && !transicionNivel &&
+    public bool PuedeSonarPaso => isGrounded && !enEscalera && !transicionNivel && !movimientoBloqueado &&
         faseSalto == FaseSalto.Nada && Mathf.Abs(horizontalInput) > 0.01f;
-
-    HopeJumpLanding foleySalto;
     public bool BloqueaFoleyDeSalto => enEscalera || transicionNivel;
     public bool EnSueloParaFoley => isGrounded && faseSalto != FaseSalto.Subiendo;
 
+    HopeJumpLanding foleySalto;
     HopeDistantSequence secuenciaLejana;
     HopeLevelMusic musicaNivel;
+    private float moveSpeedOriginal;
+    private bool movimientoBloqueado;
+    private Coroutine rutinaBloqueo;
+    private bool reproduciendoPrendeFarol;
+    private float velocidadPrendeFarol = 1f;
+
+    public bool IsLocked { get { return movimientoBloqueado; } }
 
     void Awake()
     {
@@ -125,6 +135,7 @@ public class PlayerController2D : MonoBehaviour
         }
 
         gravedadOriginal = rb.gravityScale;
+        moveSpeedOriginal = moveSpeed;
         AsegurarEscaleraTrigger();
         AsegurarColliderNivel2();
         if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
@@ -139,6 +150,8 @@ public class PlayerController2D : MonoBehaviour
         if (musicaNivel == null) musicaNivel = gameObject.AddComponent<HopeLevelMusic>();
         CrearPantallaNivel2();
         PrepararAnimator();
+        AgregarAudio();
+        CrearPantallaNivel2();
         PrepararHaloSalto();
         AplicarClipsDeAnimacion();
         if (TieneAnimacionEspera() && animator != null)
@@ -149,18 +162,24 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
-    void PrepararAnimator()
+    void AgregarAudio()
     {
-        if (animator == null) return;
-        tieneParametroSpeed = false;
-        foreach (AnimatorControllerParameter p in animator.parameters)
-        {
-            if (p.name == "Speed")
-            {
-                tieneParametroSpeed = true;
-                break;
-            }
-        }
+        if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
+        secuenciaLejana = GetComponent<HopeDistantSequence>();
+        if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
+        if (GetComponent<HopeLampRattle>() == null) gameObject.AddComponent<HopeLampRattle>();
+        foleySalto = GetComponent<HopeJumpLanding>();
+        if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+        if (GetComponent<HopeFootsteps>() == null) gameObject.AddComponent<HopeFootsteps>();
+        if (GetComponent<HopeLevelAmbience>() == null) gameObject.AddComponent<HopeLevelAmbience>();
+        musicaNivel = GetComponent<HopeLevelMusic>();
+        if (musicaNivel == null) musicaNivel = gameObject.AddComponent<HopeLevelMusic>();
+    }
+
+    public void SonarMuerte(bool contactoMano)
+    {
+        HopeDeathAudio audioMuerte = GetComponent<HopeDeathAudio>();
+        if (audioMuerte != null) audioMuerte.Reproducir(contactoMano);
     }
 
     void PrepararHaloSalto()
@@ -198,13 +217,16 @@ public class PlayerController2D : MonoBehaviour
 
         if (animacionCaminar != null)
             ov["caminar"] = animacionCaminar;
-        if (animacionEspera != null)
+        if (animacionIdle != null)
         {
-            ov["espera"] = animacionEspera;
-            ov["huh"] = animacionEspera;
+            ov["idle"] = animacionIdle;
+            ov["espera"] = animacionIdle;
+            ov["huh"] = animacionIdle;
         }
         if (animacionSalto != null)
             ov["saltar"] = animacionSalto;
+        if (animacionPrendeFarol != null)
+            ov["prendefarol"] = animacionPrendeFarol;
 
         animator.runtimeAnimatorController = ov;
     }
@@ -249,8 +271,16 @@ public class PlayerController2D : MonoBehaviour
     {
         if (transicionNivel) return;
 
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        if (movimientoBloqueado)
+        {
+            horizontalInput = 0f;
+            verticalInput = 0f;
+        }
+        else
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
+        }
 
         if (groundCheck != null)
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
@@ -268,16 +298,16 @@ public class PlayerController2D : MonoBehaviour
             ReanudarCaminar();
         estabaEnPiso = isGrounded;
 
-        if (Input.GetButtonDown("Jump") && !enEscalera)
+        if (!movimientoBloqueado && Input.GetButtonDown("Jump") && !enEscalera)
         {
             if (isGrounded)
             {
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, false);
             }
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, true);
             }
         }
 
@@ -295,7 +325,11 @@ public class PlayerController2D : MonoBehaviour
 
         if (animator != null)
         {
-            if (enEscalera)
+            if (reproduciendoPrendeFarol)
+            {
+                animator.speed = velocidadPrendeFarol;
+            }
+            else if (enEscalera)
             {
                 animator.speed = isMoving ? 1f : 0f;
             }
@@ -305,7 +339,7 @@ public class PlayerController2D : MonoBehaviour
             }
             else
             {
-                if (tieneParametroSpeed)
+                if (TieneParametroAnimator("Speed"))
                     animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
                 if (isMoving)
@@ -339,7 +373,10 @@ public class PlayerController2D : MonoBehaviour
         wasMoving = isMoving;
 
         if (transform.position.y < alturaDeCaida && !transicionNivel)
-            Morir();
+        {
+            SonarMuerte(false);
+            VolverAlCheckPoint();
+        }
     }
 
     void FixedUpdate()
@@ -364,7 +401,88 @@ public class PlayerController2D : MonoBehaviour
             ActualizarFaseSalto();
             if (faseSalto == FaseSalto.Nada && !transicionNivel)
                 rb.gravityScale = gravedadOriginal;
-            rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+            float vx = movimientoBloqueado ? 0f : horizontalInput * moveSpeed;
+            rb.velocity = new Vector2(vx, rb.velocity.y);
+        }
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = Mathf.Max(0f, speed);
+    }
+
+    public void RestoreMoveSpeed()
+    {
+        moveSpeed = moveSpeedOriginal;
+    }
+
+    public void LockMovement(float duration)
+    {
+        if (rutinaBloqueo != null)
+            StopCoroutine(rutinaBloqueo);
+        rutinaBloqueo = StartCoroutine(BloquearMovimiento(duration));
+    }
+
+    IEnumerator BloquearMovimiento(float duration)
+    {
+        movimientoBloqueado = true;
+        horizontalInput = 0f;
+        if (rb != null)
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+        float t = Mathf.Max(0f, duration);
+        while (t > 0f)
+        {
+            t -= Time.deltaTime;
+            if (rb != null)
+                rb.velocity = new Vector2(0f, rb.velocity.y);
+            yield return null;
+        }
+        movimientoBloqueado = false;
+        rutinaBloqueo = null;
+    }
+
+    public void UnlockMovement()
+    {
+        if (rutinaBloqueo != null)
+        {
+            StopCoroutine(rutinaBloqueo);
+            rutinaBloqueo = null;
+        }
+        movimientoBloqueado = false;
+        TerminarPrendeFarol();
+    }
+
+    public void ReproducirPrendeFarol(float duracion = 0f)
+    {
+        reproduciendoPrendeFarol = true;
+        enIdle = false;
+        velocidadPrendeFarol = 1f;
+        if (animator == null) return;
+        float largoClip = LargoClipPrendeFarol();
+        if (duracion > 0f && largoClip > 0f)
+            velocidadPrendeFarol = largoClip / duracion;
+        animator.speed = velocidadPrendeFarol;
+        animator.Play(prendeFarolStateName, 0, 0f);
+    }
+
+    float LargoClipPrendeFarol()
+    {
+        if (animacionPrendeFarol != null) return animacionPrendeFarol.length;
+        if (animator == null || animator.runtimeAnimatorController == null) return 0f;
+        foreach (AnimationClip c in animator.runtimeAnimatorController.animationClips)
+            if (c != null && c.name == prendeFarolStateName) return c.length;
+        return 0f;
+    }
+
+    public void TerminarPrendeFarol()
+    {
+        if (!reproduciendoPrendeFarol) return;
+        reproduciendoPrendeFarol = false;
+        if (animator == null) return;
+        if (TieneAnimacionEspera())
+        {
+            animator.Play(NombreEstadoEspera(), 0, 0f);
+            enIdle = true;
         }
     }
 
@@ -375,7 +493,7 @@ public class PlayerController2D : MonoBehaviour
             saltosExtraRestantes = activo ? 1 : 0;
     }
 
-    void IniciarSalto(float altura, bool reproducirRoce = true)
+    void IniciarSalto(float altura, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -463,9 +581,20 @@ public class PlayerController2D : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(idleStateName))
             return idleStateName;
-        if (animacionEspera != null)
-            return animacionEspera.name;
-        return "";
+        if (animacionIdle != null)
+            return animacionIdle.name;
+        return "idle";
+    }
+
+    bool TieneParametroAnimator(string nombre)
+    {
+        if (animator == null) return false;
+        foreach (AnimatorControllerParameter p in animator.parameters)
+        {
+            if (p.name == nombre)
+                return true;
+        }
+        return false;
     }
 
     string NombreEstadoSalto()
@@ -678,8 +807,8 @@ public class PlayerController2D : MonoBehaviour
         if (luces == null) luces = FindObjectOfType<LuzFondoInteractiva>();
         if (luces != null) luces.Reiniciar();
 
-        HandChaser mano = FindObjectOfType<HandChaser>();
-        if (mano != null) mano.Reiniciar();
+        foreach (ChaseZone zona in FindObjectsOfType<ChaseZone>(true))
+            zona.ReiniciarPorCheckpoint();
     }
 
     // Verde = esta pisando piso (puede saltar). Rojo = en el aire.
