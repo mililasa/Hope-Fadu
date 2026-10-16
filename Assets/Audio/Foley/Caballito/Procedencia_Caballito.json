@@ -1,0 +1,32 @@
+{
+  "fuente": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\Jake Fielding - Squeaky Gates\\DOORGate_Metal Gate Spring Latch Mechanism, Screech_Jake Fielding_Squeaky Gates_01.wav",
+  "biblioteca": "Sonniss GDC 2024 / Jake Fielding - Squeaky Gates",
+  "recortes_inicio_s": [
+    16.32,
+    28.0,
+    25.92
+  ],
+  "recortes_duracion_s": 0.22,
+  "tratamiento": "Resorte bajado aproximadamente una octava respecto del original. Filtro 85-1350 Hz, refuerzo progresivo de graves/medios bajos hasta 620 Hz, cuerpo de la misma fuente entre 100 y 500 Hz. Entrada 40 ms y caida 160 ms.",
+  "detalle": "Clac suavizado con filtro hasta 900 Hz y entrada de 10 ms.",
+  "sincronizacion": "Ciclo caballito_normal de 7 s; movimiento entre 0 y 3.25 s, pausa final sin nuevos disparos.",
+  "formato": "PCM 24 bits / 48000 Hz / stereo",
+  "licencia": "Consultar License - GDC Game Audio.pdf en la biblioteca fuente.",
+  "revision": 6,
+  "ritmo": "Rechinidos reproducidos un 15% mas lento (duracion +17.65%). Cinco gestos por ciclo normal, alineados al inicio de recorridos completos, para evitar superposiciones y conservar la pausa final.",
+  "momentos_normal_s": [
+    0.08333,
+    0.75,
+    1.25,
+    1.91667,
+    2.5
+  ],
+  "ajuste_intermedio": "Sobre la revision lenta: graves reducidos hasta 3 dB bajo 430 Hz, realce suave de 1.5 dB en medios centrado en 1050 Hz. Se mantienen duraciones, ritmo y agudos suavizados.",
+  "brillo_reverb": "Reverb de la revision 5 retirada: se reconstruyen los sonidos a partir del respaldo de la primera version, sin cola de sala.",
+  "tratamiento_actual": "Timbre de los WAV originales de la primera prueba, agudo y con filtro original 200-3400 Hz. Estiramiento con vocoder de fase para conservar ese tono y mantener las duraciones de la revision lenta. Sin la reverb agregada en la revision 5 ni las ecualizaciones de graves posteriores a la primera prueba.",
+  "duraciones_actuales_s": [
+    0.49775,
+    0.47058333333333335,
+    0.5176458333333334
+  ]
+}

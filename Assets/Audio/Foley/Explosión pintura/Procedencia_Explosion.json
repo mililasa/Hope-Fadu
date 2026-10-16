@@ -1,0 +1,26 @@
+{
+  "archivo": "Hope_Explosion_Fantastica_Prueba_02.wav",
+  "formato": "WAV PCM 24 bits, 48000 Hz, stereo",
+  "duracion_s": 2.5,
+  "pico_dbfs": -6.000000000000001,
+  "capas": [
+    {
+      "fuente": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\DavidDumais - Explosion SFX Pack\\EXPLReal_Medium Realistic Explosion 15_DDUMAIS_NONE.wav",
+      "funcion": "Detonacion belica con cuerpo, filtrada para dar distancia."
+    },
+    {
+      "fuente": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\BluezoneCorp - Sci Fi Weapon\\Bluezone_BC0295_sci_fi_weapon_cannon_shot_002.wav",
+      "funcion": "Expansion energetica y resonancia futurista, ataque suavizado."
+    },
+    {
+      "fuente": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\Justsoundeffects - Gore Mini Pack\\GORESplt_Gore Splatter 01_JSE_GMP.wav",
+      "funcion": "Salpicadura para la mancha visual, mas presente en la revision 2.",
+      "recorte_inicio_s": 4.87,
+      "ganancia_capa": 0.4,
+      "inicio_s": 0.17
+    }
+  ],
+  "espacio": "Reflexiones difusas oscuras a bajo nivel; imagen directa algo estrecha.",
+  "estado": "Primera maqueta para audicionar, aun sin incorporar a Unity.",
+  "licencia": "Fuentes de Sonniss GDC 2024; ver licencia incluida en la biblioteca original."
+}

@@ -65,6 +65,8 @@ public sealed class HopeFootsteps : MonoBehaviour
 
     void ReproducirPaso()
     {
+        if (HopeCorpsePileAudio.TryPlayContacto(jugador, false)) return;
+
         int cantidad = ajustes.pasos.Length;
         int indice = Random.Range(0, cantidad);
         if (cantidad > 1 && indice == ultimo) indice = (indice + Random.Range(1, cantidad)) % cantidad;

@@ -66,6 +66,7 @@ public class HandChaser : MonoBehaviour
         if (animator != null)
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         AsegurarToqueChico();
+        if (GetComponent<HopeHandImpactAudio>() == null) gameObject.AddComponent<HopeHandImpactAudio>();
         if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
         if (sr != null)
         {
@@ -191,6 +192,8 @@ public class HandChaser : MonoBehaviour
     {
         HopeHandAudio audioMano = GetComponent<HopeHandAudio>();
         if (audioMano != null) audioMano.Reiniciar();
+        HopeHandImpactAudio golpeAudio = GetComponent<HopeHandImpactAudio>();
+        if (golpeAudio != null) golpeAudio.Reiniciar();
         estado = Estado.Inactive;
         farolesPrendidos.Clear();
         objetivoActual = null;
@@ -489,6 +492,9 @@ public class HandChaser : MonoBehaviour
             }
         }
 
+        HopeHandImpactAudio golpeAudio = GetComponent<HopeHandImpactAudio>();
+        if (golpeAudio != null) golpeAudio.PrepararGolpe(duracion * 0.45f);
+
         yield return new WaitForSeconds(duracion * 0.45f);
         if (extinguishPedido)
             OnExtinguishHit();
@@ -500,6 +506,8 @@ public class HandChaser : MonoBehaviour
     // Animation Event: frame donde cierra sobre la llama.
     public void OnExtinguishHit()
     {
+        HopeHandImpactAudio golpeAudio = GetComponent<HopeHandImpactAudio>();
+        if (golpeAudio != null) golpeAudio.Golpear();
         if (objetivoActual != null)
             objetivoActual.TurnOff();
     }
