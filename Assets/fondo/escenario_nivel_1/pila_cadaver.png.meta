@@ -102,10 +102,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 401
-        height: 229
+        width: 309
+        height: 189
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,12 +121,12 @@ TextureImporter:
       name: pila_cadaver_1
       rect:
         serializedVersion: 2
-        x: 401
+        x: 309
         y: 0
-        width: 401
-        height: 229
+        width: 309
+        height: 189
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,10 +142,10 @@ TextureImporter:
       name: pila_cadaver_2
       rect:
         serializedVersion: 2
-        x: 401
+        x: 618
         y: 0
-        width: 401
-        height: 229
+        width: 309
+        height: 189
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,6 +155,153 @@ TextureImporter:
       bones: []
       spriteID: cd427b2b46ba9aa4d8d7618d42946525
       internalID: -148679611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_3
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6aa3a4a0ee25df409d75a34dbe6c854
+      internalID: 1120462143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_4
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e643080f2bc555b4582f82605abf5f90
+      internalID: -2127933640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_5
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ae55f3978efdd7438a3ae34180c1d79
+      internalID: 1824327636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_6
+      rect:
+        serializedVersion: 2
+        x: 1854
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8cd0581ba5b8f04a9af47aa4b821749
+      internalID: 1720186547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_7
+      rect:
+        serializedVersion: 2
+        x: 2163
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cd13eb9ffbd107419c39310620f886e
+      internalID: 1186682524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_8
+      rect:
+        serializedVersion: 2
+        x: 2472
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbcb1c9285ac82b4c85a2b304c7be7e9
+      internalID: -458193655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pila_cadaver_9
+      rect:
+        serializedVersion: 2
+        x: 2781
+        y: 0
+        width: 309
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43216c07c6e6944418665d4a051228c0
+      internalID: 1518162757
       vertices: []
       indices: 
       edges: []
@@ -173,6 +320,13 @@ TextureImporter:
       pila_cadaver_0: -1507146121
       pila_cadaver_1: -2085568635
       pila_cadaver_2: -148679611
+      pila_cadaver_3: 1120462143
+      pila_cadaver_4: -2127933640
+      pila_cadaver_5: 1824327636
+      pila_cadaver_6: 1720186547
+      pila_cadaver_7: 1186682524
+      pila_cadaver_8: -458193655
+      pila_cadaver_9: 1518162757
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
