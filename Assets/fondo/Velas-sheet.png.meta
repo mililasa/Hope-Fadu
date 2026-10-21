@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 160
+  spritePixelsToUnits: 320
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,10 +100,10 @@ TextureImporter:
       name: Velas-sheet_0
       rect:
         serializedVersion: 2
-        x: 730
-        y: 320
-        width: 60
-        height: 280
+        x: 0
+        y: 0
+        width: 1280
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c34ebc1eb3cf7ba45a0c6bd3d40bc798
-      internalID: 2077337435
+      spriteID: 050b435c28179174d863e572c2496a49
+      internalID: -1113752809
       vertices: []
       indices: 
       edges: []
@@ -121,10 +121,10 @@ TextureImporter:
       name: Velas-sheet_1
       rect:
         serializedVersion: 2
-        x: 2010
-        y: 320
-        width: 60
-        height: 280
+        x: 1280
+        y: 0
+        width: 1280
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edf618809098e1943820f8fecaa743d7
-      internalID: -996969300
+      spriteID: 06d209ced3ba1c2469f4231652321213
+      internalID: 2066646214
       vertices: []
       indices: 
       edges: []
@@ -142,10 +142,10 @@ TextureImporter:
       name: Velas-sheet_2
       rect:
         serializedVersion: 2
-        x: 810
-        y: 319
-        width: 60
-        height: 280
+        x: 2560
+        y: 0
+        width: 1280
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99a161ec631b26e468db6a72280a6dd7
-      internalID: -567102049
+      spriteID: 348dd94ecbcdc6349a53d7b13aed91a2
+      internalID: -1009059427
       vertices: []
       indices: 
       edges: []
@@ -163,10 +163,10 @@ TextureImporter:
       name: Velas-sheet_3
       rect:
         serializedVersion: 2
-        x: 3290
-        y: 320
-        width: 60
-        height: 280
+        x: 3840
+        y: 0
+        width: 1280
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 880c9afdfa38a1e4a9d3cea3971c2edd
-      internalID: -1689548940
+      spriteID: 250b6779e8a6f344698b3a1a0582400a
+      internalID: 1202663306
       vertices: []
       indices: 
       edges: []
@@ -184,10 +184,10 @@ TextureImporter:
       name: Velas-sheet_4
       rect:
         serializedVersion: 2
-        x: 4565
-        y: 320
-        width: 70
-        height: 279
+        x: 5120
+        y: 0
+        width: 1280
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,8 +195,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99b1ccc721a5f5b4fa74a4df033db15a
-      internalID: -1669979324
+      spriteID: 40e817a44b67be7448fd80475c47ac52
+      internalID: 1627227633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Velas-sheet_5
+      rect:
+        serializedVersion: 2
+        x: 6400
+        y: 0
+        width: 1280
+        height: 720
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52c10e6d348a8ce47acb2614851b042e
+      internalID: 1742907553
       vertices: []
       indices: 
       edges: []
@@ -212,11 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Velas-sheet_0: 2077337435
-      Velas-sheet_1: -996969300
-      Velas-sheet_2: -567102049
-      Velas-sheet_3: -1689548940
-      Velas-sheet_4: -1669979324
+      Velas-sheet_0: -1113752809
+      Velas-sheet_1: 2066646214
+      Velas-sheet_2: -1009059427
+      Velas-sheet_3: 1202663306
+      Velas-sheet_4: 1627227633
+      Velas-sheet_5: 1742907553
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
