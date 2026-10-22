@@ -31,7 +31,10 @@ public sealed class HopeExplosionAudio : MonoBehaviour
     {
         foreach (Animator a in Object.FindObjectsOfType<Animator>())
         {
-            if (a.gameObject.name != "explosion-Sheet_0") continue;
+            string n = a.gameObject.name;
+            if (n != "explosion-Sheet_0" &&
+                n.IndexOf("explosion", System.StringComparison.OrdinalIgnoreCase) < 0)
+                continue;
             if (a.GetComponent<HopeExplosionAudio>() == null)
                 a.gameObject.AddComponent<HopeExplosionAudio>();
         }

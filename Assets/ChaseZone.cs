@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 
 // Una zona de persecucion: el trigger arranca la mano fantasma y los faroles.
@@ -29,11 +28,20 @@ public class ChaseZone : MonoBehaviour
     [SerializeField] float handTopOffset = 0.2f;
     [SerializeField] float handReachDistance = 3.5f;
     [SerializeField] float playerLockDuration = 0.7f;
-    [SerializeField] float loseScreenDuration = 5f;
-    [SerializeField] [TextArea] string avisoEntrada = "La oscuridad te persigue!\nPrende los faroles con E para alentizarla";
-    [SerializeField] float avisoDuracion = 3f;
+    [Header("Barriles de la zona")]
+    [SerializeField] RuntimeAnimatorController animBarrilPrendiendo;
+    [SerializeField] RuntimeAnimatorController animBarrilPrendido;
+    [SerializeField] Sprite spriteBarrilApagado;
     [SerializeField] [TextArea] string avisoFinal = "Estas a salvo!\nBusca la salida";
     [SerializeField] float avisoFinalDuracion = 3f;
+    [SerializeField] SpriteRenderer pilaCadaver;
+    [SerializeField] Sprite spritePilaPrendida;
+
+    [Header("Agujero de Hope")]
+    [Tooltip("Tamano del agujero al terminar el cierre, como parte del original. 0.4 = queda al 40%.")]
+    [SerializeField] [Range(0.2f, 1f)] float radioFinalAgujero = 0.4f;
+    [Tooltip("Segundos que tarda en cerrarse, de forma pareja, desde que empieza la persecucion.")]
+    [SerializeField] float segundosCierreAgujero = 6f;
 
     PlayerController2D player;
     bool zonaActiva;
@@ -42,6 +50,11 @@ public class ChaseZone : MonoBehaviour
     readonly List<Lantern> lanterns = new List<Lantern>();
     GameObject pantallaAviso;
     Text textoAviso;
+    Sprite spritePilaOriginal;
+    LanternGlow glowHope;
+    Vector3 escalaAgujeroInicial;
+    float tiempoCierreAgujero;
+    bool escalaAgujeroLista;
 
     public string ZoneName { get { return zoneName; } }
     public float PlayerChaseSpeed { get { return playerChaseSpeed; } }
@@ -84,6 +97,8 @@ public class ChaseZone : MonoBehaviour
         if (hand != null)
             hand.gameObject.SetActive(false);
 
+        AsegurarBarriles();
+        AsegurarPila();
         ReconstruirFaroles();
         CrearAviso();
     }
@@ -93,8 +108,21 @@ public class ChaseZone : MonoBehaviour
         ReconstruirFaroles();
     }
 
+    void AsegurarBarriles()
+    {
+#if UNITY_EDITOR
+        if (animBarrilPrendiendo == null)
+            animBarrilPrendiendo = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/farol/Barri-Encendiendosel-Sheet_0.controller");
+        if (animBarrilPrendido == null)
+            animBarrilPrendido = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/farol/Barril-Prendido-Sheet_0.controller");
+        if (spriteBarrilApagado == null)
+            spriteBarrilApagado = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/farol/Barril1.png");
+#endif
+    }
+
     public void ReconstruirFaroles()
     {
+        AsegurarBarriles();
         if (faroles == null)
             faroles = new List<GameObject>();
 
@@ -116,8 +144,13 @@ public class ChaseZone : MonoBehaviour
             Lantern l = go.GetComponent<Lantern>();
             if (l == null)
                 l = go.AddComponent<Lantern>();
-            l.isFinal = i == faroles.Count - 1;
+            bool esFarol4 = go.name == "Farol (4)";
+            // isFinal: último de la lista (gana la zona). Checkpoint permanente: Farol (4).
+            // Farol (5)/(6) son checkpoints libres (fuera de esta lista).
+            l.isFinal = i == faroles.Count - 1 || esFarol4;
+            l.esCheckpointPermanente = esFarol4;
             l.AsignarZona(this);
+            l.ConfigurarComoBarril(animBarrilPrendiendo, animBarrilPrendido, spriteBarrilApagado);
             lanterns.Add(l);
         }
     }
@@ -153,21 +186,6 @@ public class ChaseZone : MonoBehaviour
         player = pp;
         zonaActiva = true;
         triggerArmado = false;
-        StartCoroutine(EntrarConAviso());
-    }
-
-    IEnumerator EntrarConAviso()
-    {
-        if (player != null)
-            player.LockMovement(avisoDuracion + 1f);
-
-        MostrarAviso(true);
-        yield return new WaitForSecondsRealtime(Mathf.Max(0.1f, avisoDuracion));
-        MostrarAviso(false);
-
-        if (player != null)
-            player.UnlockMovement();
-
         ArrancarPersecucion();
     }
 
@@ -191,6 +209,54 @@ public class ChaseZone : MonoBehaviour
             hand.transform.position = spawn;
             hand.StartChase(player.transform, this);
         }
+
+        EmpezarCierreAgujero();
+    }
+
+    void LateUpdate()
+    {
+        if (!zonaActiva || player == null) return;
+        AsegurarGlow();
+        if (glowHope == null) return;
+
+        if (!escalaAgujeroLista)
+        {
+            escalaAgujeroInicial = glowHope.transform.localScale;
+            escalaAgujeroLista = true;
+        }
+
+        tiempoCierreAgujero += Time.deltaTime;
+        float duracion = Mathf.Max(0.2f, segundosCierreAgujero);
+        float lineal = Mathf.Clamp01(tiempoCierreAgujero / duracion);
+        // t^2: casi no se mueve al principio y aprieta hacia el final del tiempo.
+        float t = lineal * lineal;
+        float factor = Mathf.Lerp(1f, radioFinalAgujero, t);
+        glowHope.factorRadio = factor;
+        Vector3 escala = escalaAgujeroInicial * factor;
+        glowHope.transform.localScale = new Vector3(escala.x, escala.y, escalaAgujeroInicial.z);
+    }
+
+    void EmpezarCierreAgujero()
+    {
+        tiempoCierreAgujero = 0f;
+        escalaAgujeroLista = false;
+        AsegurarGlow();
+        if (glowHope != null) glowHope.factorRadio = 1f;
+    }
+
+    void AsegurarGlow()
+    {
+        if (glowHope != null || player == null) return;
+        Transform oscuridad = player.transform.Find("Oscuridad");
+        if (oscuridad != null) glowHope = oscuridad.GetComponent<LanternGlow>();
+    }
+
+    void RestaurarAgujero()
+    {
+        tiempoCierreAgujero = 0f;
+        escalaAgujeroLista = false;
+        AsegurarGlow();
+        if (glowHope != null) glowHope.factorRadio = 1f;
     }
 
     void CrearAviso()
@@ -219,7 +285,7 @@ public class ChaseZone : MonoBehaviour
         GameObject textoGO = new GameObject("Texto");
         textoGO.transform.SetParent(pantallaAviso.transform, false);
         textoAviso = textoGO.AddComponent<Text>();
-        textoAviso.text = avisoEntrada;
+        textoAviso.text = avisoFinal;
         textoAviso.fontSize = 42;
         textoAviso.alignment = TextAnchor.MiddleCenter;
         textoAviso.color = Color.white;
@@ -237,11 +303,6 @@ public class ChaseZone : MonoBehaviour
         pantallaAviso.SetActive(false);
     }
 
-    void MostrarAviso(bool visible)
-    {
-        MostrarAviso(visible, avisoEntrada);
-    }
-
     void MostrarAviso(bool visible, string texto)
     {
         if (pantallaAviso == null)
@@ -252,16 +313,9 @@ public class ChaseZone : MonoBehaviour
             pantallaAviso.SetActive(visible);
     }
 
-    IEnumerator AvisoFinal()
-    {
-        MostrarAviso(true, avisoFinal);
-        yield return new WaitForSecondsRealtime(Mathf.Max(0.1f, avisoFinalDuracion));
-        MostrarAviso(false);
-    }
-
     public void OnChaseWon()
     {
-        if (!zonaActiva) return;
+        if (!zonaActiva && zonaGanada) return;
         zonaActiva = false;
         zonaGanada = true;
         if (player != null)
@@ -269,38 +323,77 @@ public class ChaseZone : MonoBehaviour
         if (hand != null)
             hand.gameObject.SetActive(false);
         triggerArmado = false;
-        StartCoroutine(AvisoFinal());
+        MostrarAviso(false, avisoFinal);
+        // Los barriles de la persecución quedan apagados + chispa, salvo Farol (4) checkpoint.
+        for (int i = 0; i < lanterns.Count; i++)
+        {
+            if (lanterns[i] != null)
+                lanterns[i].ApagarTrasPersecucion();
+        }
+        RestaurarAgujero();
     }
 
     public void OnPlayerCaught()
     {
         if (!zonaActiva) return;
-        if (player != null) player.SonarMuerte(true);
-        StartCoroutine(SecuenciaPerdiste());
-    }
-
-    IEnumerator SecuenciaPerdiste()
-    {
         zonaActiva = false;
-        if (pantallaPerdiste != null)
-            yield return pantallaPerdiste.MostrarDurante(loseScreenDuration);
-        else
-            yield return new WaitForSecondsRealtime(loseScreenDuration);
-
         if (player != null)
+        {
+            player.SonarMuerte(true);
             player.VolverAlCheckPoint();
-
-        ResetZone();
+        }
     }
 
-    // Al volver al checkpoint la persecucion queda lista para empezar de nuevo, aunque ya se haya ganado.
+    // Al morir: no re-arma la persecución si ya se ganó; conserva cadáver y Farol (4).
     public void ReiniciarPorCheckpoint()
     {
         StopAllCoroutines();
-        MostrarAviso(false);
-        zonaGanada = false;
+        MostrarAviso(false, avisoFinal);
+        bool yaGano = zonaGanada;
         ResetZone();
-        triggerArmado = true;
+        if (yaGano)
+        {
+            zonaGanada = true;
+            triggerArmado = false;
+        }
+        else
+            triggerArmado = true;
+    }
+
+    public void OnUltimoBarrilPrendido(PlayerController2D pp)
+    {
+        AsegurarPila();
+        CadaverChase cadaver = null;
+        if (pilaCadaver != null)
+            cadaver = pilaCadaver.GetComponent<CadaverChase>();
+        if (cadaver == null)
+        {
+            GameObject go = GameObject.Find("pilacadaver");
+            if (go != null)
+            {
+                pilaCadaver = go.GetComponent<SpriteRenderer>();
+                cadaver = go.GetComponent<CadaverChase>();
+                if (cadaver == null)
+                    cadaver = go.AddComponent<CadaverChase>();
+            }
+        }
+        if (cadaver != null)
+            cadaver.Despertar();
+        else
+            Debug.LogWarning("Hope: no se encontro pilacadaver para despertar.", this);
+        if (pp != null)
+            pp.LockMovement(1f);
+    }
+
+    void AsegurarPila()
+    {
+        if (pilaCadaver == null)
+        {
+            GameObject go = GameObject.Find("pilacadaver");
+            if (go != null) pilaCadaver = go.GetComponent<SpriteRenderer>();
+        }
+        if (pilaCadaver != null && pilaCadaver.GetComponent<CadaverChase>() == null)
+            pilaCadaver.gameObject.AddComponent<CadaverChase>();
     }
 
     public void ResetZone()
@@ -310,13 +403,22 @@ public class ChaseZone : MonoBehaviour
         {
             player.RestoreMoveSpeed();
             if (player.IsLocked)
-                player.UnlockMovement();
+                player.UnlockMovementYSoltarAnim();
         }
 
         for (int i = 0; i < lanterns.Count; i++)
         {
             if (lanterns[i] != null)
-                lanterns[i].ResetLantern();
+                lanterns[i].ResetLantern(); // permanentes lit se conservan sin re-animar
+        }
+
+        // Cadáver: no volver atrás si ya despertó.
+        AsegurarPila();
+        if (pilaCadaver != null)
+        {
+            CadaverChase cadaver = pilaCadaver.GetComponent<CadaverChase>();
+            if (cadaver != null)
+                cadaver.ConservarEstadoEnCheckpoint();
         }
 
         if (hand != null)
@@ -324,6 +426,8 @@ public class ChaseZone : MonoBehaviour
             hand.GoInactive();
             hand.gameObject.SetActive(false);
         }
+
+        RestaurarAgujero();
 
         if (!zonaGanada)
             triggerArmado = true;

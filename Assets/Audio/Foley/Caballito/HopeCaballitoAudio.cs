@@ -31,7 +31,7 @@ public sealed class HopeCaballitoAudio : MonoBehaviour
     {
         foreach (Animator a in Object.FindObjectsOfType<Animator>())
         {
-            if (a.gameObject.name != "caballito_0") continue;
+            if (a.gameObject.name != "caballo") continue;
             if (a.GetComponent<HopeCaballitoAudio>() == null)
                 a.gameObject.AddComponent<HopeCaballitoAudio>();
         }
@@ -93,12 +93,12 @@ public sealed class HopeCaballitoAudio : MonoBehaviour
         }
         if (ganancia > 0.001f && tiempo - tiempoAnterior < estado.length)
         {
-            if (estado.IsName("caballito_normal") && ajustes.momentosNormal != null)
+            if (estado.IsName("caballonormal") && ajustes.momentosNormal != null)
             {
                 foreach (float momento in ajustes.momentosNormal)
                     if (Cruzo(tiempoAnterior, tiempo, momento, estado.length)) Rechinar();
             }
-            else if (estado.IsName("caballito_embrujado"))
+            else if (estado.IsName("caballoembrujado"))
             {
                 if (Cruzo(tiempoAnterior, tiempo, 0.01f, estado.length) ||
                     Cruzo(tiempoAnterior, tiempo, estado.length * 0.5f, estado.length)) Rechinar();

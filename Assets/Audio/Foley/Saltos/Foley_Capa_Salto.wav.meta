@@ -5,19 +5,19 @@ AudioImporter:
   serializedVersion: 7
   defaultSettings:
     serializedVersion: 2
-    loadType: 0
+    loadType: 1
     sampleRateSetting: 0
     sampleRateOverride: 48000
-    compressionFormat: 0
-    quality: 1
+    compressionFormat: 1
+    quality: 0.7
     conversionMode: 0
     preloadAudioData: 1
   platformSettingOverrides: {}
   forceToMono: 0
   normalize: 1
-  ambisonic: 0
   loadInBackground: 0
+  ambisonic: 0
   3D: 0
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  userData: hope-webgl-1
+  assetBundleName: 
+  assetBundleVariant: 

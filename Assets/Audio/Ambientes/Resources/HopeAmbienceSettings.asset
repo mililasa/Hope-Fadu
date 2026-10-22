@@ -21,5 +21,4 @@ MonoBehaviour:
   alcanceArcos: 4
   fundidoArcos: 0.6
   nombresArcos:
-  - arco_de_sombras_frente
-  - arco_de_sombras_frente 2
+  - arco

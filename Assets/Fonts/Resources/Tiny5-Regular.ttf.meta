@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 4b7e2c91a6d84f0e9c3a15d8b2f64710
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterPadding: 1
+  characterSpacing: 0
+  fontRenderingMode: 0
+  includeFontData: 1
+  fontNames:
+  - Tiny5
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
