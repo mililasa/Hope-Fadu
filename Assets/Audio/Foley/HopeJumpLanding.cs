@@ -27,6 +27,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
         GameObject objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         AudioSource fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;
@@ -46,7 +47,8 @@ public sealed class HopeJumpLanding : MonoBehaviour
         else
         {
             // Filtra pequeños cortes del sensor al caminar sobre bordes.
-            if (tiempoAire >= 0.08f) Reproducir(fuenteApoyo, apoyos);
+            if (tiempoAire >= 0.08f && !HopeCorpsePileAudio.TryPlayContacto(jugador, true))
+                Reproducir(fuenteApoyo, apoyos);
             tiempoAire = 0f;
         }
     }

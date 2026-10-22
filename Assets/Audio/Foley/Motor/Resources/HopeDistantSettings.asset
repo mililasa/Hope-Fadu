@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   motor: {fileID: 8300000, guid: 473e3493dab554b0bbc4cdf1f2b5b141, type: 3}
   eco: {fileID: 8300000, guid: 5cd4018f462357aab3a90ccbf7641618, type: 3}
-  volumenMotor: 0.025119
-  volumenEco: 0.044668
+  volumenMotor: 0.104
+  volumenEco: 0.122
   esperaInicial: 5
   retrasoEco: 5.15
   intervaloMinimo: 10

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Se agrega al jugador al iniciar: no necesita modificar ni guardar la escena.
 [DefaultExecutionOrder(1100)]
@@ -12,7 +13,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
     float mezcla;
     float mezclaMano;
     HopeHandAudio[] manos;
-    bool cerca, finalizado;
+    bool cerca, finalizado, soloFondo;
 
     void Start()
     {
@@ -25,12 +26,13 @@ public sealed class HopeLevelMusic : MonoBehaviour
             enabled = false;
             return;
         }
-        if (salida == null)
+        soloFondo = SceneManager.GetActiveScene().name == "Nivel_2";
+        if (!soloFondo && salida == null)
         {
             GameObject destino = GameObject.Find(ajustes.nombreSalida);
             if (destino != null) salida = destino.transform;
         }
-        if (salida == null) Debug.LogWarning("Hope: no se encontro el escenario de referencia de la puerta.", this);
+        if (!soloFondo && salida == null) Debug.LogWarning("Hope: no se encontro el escenario de referencia de la puerta.", this);
         principal = CrearFuente("Musica Main", ajustes.musicaMain);
         paso = CrearFuente("Musica Paso de Nivel", ajustes.pasoDeNivel);
         principal.volume = ajustes.volumenMain;
@@ -42,6 +44,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
         var objeto = new GameObject(nombre);
         objeto.transform.SetParent(transform, false);
         var fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Musica);
         fuente.playOnAwake = false;
         fuente.loop = true;
         fuente.spatialBlend = 0f;
@@ -54,6 +57,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
     void Update()
     {
         if (principal == null || paso == null) return;
+        if (soloFondo) return;
         if (!finalizado && salida != null)
         {
             float distancia = DistanciaPuerta();

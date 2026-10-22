@@ -23,6 +23,7 @@ public sealed class HopeLampRattle : MonoBehaviour
         GameObject objeto = new GameObject("F - Lampara metal y vidrio (canal 13)");
         objeto.transform.SetParent(transform, false);
         fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;

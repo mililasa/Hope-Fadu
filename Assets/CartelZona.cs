@@ -8,13 +8,24 @@ public class CartelZona : MonoBehaviour
     [Tooltip("Texto de la pantalla. Para perder: Perdiste")]
     public string textoPantalla = "Perdiste";
     public float segundosVisible = 2f;
+    [Tooltip("Si esta destildado, no muestra la pantalla negra: va directo al checkpoint.")]
+    public bool mostrarPantalla = true;
     [Tooltip("Si esta tildado, Hope vuelve al check point despues del cartel.")]
     public bool volverAlCheck = true;
 
     [Tooltip("Si esta destildado, solo se usa para que otras zonas (persecucion) muestren el cartel.")]
     public bool dispararPorTrigger = true;
 
+    [Header("Altura (plataforma movible)")]
+    [Tooltip("Si esta tildado, solo dispara cuando el padre (plataforma) esta cerca de alturaYActivacion.")]
+    public bool soloEnAlturaY;
+    [Tooltip("Y mundial de la plataforma para activar Perdiste (ej. -1.23).")]
+    public float alturaYActivacion = -1.23f;
+    [Tooltip("Margen de tolerancia en Y.")]
+    public float toleranciaAlturaY = 0.12f;
+
     GameObject pantalla;
+    Collider2D col;
     bool activo;
 
     public bool EstaVisible
@@ -24,14 +35,35 @@ public class CartelZona : MonoBehaviour
 
     void Awake()
     {
-        Collider2D col = GetComponent<Collider2D>();
+        col = GetComponent<Collider2D>();
         if (col != null) col.isTrigger = true;
         CrearPantalla();
+        ActualizarColliderPorAltura();
+    }
+
+    void Update()
+    {
+        ActualizarColliderPorAltura();
+    }
+
+    void ActualizarColliderPorAltura()
+    {
+        if (!soloEnAlturaY || col == null) return;
+        bool enAltura = EstaEnAlturaActivacion();
+        if (col.enabled != enAltura)
+            col.enabled = enAltura;
+    }
+
+    bool EstaEnAlturaActivacion()
+    {
+        Transform referencia = transform.parent != null ? transform.parent : transform;
+        return Mathf.Abs(referencia.position.y - alturaYActivacion) <= toleranciaAlturaY;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!dispararPorTrigger || activo) return;
+        if (soloEnAlturaY && !EstaEnAlturaActivacion()) return;
         PlayerController2D pp = other.GetComponent<PlayerController2D>();
         if (pp == null) pp = other.GetComponentInParent<PlayerController2D>();
         if (pp == null) return;
@@ -41,6 +73,16 @@ public class CartelZona : MonoBehaviour
     IEnumerator Mostrar(PlayerController2D pp)
     {
         activo = true;
+
+        // Plataforma movible: sin cartel, directo al checkpoint.
+        if (!mostrarPantalla)
+        {
+            if (volverAlCheck && pp != null)
+                pp.VolverAlCheckPoint();
+            activo = false;
+            yield break;
+        }
+
         Rigidbody2D rb = pp.GetComponent<Rigidbody2D>();
         if (rb != null)
         {

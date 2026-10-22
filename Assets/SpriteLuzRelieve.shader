@@ -106,7 +106,9 @@ Shader "Hope/SpriteLuzRelieve"
             float Altura(float2 uv)
             {
                 fixed4 s = tex2D(_MainTex, uv);
-                return dot(s.rgb, float3(0.299, 0.587, 0.114)) * s.a;
+                float lum = dot(s.rgb, float3(0.299, 0.587, 0.114));
+                // Un poco de alpha ayuda a siluetas planas, sin inflar todo el contorno.
+                return lerp(lum, max(lum, 0.25), 0.35) * s.a;
             }
 
             void Gradiente(float2 uv, float grosor, out float2 g, out float mag)

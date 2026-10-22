@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb1cd2c170c154de955d3967677a357e, type: 3}
   - {fileID: 8300000, guid: e7d43dbc424657548ee627b8f4d732e4, type: 3}
   - {fileID: 8300000, guid: 1b0909e4378452f2afefc0c27baa948b, type: 3}
-  volumenCanal: 0.12589253
+  volumenCanal: 0.351
   volumenFragmentoMin: 0.194984
   volumenFragmentoMax: 0.25704
   segundosEntrePasos: 0.45

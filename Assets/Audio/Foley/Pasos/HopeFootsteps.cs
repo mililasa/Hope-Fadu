@@ -24,6 +24,7 @@ public sealed class HopeFootsteps : MonoBehaviour
         GameObject objeto = new GameObject("F - Pasos (canal 10)");
         objeto.transform.SetParent(transform, false);
         fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Foley);
         fuente.playOnAwake = false;
         fuente.loop = false;
         fuente.spatialBlend = 0f;
@@ -64,6 +65,7 @@ public sealed class HopeFootsteps : MonoBehaviour
 
     void ReproducirPaso()
     {
+        if (HopeCorpsePileAudio.TryPlayContacto(jugador, false)) return;
         int cantidad = ajustes.pasos.Length;
         int indice = Random.Range(0, cantidad);
         if (cantidad > 1 && indice == ultimo) indice = (indice + Random.Range(1, cantidad)) % cantidad;

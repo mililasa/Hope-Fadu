@@ -28,6 +28,7 @@ public sealed class HopeHandAudio : MonoBehaviour
         var objeto = new GameObject("M - Manos y plantas (canal 22)");
         objeto.transform.SetParent(transform, false);
         fuente = objeto.AddComponent<AudioSource>();
+        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Mecanicas);
         fuente.playOnAwake = false;
         fuente.loop = true;
         fuente.spatialBlend = 0f;

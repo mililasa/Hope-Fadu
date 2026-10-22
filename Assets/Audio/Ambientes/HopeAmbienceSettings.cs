@@ -9,5 +9,5 @@ public sealed class HopeAmbienceSettings : ScriptableObject
     [Range(0f,1f)] public float volumenArcos = 0.006067156f;
     [Min(0.1f)] public float alcanceArcos = 4f;
     [Min(0.1f)] public float fundidoArcos = 0.6f;
-    public string[] nombresArcos = { "arco_de_sombras_frente", "arco_de_sombras_frente 2" };
+    public string[] nombresArcos = { "arco" };
 }

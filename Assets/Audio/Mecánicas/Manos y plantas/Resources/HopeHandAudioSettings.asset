@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HopeHandAudioSettings
   m_EditorClassIdentifier: 
   motivo: {fileID: 8300000, guid: f9afa64958cf5c1eba27160eb16ba61c, type: 3}
-  volumen: 0.81
+  volumen: 0.935
   entrada: 1.2
   salida: 1.8
   fraccionPantallaPlena: 0.2
