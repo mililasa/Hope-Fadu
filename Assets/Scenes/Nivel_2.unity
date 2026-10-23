@@ -732,7 +732,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2074785713
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Sprite: {fileID: -1107176728, guid: cceeb5612c552a8409b030e9966487e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1538,7 +1538,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2074785713
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e487db6d14485b249861a4f64e27e11e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2037,8 +2037,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoPantalla: Perdiste
   segundosVisible: 2
+  mostrarPantalla: 1
   volverAlCheck: 1
   dispararPorTrigger: 1
+  soloEnAlturaY: 0
+  alturaYActivacion: -1.23
+  toleranciaAlturaY: 0.12
 --- !u!61 &449174451
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2353,12 +2357,12 @@ MonoBehaviour:
   target: {fileID: 154405062}
   smoothTime: 0.12
   offset: {x: 0, y: 1, z: -10}
-  zoom: 4
+  zoom: 5.8
   limitarALimites: 1
   minX: -11.75
   maxX: 119.9
   minY: -5
-  maxY: 7.88
+  maxY: 8.22
 --- !u!1 &564739575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,7 +2683,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2074785713
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: aac8565c78d8dfa4d87da3e9ad721c04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3325,8 +3329,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoPantalla: Perdiste
   segundosVisible: 2
+  mostrarPantalla: 1
   volverAlCheck: 1
   dispararPorTrigger: 1
+  soloEnAlturaY: 0
+  alturaYActivacion: -1.23
+  toleranciaAlturaY: 0.12
 --- !u!61 &905654549
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3639,7 +3647,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2074785713
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e487db6d14485b249861a4f64e27e11e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3699,8 +3707,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoPantalla: Perdiste
   segundosVisible: 2
+  mostrarPantalla: 1
   volverAlCheck: 1
   dispararPorTrigger: 1
+  soloEnAlturaY: 0
+  alturaYActivacion: -1.23
+  toleranciaAlturaY: 0.12
 --- !u!61 &1022292848
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3793,8 +3805,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoPantalla: Perdiste
   segundosVisible: 2
+  mostrarPantalla: 1
   volverAlCheck: 1
   dispararPorTrigger: 1
+  soloEnAlturaY: 0
+  alturaYActivacion: -1.23
+  toleranciaAlturaY: 0.12
 --- !u!61 &1039548355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4030,7 +4046,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2074785713
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e487db6d14485b249861a4f64e27e11e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4189,7 +4205,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1178372249
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 14d1b1f6d62aeb44887c1944420492ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4222,6 +4238,7 @@ MonoBehaviour:
   amplitud: 0.05
   velocidad: 4
   encendida: 1
+  factorRadio: 1
   escalaApagada: 0.15
   suavidad: 4
 --- !u!114 &1308258491
@@ -4250,13 +4267,14 @@ MonoBehaviour:
   oscuridadAmbiente: 1
   colorAmbiente: {r: 0.0916822, g: 0, b: 0.21698111, a: 1}
   colorLuz: {r: 0.82, g: 0.74, b: 1, a: 1}
-  relieve: 1.6
-  brilloBorde: 0.7
-  grosorContorno: 2.2
-  umbralContorno: 0.04
+  relieve: 1.41
+  brilloBorde: 0.52
+  grosorContorno: 1.02
+  umbralContorno: 0.081
   alturaLuz: 1.1
   planoNormal: 0.28
   bordeSuave: 0.5
+  colorBordeInteractivo: {r: 1, g: 0.84, b: 0.12, a: 1}
   shaderLuz: {fileID: 4800000, guid: 3b8e1c4a9d2f47c0a6e5b7d8f9012345, type: 3}
   materialLuz: {fileID: 2100000, guid: 5e9c2a7b1d4f48c3a0b6e8d9f1234567, type: 2}
 --- !u!1 &1311669751
@@ -4434,6 +4452,7 @@ MonoBehaviour:
   amplitud: 0.05
   velocidad: 4
   encendida: 1
+  factorRadio: 1
   escalaApagada: 0.15
   suavidad: 4
 --- !u!212 &1374882256
@@ -4475,7 +4494,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1178372249
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 14d1b1f6d62aeb44887c1944420492ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4629,7 +4648,7 @@ GameObject:
   - component: {fileID: 1544940710}
   - component: {fileID: 1544940709}
   m_Layer: 0
-  m_Name: NIVEL2
+  m_Name: NIVEL3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4689,7 +4708,7 @@ Transform:
   m_GameObject: {fileID: 1544940708}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 118.57, y: -3.55, z: -0.02978434}
+  m_LocalPosition: {x: 116.35, y: 8.1, z: -0.02978434}
   m_LocalScale: {x: 1.1697235, y: 0.8968391, z: 0.97567475}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4802,11 +4821,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFinal: 0
   extinguishOffset: {x: 0, y: 1.1, z: 0}
+  esCheckpointPermanente: 0
   ciclosChispita: 2
+  mostrarCartelEncender: 1
   textoCartelE: Encender con E
   segundosPrendidoLibre: 6
-  intensidadRelieve: 1
-  grosorContornoRelieve: 1.8
+  intensidadRelieve: 1.66
+  grosorContornoRelieve: 4.84
+  brilloBordeRelieve: 1.17
+  umbralContornoRelieve: 0.007
+  colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
 --- !u!61 &1801969446
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5465,8 +5489,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoPantalla: Perdiste
   segundosVisible: 2
+  mostrarPantalla: 1
   volverAlCheck: 1
   dispararPorTrigger: 1
+  soloEnAlturaY: 0
+  alturaYActivacion: -1.23
+  toleranciaAlturaY: 0.12
 --- !u!1 &2044190890
 GameObject:
   m_ObjectHideFlags: 0

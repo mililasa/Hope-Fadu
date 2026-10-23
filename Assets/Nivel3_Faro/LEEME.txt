@@ -1,0 +1,74 @@
+NIVEL 3 · EL FARO
+==================
+
+INSTALAR (si ya habías importado la versión anterior)
+1. Borrá la carpeta Assets/Nivel3_Faro vieja y la escena Assets/Scenes/Nivel_3.
+2. Importá HOPE-Nivel3-Faro.unitypackage.
+3. Menú HOPE > Nivel 3 > Crear escena Nivel_3.
+
+JUGAR
+   ← →       mover
+   Espacio   saltar (con doble salto)
+   ↑ o W     entrar / salir por una puerta o ventana
+   Borde     caminá contra el borde izquierdo o derecho: el faro gira y Hope
+             sigue en la pared de al lado
+   E         prender el farol de arriba (termina el nivel)
+No hay carteles: las flechas curvas amarillas marcan las repisas que siguen
+a la vuelta de la esquina.
+
+EL RECORRIDO DE EJEMPLO
+Hope entra por la puerta de abajo, sube en espiral por adentro, el derrumbe la
+obliga a salir por la puerta del balcón, sube por afuera, vuelve a entrar por la
+ventana y llega al farol.
+
+MOVER PLATAFORMAS
+Todo está en Faro_Nivel3 > Pivote:
+   Repisas adentro / Repisas afuera   cada repisa es un cubo
+   Puertas                            puertas y la ventana
+   Paredes, Pisos y techo
+Cada repisa guarda su lugar en "Pieza Faro" con números:
+   Lado     Adentro o Afuera
+   Pared    Norte, Oeste, Sur o Este
+   Desde / Hasta   de izquierda a derecha como se ve esa pared de frente
+                   (de -4 a 4 adentro, de -5 a 5 afuera)
+   Altura   donde apoya los pies Hope
+   Rota     se pisa pero nunca lleva flecha
+- Cambiá un número y la repisa se mueve sola.
+- O arrastrala en la escena (a lo largo de la pared o para arriba y abajo,
+  sin rotarla): los números se actualizan solos y la repisa queda pegada a
+  su pared.
+- Para pasarla a otra pared, cambiá "Pared".
+- Duplicar (Ctrl+D) sirve para hacer repisas nuevas.
+- Para que una repisa siga a la vuelta de la esquina: que toque el borde de su
+  pared (Hasta = 4, o Desde = -4; afuera 5 / -5) y que en la pared de al lado
+  haya otra repisa a la MISMA altura que toque el borde opuesto. La flecha
+  aparece sola al dar Play.
+- Puertas: "Puerta Faro" tiene Pared, Posicion (medida desde adentro) y
+  Altura. Tiene que haber piso o repisa a esa altura de los dos lados.
+- El botón rojo "Reconstruir faro de ejemplo" borra tus cambios y arma el
+  nivel de ejemplo otra vez.
+
+CAMBIAR LOS DIBUJOS
+Están en Nivel3_Faro/Texturas. Reemplazá cualquier PNG por tu pixel art con el
+mismo nombre y Unity lo usa:
+   pared_adentro, pared_afuera, piedra, suelo     paredes y pisos
+   repisa, repisa_rota                            plataformas
+   puerta_adentro, puerta_afuera, ventana         puertas
+   flecha_esquina                                 la flecha curva
+   haz_luz                                        la luz que gira al ganar
+Hope y el farol de arriba son tus sprites y animaciones de siempre.
+
+AJUSTES (seleccioná Faro_Nivel3)
+   Empieza Afuera / Vista Inicial      dónde arranca Hope
+   Segundos Empujando                  cuánto empujar contra el borde para girar
+   Zoom Adentro / Zoom Afuera          tamaño de la cámara
+   Escena Siguiente                    adónde va al prender el farol
+
+ARCHIVOS
+   FaroFez.cs          paneles, giros, puertas, flechas y final del nivel
+   PiezaFaro.cs        cada repisa, pared y piso
+   PuertaFaro.cs       puertas y ventanas
+   BordeGiroFaro.cs    (de la versión anterior, ya no se usa)
+   TexturaRepetida.cs  repite la textura cuando estirás una pieza
+   Editor/ConstructorFaro.cs   menú HOPE, nivel de ejemplo y texturas
+   PlayerController2D.cs (cambio chico): del Nivel_2 pasa al Nivel_3
