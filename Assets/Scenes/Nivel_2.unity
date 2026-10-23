@@ -4805,8 +4805,8 @@ MonoBehaviour:
   ciclosChispita: 2
   textoCartelE: Encender con E
   segundosPrendidoLibre: 6
-  intensidadRelieve: 0.55
-  grosorContornoRelieve: 0.7
+  intensidadRelieve: 1
+  grosorContornoRelieve: 1.8
 --- !u!61 &1801969446
 BoxCollider2D:
   m_ObjectHideFlags: 0

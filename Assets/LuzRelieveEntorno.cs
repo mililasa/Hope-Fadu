@@ -49,6 +49,8 @@ public class LuzRelieveEntorno : MonoBehaviour
     public float planoNormal = 0.28f;
     [Range(0.05f, 1f)]
     public float bordeSuave = 0.5f;
+    [Tooltip("Color del borde iluminado en faroles y barriles.")]
+    public Color colorBordeInteractivo = new Color(1f, 0.84f, 0.12f, 1f);
 
     [Header("Shader")]
     public Shader shaderLuz;
@@ -106,6 +108,7 @@ public class LuzRelieveEntorno : MonoBehaviour
                 sr.sharedMaterial = materialLuz;
                 if (sr.GetComponent<RelieveSprite>() == null)
                     sr.gameObject.AddComponent<RelieveSprite>();
+                ConfigurarBordeInteractivo(sr);
                 continue;
             }
 
@@ -140,6 +143,30 @@ public class LuzRelieveEntorno : MonoBehaviour
         sr.sharedMaterial = materialLuz;
         if (sr.GetComponent<RelieveSprite>() == null)
             sr.gameObject.AddComponent<RelieveSprite>();
+        ConfigurarBordeInteractivo(sr);
+    }
+
+    void ConfigurarBordeInteractivo(SpriteRenderer sr)
+    {
+        if (!EsInteractivo(sr)) return;
+        RelieveSprite relieve = sr.GetComponent<RelieveSprite>();
+        if (relieve == null) return;
+        relieve.recibirLuz = true;
+        relieve.usarParametrosPropios = true;
+        relieve.usarColorContorno = true;
+        if (sr.GetComponent<Lantern>() != null) return;
+        relieve.colorContorno = colorBordeInteractivo;
+        relieve.intensidadRelieve = 1f;
+        relieve.grosorContorno = 1.8f;
+        relieve.brilloBorde = 1.15f;
+        relieve.umbralContorno = 0.035f;
+    }
+
+    static bool EsInteractivo(SpriteRenderer sr)
+    {
+        if (sr == null) return false;
+        if (sr.GetComponent<Lantern>() != null) return true;
+        return sr.gameObject.name.StartsWith("Barril");
     }
 
     bool DebeRecibirLuz(SpriteRenderer sr)
@@ -224,7 +251,8 @@ public class LuzRelieveEntorno : MonoBehaviour
         string n = sr.gameObject.name;
         if (n == "LuzFarol" || n == "Oscuridad" || n == "Chispita") return false;
         if (sr.sortingLayerName == "Oscuridad") return false;
-        return sr.GetComponent<Lantern>() != null;
+        if (sr.GetComponent<Lantern>() != null) return true;
+        return n.StartsWith("Barril");
     }
 
     void PublicarLuz()

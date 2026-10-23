@@ -13,6 +13,7 @@ public sealed class HopeExplosionAudio : MonoBehaviour
     Camera camara;
     int estadoAnterior, cicloAnterior;
     bool sincronizado;
+    bool yaSono;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Limpiar() { SceneManager.sceneLoaded -= AlCargar; }
@@ -97,13 +98,15 @@ public sealed class HopeExplosionAudio : MonoBehaviour
             estadoAnterior = estado.fullPathHash;
             cicloAnterior = ciclo;
             // Do not invent an impact when the player walks into range mid-cycle.
-            if (inicio && estado.IsName("explosion") && ganancia > 0.001f && dibujo != null && dibujo.enabled && dibujo.color.a > 0f)
+            if (!yaSono && inicio && estado.IsName("explosion") && ganancia > 0.001f && dibujo != null && dibujo.enabled && dibujo.color.a > 0f)
                 Disparar();
         }
     }
 
     void Disparar()
     {
+        if (yaSono) return;
+        yaSono = true;
         // Files retain the prototype's internal offsets. Start their timelines
         // together on the audio clock to keep all three layers synchronized.
         double inicio = AudioSettings.dspTime + 0.01;

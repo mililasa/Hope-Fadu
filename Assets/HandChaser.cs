@@ -530,6 +530,16 @@ public class HandChaser : MonoBehaviour
         if (golpeAudio != null) golpeAudio.Golpear();
         if (objetivoActual != null)
             objetivoActual.TurnOff();
+        TemblarCamara();
+    }
+
+    void TemblarCamara()
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return;
+        CameraFollow follow = cam.GetComponent<CameraFollow>();
+        if (follow != null)
+            follow.Temblar(0.3f, 0.12f);
     }
 
     // Animation Event: ultimo frame de mano_apaga_vela.
