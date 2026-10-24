@@ -1,0 +1,50 @@
+[
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Agua Goteando\\agua gotea 1.wav",
+    "sha256_original": "9fa73e0e623fac2f21433abde2aeabd04ab7ea27767775f43daae59ba95d33d6",
+    "loop": "Foley\\Agua Gotas\\agua gotea 1 - loop.wav",
+    "crossfade_ms": 150,
+    "original_s": 9.381043083900227,
+    "loop_s": 9.231043083900227,
+    "rate": 44100,
+    "canales": 2,
+    "ganancia_db": 0,
+    "salto_union_max": 0.000396728515625
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Agua Goteando\\agua gotea 2.wav",
+    "sha256_original": "9c6c858f9a542d864334b212e3289b242ee0872c28286f6257701b6e59d2b193",
+    "loop": "Foley\\Agua Gotas\\agua gotea 2 - loop.wav",
+    "crossfade_ms": 150,
+    "original_s": 4.963265306122449,
+    "loop_s": 4.813265306122449,
+    "rate": 44100,
+    "canales": 2,
+    "ganancia_db": 0,
+    "salto_union_max": 0.001556396484375
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Agua Goteando\\agua gotea 3.mp3",
+    "sha256_original": "836bda20b70dadc056eda498e25c48e2f31b721a5d6604c3cd96a1e4ea9f4216",
+    "loop": "Foley\\Agua Gotas\\agua gotea 3 - loop.wav",
+    "crossfade_ms": 150,
+    "original_s": 8.088,
+    "loop_s": 7.938,
+    "rate": 48000,
+    "canales": 2,
+    "ganancia_db": 0,
+    "salto_union_max": 0.01707911491394043
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Agua Goteando\\agua gotea 4.wav",
+    "sha256_original": "a72d02ae75e34ab4d6d32c941d1353edb8f80d0a592700d38174589ca62d69ce",
+    "loop": "Foley\\Agua Gotas\\agua gotea 4 - loop.wav",
+    "crossfade_ms": 150,
+    "original_s": 59.74836734693878,
+    "loop_s": 59.59836734693877,
+    "rate": 44100,
+    "canales": 2,
+    "ganancia_db": 0,
+    "salto_union_max": 0.0001220703125
+  }
+]

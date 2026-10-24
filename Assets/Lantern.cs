@@ -295,7 +295,7 @@ public class Lantern : MonoBehaviour
         if (zona != null && zona.Hand != null)
             zona.Hand.NotifyLightingStarted(this);
 
-        if (pp != null)
+        if (pp != null && HopeLegacyAudioPolicy.Permitir(this))
         {
             HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
             if (audioFarol == null) audioFarol = gameObject.AddComponent<HopeLanternAudio>();

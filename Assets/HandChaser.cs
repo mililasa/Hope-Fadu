@@ -66,8 +66,11 @@ public class HandChaser : MonoBehaviour
         if (animator != null)
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         AsegurarToqueChico();
-        if (GetComponent<HopeHandImpactAudio>() == null) gameObject.AddComponent<HopeHandImpactAudio>();
-        if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
+        if (HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (GetComponent<HopeHandImpactAudio>() == null) gameObject.AddComponent<HopeHandImpactAudio>();
+            if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
+        }
         if (sr != null)
         {
             colorBase = sr.color;

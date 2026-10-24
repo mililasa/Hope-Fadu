@@ -170,6 +170,15 @@ public class PlayerController2D : MonoBehaviour
 
     void AgregarAudio()
     {
+        if (!HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (gameObject.scene.name == "Nivel_2")
+            {
+                foleySalto = GetComponent<HopeJumpLanding>();
+                if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+            }
+            return;
+        }
         if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
         secuenciaLejana = GetComponent<HopeDistantSequence>();
         if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
@@ -339,7 +348,7 @@ public class PlayerController2D : MonoBehaviour
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, false, true);
             }
         }
 
@@ -682,7 +691,7 @@ public class PlayerController2D : MonoBehaviour
         return null;
     }
 
-    void IniciarSalto(float altura, bool desdePlataforma = false)
+    void IniciarSalto(float altura, bool desdePlataforma = false, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -697,7 +706,7 @@ public class PlayerController2D : MonoBehaviour
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
-        if (foleySalto != null) foleySalto.Saltar();
+        if (foleySalto != null) foleySalto.Saltar(true, dobleSalto);
     }
 
     float EscalaDeGravedad(float aceleracion)
@@ -887,6 +896,7 @@ public class PlayerController2D : MonoBehaviour
         if (musicaNivel != null) musicaNivel.CompletarNivel();
         rb.velocity = Vector2.zero;
         string escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
         SceneManager.LoadScene(escena);
     }
 
@@ -906,6 +916,7 @@ public class PlayerController2D : MonoBehaviour
             escena = "Menu";
         else
             escena = "Nivel_2";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
         SceneManager.LoadScene(escena);
     }
 

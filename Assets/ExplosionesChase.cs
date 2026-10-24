@@ -75,7 +75,7 @@ public class ExplosionesChase : MonoBehaviour
             controllerExplosion = CargarController();
         if (animator.runtimeAnimatorController == null && controllerExplosion != null)
             animator.runtimeAnimatorController = controllerExplosion;
-        if (GetComponent<HopeExplosionAudio>() == null)
+        if (HopeLegacyAudioPolicy.Permitir(this) && GetComponent<HopeExplosionAudio>() == null)
             gameObject.AddComponent<HopeExplosionAudio>();
         Ocultar();
     }

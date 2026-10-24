@@ -1,0 +1,52 @@
+{
+  "sources": {
+    "rieles": {
+      "source": "\\\\?\\C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ruidos Metalicos\\Metal_Rails_Pack_Rumble_Rattle_Shake_Vibrate_Debris_Mkh8040_Seismic_Activities_03.Wav",
+      "start_s": 2.8,
+      "duration_s": 7.0,
+      "eq": "highpass=f=110,lowpass=f=3400"
+    },
+    "friccion": {
+      "source": "\\\\?\\C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ruidos Metalicos\\METLFric_Screeching Metal Rub-11_MWSFX_TM.wav",
+      "start_s": 0.4,
+      "duration_s": 2.4,
+      "eq": "highpass=f=380,lowpass=f=3900"
+    },
+    "servo": {
+      "source": "\\\\?\\C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Sonidos Electtricos\\165861__tlwmdbt__servo-motors.wav",
+      "start_s": 0.05,
+      "duration_s": 1.65,
+      "eq": "highpass=f=180,lowpass=f=4600"
+    },
+    "electrico": {
+      "source": "\\\\?\\C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Sonidos Electtricos\\Bluezone_BC0299_electricity_texture_sizzling_crackling_006.wav",
+      "start_s": 0.05,
+      "duration_s": 2.5,
+      "eq": "highpass=f=450,lowpass=f=5500"
+    },
+    "arco": {
+      "source": "\\\\?\\C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Sonidos Electtricos\\Bluezone_BC0299_electricity_surge_discharge_electrical_arc_crackling_002_01.wav",
+      "start_s": 1.02,
+      "duration_s": 0.35,
+      "eq": "highpass=f=650,lowpass=f=4500"
+    }
+  },
+  "variants": {
+    "Horizontal": {
+      "cycle_s": 5.88,
+      "preview_s": 12.46,
+      "peak_dbfs": -8.999999999999998,
+      "rms_dbfs": -26.96961224896433,
+      "loop_boundary_delta": 0.013085244079175634
+    },
+    "Vertical": {
+      "cycle_s": 6.88,
+      "preview_s": 14.46,
+      "peak_dbfs": -10.97036694483975,
+      "rms_dbfs": -28.51478626696862,
+      "loop_boundary_delta": 0.0025103221717955723
+    }
+  },
+  "status": "Integración: loops sin envolvente cíclica y conmutación separada. Sincronía por movimiento real.",
+  "processing": "PCM24 mono 48kHz. EQ por capa; cambios leves de velocidad; envolvente cíclica; uniones de 120 ms; reflexiones breves. Sin compresión ni limitador. Ganancia común con pico máximo -9 dBFS."
+}
