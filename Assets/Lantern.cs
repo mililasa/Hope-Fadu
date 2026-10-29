@@ -300,6 +300,16 @@ public class Lantern : MonoBehaviour
             HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
             if (audioFarol == null) audioFarol = gameObject.AddComponent<HopeLanternAudio>();
             audioFarol.Encender(gameObject, pp.transform);
+            if (gameObject.scene.name == "SampleScene")
+            {
+                HopeCheckpointAudio checkpoint = GetComponent<HopeCheckpointAudio>();
+                if (checkpoint == null) checkpoint = gameObject.AddComponent<HopeCheckpointAudio>();
+                bool primero = true;
+                foreach (Lantern otro in FindObjectsOfType<Lantern>())
+                    if (otro.gameObject.scene == gameObject.scene && otro.transform.position.x < transform.position.x)
+                    { primero = false; break; }
+                checkpoint.Activar(gameObject, primero);
+            }
         }
 
         if (esBarril)
@@ -409,6 +419,8 @@ public class Lantern : MonoBehaviour
         estado = Estado.Off;
         HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
         if (audioFarol != null) audioFarol.Reiniciar();
+        HopeCheckpointAudio checkpointAudio = GetComponent<HopeCheckpointAudio>();
+        if (checkpointAudio != null) checkpointAudio.Reiniciar();
         MostrarChispita(true);
         if (luzOscuridad != null)
         {
@@ -456,6 +468,8 @@ public class Lantern : MonoBehaviour
         estado = Estado.Off;
         HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
         if (audioFarol != null) audioFarol.Reiniciar();
+        HopeCheckpointAudio checkpointAudio = GetComponent<HopeCheckpointAudio>();
+        if (checkpointAudio != null) checkpointAudio.Reiniciar();
         MostrarChispita(true);
         if (luzOscuridad != null)
         {

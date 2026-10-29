@@ -626,6 +626,7 @@ public class PlayerController2D : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, vy);
         ReproducirSalto();
         if (foleySalto != null) foleySalto.Saltar();
+        HopeSpringAudio.Impulsar(this);
     }
 
     // Solo Enter desde arriba. No rearma en Exit (eso re-impulsaba a media altura).

@@ -127,10 +127,19 @@ public sealed class HopeMusicTransition : MonoBehaviour
         else if (estado == Estado.Entrada)
         {
             tiempoEntrada += Time.deltaTime;
-            float espera = ajustes != null ? ajustes.segundosAlEntrar : 3;
+            float espera = destino == "Nivel_2"
+                ? (ajustes != null ? ajustes.segundosAlEntrarNivel2 : 2)
+                : (ajustes != null ? ajustes.segundosAlEntrar : 3);
             if (tiempoEntrada >= espera)
             {
-                nivel = Mathf.MoveTowards(nivel, 0, Time.deltaTime / Mathf.Max(.05f, fundido));
+                if (destino == "Nivel_2")
+                {
+                    float duracion = ajustes != null ? ajustes.segundosFundidoEntradaNivel2 : 1.5f;
+                    float progreso = Mathf.Clamp01((tiempoEntrada - espera) / Mathf.Max(.05f, duracion));
+                    // Complementary gains: the new music rises as the bridge fades.
+                    nivel = 1f - Mathf.SmoothStep(0f, 1f, progreso);
+                }
+                else nivel = Mathf.MoveTowards(nivel, 0, Time.deltaTime / Mathf.Max(.05f, fundido));
                 if (nivel <= 0) { fuente.Stop(); estado = Estado.Ninguno; }
             }
         }

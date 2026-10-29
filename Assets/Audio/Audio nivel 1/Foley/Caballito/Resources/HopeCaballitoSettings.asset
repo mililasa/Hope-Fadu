@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
   - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
   apoyo: {fileID: 8300000, guid: 2b6f3a32f5ea4606aab937efa3fca033, type: 3}
-  volumen: 0.05
+  volumen: 0.03
   volumenApoyo: 0.1
   distanciaPlena: 2
   distanciaMaxima: 11

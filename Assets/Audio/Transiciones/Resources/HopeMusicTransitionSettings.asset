@@ -11,7 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631bd57060444a1c9c585f3712ec1657, type: 3}
   m_Name: HopeMusicTransitionSettings
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   segundosAlEntrar: 3
+  segundosAlEntrarNivel2: 1
   segundosFundido: 2
   segundosAnticipacionSalida: 2
+  segundosFundidoEntradaNivel2: 1.5

@@ -17,7 +17,7 @@ MonoBehaviour:
   pintura: {fileID: 8300000, guid: 900327560abc44b2bedab801e0428b9a, type: 3}
   volumenGeneral: 0.25
   volumenDetonacion: 0.85
-  volumenEnergia: 0.05
+  volumenEnergia: 0.101192885
   volumenPintura: 0.4
   distanciaPlena: 4
   distanciaMaxima: 18

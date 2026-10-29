@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3ec8d84b9a4841a41cefe6ed8330e1, type: 3}
+  m_Name: HopeStonePlatformSettings
+  m_EditorClassIdentifier: 
+  roce: {fileID: 8300000, guid: da3849de932c4b89a681a128ff9b1a8c, type: 3}
+  contactos:
+  - {fileID: 8300000, guid: 1bda6c9417984b1187a07a748b982e14, type: 3}
+  - {fileID: 8300000, guid: f0f7571dd64d4c75a31c0d3c8cad66ca, type: 3}
+  - {fileID: 8300000, guid: 46dd6eb91c844e259320f821ff339ff6, type: 3}
+  volumenRoce: 0.481
+  volumenContacto: 0.223
+  distanciaPlena: 2
+  distanciaSilencio: 9

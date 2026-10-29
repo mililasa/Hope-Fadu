@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7dc71a0b7d24203a497ff8a81934a94, type: 3}
+  m_Name: HopeSoldierHandSettings
+  m_EditorClassIdentifier: 
+  aparicion: {fileID: 8300000, guid: 668dc11ac1f448929ebb8a3a4c2a576c, type: 3}
+  motivo: {fileID: 8300000, guid: 1c2a9771fea14c04ae51d7298f6be642, type: 3}
+  agarre: {fileID: 8300000, guid: 5bcca64d11144f4d97102f45f77e51cc, type: 3}
+  retirada: {fileID: 8300000, guid: 1fba7d6820d74ced90fb567d15a576a9, type: 3}
+  volumenGeneral: 0.744
+  volumenAparicion: 1
+  volumenMotivo: 1
+  volumenAgarre: 1
+  volumenRetirada: 1
+  faseAparicion: 0.05
+  faseMotivo: 0.108
+  faseAgarre: 0.6
+  faseRetirada: 0.7

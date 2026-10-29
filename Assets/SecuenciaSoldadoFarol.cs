@@ -102,6 +102,7 @@ public class SecuenciaSoldadoFarol : MonoBehaviour
             animatorMano.speed = 1f;
             animatorMano.Play(estadoMano, 0, 0f);
             animatorMano.Update(0f);
+            HopeSoldierHandAudio.Iniciar(this, animatorMano, estadoMano);
         }
 
         // El primer cuadro de la mano es el mismo soldado. Se apaga el de abajo
