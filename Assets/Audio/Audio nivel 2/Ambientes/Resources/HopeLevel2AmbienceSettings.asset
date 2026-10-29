@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba7d22ec33046d9895424809892179e, type: 3}
+  m_Name: HopeLevel2AmbienceSettings
+  m_EditorClassIdentifier:
+  clips:
+  - {fileID: 8300000, guid: 8cd7c446f2564b8fabb41661191a745e, type: 3}
+  - {fileID: 8300000, guid: cd1bb77272f94ca8b7c14dbdea78a73d, type: 3}
+  - {fileID: 8300000, guid: 9b18e369430c475cab20533a23cec63d, type: 3}
+  - {fileID: 8300000, guid: 105a97b9da1f4ffda9f65fe0e0ac5001, type: 3}
+  - {fileID: 8300000, guid: 542ff61f20d14077840e8b5009eef2de, type: 3}
+  salidas:
+  - {fileID: 24300100, guid: f7f7f954be32472ab249e1baa01e223b, type: 2}
+  - {fileID: 24300101, guid: f7f7f954be32472ab249e1baa01e223b, type: 2}
+  - {fileID: 24300102, guid: f7f7f954be32472ab249e1baa01e223b, type: 2}
+  - {fileID: 24300103, guid: f7f7f954be32472ab249e1baa01e223b, type: 2}
+  - {fileID: 24300104, guid: f7f7f954be32472ab249e1baa01e223b, type: 2}

@@ -1,18 +1,72 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
-// En cada hijo "explosion" de un farol/barril. Oculto; al apagar la mano se reproduce una vez.
+// Hijo "explosion" de un farol: oculto, y se ve una vez cuando la mano lo apaga.
+// "explosion" y "explosion (1)" del puente se disparan cuando Hope pasa cerca.
 public class ExplosionesChase : MonoBehaviour
 {
     public string estadoExplosion = "explosion";
     public RuntimeAnimatorController controllerExplosion;
+    [Tooltip("Si esta tildado, se reproduce cuando Hope pasa cerca y no cuando la mano apaga.")]
+    public bool activarAlPasarHope;
+    public float distanciaHorizontal = 2.6f;
+    public float distanciaVertical = 5f;
 
     Animator animator;
     SpriteRenderer sr;
+    Transform hope;
+    bool yaDisparada;
+    bool reproduciendo;
+    float avancePrevio;
     static RuntimeAnimatorController controllerCache;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static void EngancharPuente()
+    {
+        SceneManager.sceneLoaded -= AlCargarEscena;
+        SceneManager.sceneLoaded += AlCargarEscena;
+        BuscarEnEscena();
+    }
+
+    static void AlCargarEscena(Scene escena, LoadSceneMode modo)
+    {
+        BuscarEnEscena();
+    }
+
+    static void BuscarEnEscena()
+    {
+        SpriteRenderer[] todos = Object.FindObjectsOfType<SpriteRenderer>(true);
+        for (int i = 0; i < todos.Length; i++)
+        {
+            SpriteRenderer dibujo = todos[i];
+            if (dibujo == null || !DisparaAlPasar(dibujo.transform)) continue;
+            if (dibujo.GetComponent<ExplosionesChase>() == null)
+                dibujo.gameObject.AddComponent<ExplosionesChase>();
+        }
+    }
+
+    public static bool DisparaAlPasar(Transform t)
+    {
+        if (t == null) return false;
+        string n = t.name;
+        if (n == "explosion" || n == "explosion (1)")
+            return true;
+        Transform p = t.parent;
+        while (p != null)
+        {
+            if (p.name == "Bridge" &&
+                n.IndexOf("explosion", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            p = p.parent;
+        }
+        return false;
+    }
 
     void Awake()
     {
+        if (DisparaAlPasar(transform))
+            activarAlPasarHope = true;
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         if (animator == null)
@@ -21,9 +75,38 @@ public class ExplosionesChase : MonoBehaviour
             controllerExplosion = CargarController();
         if (animator.runtimeAnimatorController == null && controllerExplosion != null)
             animator.runtimeAnimatorController = controllerExplosion;
-        if (GetComponent<HopeExplosionAudio>() == null)
+        if (HopeLegacyAudioPolicy.Permitir(this) && GetComponent<HopeExplosionAudio>() == null)
             gameObject.AddComponent<HopeExplosionAudio>();
         Ocultar();
+    }
+
+    bool PadreEsBarril()
+    {
+        Transform p = transform.parent;
+        while (p != null)
+        {
+            Lantern farol = p.GetComponent<Lantern>();
+            if (farol != null) return farol.EsBarril;
+            p = p.parent;
+        }
+        return false;
+    }
+
+    void Update()
+    {
+        if (yaDisparada || PadreEsBarril() || !activarAlPasarHope) return;
+        if (hope == null)
+        {
+            PlayerController2D pp = FindObjectOfType<PlayerController2D>();
+            if (pp != null) hope = pp.transform;
+            if (hope == null) return;
+        }
+
+        Vector2 delta = hope.position - transform.position;
+        if (Mathf.Abs(delta.x) > distanciaHorizontal || Mathf.Abs(delta.y) > distanciaVertical)
+            return;
+
+        Reproducir();
     }
 
     static RuntimeAnimatorController CargarController()
@@ -40,12 +123,15 @@ public class ExplosionesChase : MonoBehaviour
 
     public static void ReproducirEn(Lantern farol)
     {
-        if (farol == null) return;
+        if (farol == null || farol.EsBarril) return;
         ExplosionesChase[] propias = farol.GetComponentsInChildren<ExplosionesChase>(true);
         if (propias != null && propias.Length > 0)
         {
             for (int i = 0; i < propias.Length; i++)
-                if (propias[i] != null) propias[i].Reproducir();
+            {
+                if (propias[i] == null || propias[i].activarAlPasarHope) continue;
+                propias[i].Reproducir();
+            }
             return;
         }
 
@@ -56,14 +142,21 @@ public class ExplosionesChase : MonoBehaviour
             Transform hijo = t.GetChild(i);
             if (hijo.name.IndexOf("explosion", System.StringComparison.OrdinalIgnoreCase) < 0)
                 continue;
+            if (DisparaAlPasar(hijo))
+                continue;
             ExplosionesChase ex = hijo.GetComponent<ExplosionesChase>();
             if (ex == null) ex = hijo.gameObject.AddComponent<ExplosionesChase>();
+            if (ex.activarAlPasarHope) continue;
             ex.Reproducir();
         }
     }
 
     public void Reproducir()
     {
+        if (yaDisparada || PadreEsBarril()) return;
+        yaDisparada = true;
+        reproduciendo = true;
+        avancePrevio = 0f;
         StopAllCoroutines();
         if (animator == null) animator = GetComponent<Animator>();
         if (animator != null && animator.runtimeAnimatorController == null)
@@ -85,22 +178,17 @@ public class ExplosionesChase : MonoBehaviour
 
     IEnumerator OcultarAlTerminar()
     {
-        yield return null;
-        float dur = 0.5f;
-        if (animator != null && animator.runtimeAnimatorController != null)
+        float tope = Time.time + 2f;
+        while (Time.time < tope && reproduciendo)
         {
-            AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-            for (int i = 0; i < clips.Length; i++)
-            {
-                if (clips[i] != null &&
-                    clips[i].name.IndexOf("explosion", System.StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    dur = Mathf.Max(0.15f, clips[i].length);
-                    break;
-                }
-            }
+            yield return null;
+            if (animator == null || !animator.enabled) break;
+            AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+            float avance = info.normalizedTime;
+            if (avance >= 0.98f || avance + 0.02f < avancePrevio)
+                break;
+            avancePrevio = avance;
         }
-        yield return new WaitForSeconds(dur);
         Ocultar();
     }
 
@@ -112,9 +200,13 @@ public class ExplosionesChase : MonoBehaviour
 
     void Ocultar()
     {
+        reproduciendo = false;
         Mostrar(false);
         if (animator != null)
+        {
+            animator.speed = 0f;
             animator.enabled = false;
+        }
     }
 
     void Mostrar(bool visible)

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d3055a8af6521e9356d288c2ae7b5f, type: 3}
+  m_Name: HopeLevel2LanternSettings
+  m_EditorClassIdentifier: 
+  chispa: {fileID: 8300000, guid: 82220778950a491a9a7f998459982517, type: 3}
+  encendido: {fileID: 8300000, guid: 2382d71df3fa4e69a49111ea108bddef, type: 3}
+  fuego: {fileID: 8300000, guid: fa57e3ffec4a42ae85e1f3e2173aac00, type: 3}
+  volumenChispa: 0.316228
+  volumenEncendido: 0.223872
+  volumenFuego: 0.00346733530932
+  retrasoEncendido: 0.1
+  entradaFuego: 0.15
+  distanciaPlena: 2.5
+  alcance: 8

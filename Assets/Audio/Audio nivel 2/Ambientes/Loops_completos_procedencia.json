@@ -1,0 +1,67 @@
+[
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 1 Hope.wav",
+    "sha256_original": "eba66252b0ef1589fbee0009458efe6fda60985c3da8be0bb09a89ce45264571",
+    "loop": "Ambientes\\Loops completos\\N2_Ambiente_01_Completo_Loop.wav",
+    "rate": 96000,
+    "canales": 2,
+    "duracion_original_s": 15.650958333333334,
+    "duracion_loop_s": 15.500958333333333,
+    "crossfade_ms": 150,
+    "ganancia_db": 0,
+    "cambio_tono": false,
+    "salto_union_max": 3.2067298889160156e-05
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 2 Hope.wav",
+    "sha256_original": "ac05229dad8830bf2db44cc2474379c2976c68dda2a72f2377a21c17040f6d42",
+    "loop": "Ambientes\\Loops completos\\N2_Ambiente_02_Completo_Loop.wav",
+    "rate": 44100,
+    "canales": 2,
+    "duracion_original_s": 64.80045351473923,
+    "duracion_loop_s": 64.65045351473923,
+    "crossfade_ms": 150,
+    "ganancia_db": 0,
+    "cambio_tono": false,
+    "salto_union_max": 6.103515625e-05
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 3 Hope.Wav",
+    "sha256_original": "da9a1b279117a5be26e6f37e1287ed157f33577f3ea2389aa5036be2d15d9bdd",
+    "loop": "Ambientes\\Loops completos\\N2_Ambiente_03_Completo_Loop.wav",
+    "rate": 96000,
+    "canales": 2,
+    "duracion_original_s": 33.40795833333333,
+    "duracion_loop_s": 33.257958333333335,
+    "crossfade_ms": 150,
+    "ganancia_db": 0,
+    "cambio_tono": false,
+    "salto_union_max": 9.1552734375e-05
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 4 Hope.wav",
+    "sha256_original": "752ce3934f52a2bfd64cef8a8013cb3a0de4929e133295aa6c7d9afe03bfd935",
+    "loop": "Ambientes\\Loops completos\\N2_Ambiente_04_Completo_Loop.wav",
+    "rate": 96000,
+    "canales": 1,
+    "duracion_original_s": 59.50933333333333,
+    "duracion_loop_s": 59.35933333333333,
+    "crossfade_ms": 150,
+    "ganancia_db": 0,
+    "cambio_tono": false,
+    "salto_union_max": 0.0003579854965209961
+  },
+  {
+    "fuente": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 5.wav",
+    "sha256_original": "5cb2a8af0a7119dcc1cc6fde8400e0d7f1e085d1e0d60a6a9788e415abc318ba",
+    "loop": "Ambientes\\Loops completos\\N2_Ambiente_05_Completo_Loop.wav",
+    "rate": 96000,
+    "canales": 2,
+    "duracion_original_s": 14.506666666666666,
+    "duracion_loop_s": 14.356666666666667,
+    "crossfade_ms": 150,
+    "ganancia_db": 0,
+    "cambio_tono": false,
+    "salto_union_max": 0.0
+  }
+]

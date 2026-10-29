@@ -156,6 +156,7 @@ public class PlayerController2D : MonoBehaviour
         moveSpeedOriginal = moveSpeed;
         AsegurarEscaleraTrigger();
         AsegurarColliderNivel2();
+        AsegurarColliderNivel3();
         AgregarAudio();
         PrepararHaloSalto();
         AplicarClipsDeAnimacion();
@@ -169,6 +170,15 @@ public class PlayerController2D : MonoBehaviour
 
     void AgregarAudio()
     {
+        if (!HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (gameObject.scene.name == "Nivel_2")
+            {
+                foleySalto = GetComponent<HopeJumpLanding>();
+                if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+            }
+            return;
+        }
         if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
         secuenciaLejana = GetComponent<HopeDistantSequence>();
         if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
@@ -275,6 +285,20 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    void AsegurarColliderNivel3()
+    {
+        if (SceneManager.GetActiveScene().name != "Nivel_2") return;
+
+        GameObject n3 = GameObject.Find("NIVEL3");
+        if (n3 == null) n3 = GameObject.Find("NIVEL 3");
+        if (n3 == null) return;
+
+        Collider2D col = n3.GetComponent<Collider2D>();
+        if (col == null)
+            col = n3.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+    }
+
     void Update()
     {
         if (transicionNivel) return;
@@ -324,7 +348,7 @@ public class PlayerController2D : MonoBehaviour
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, false, true);
             }
         }
 
@@ -667,7 +691,7 @@ public class PlayerController2D : MonoBehaviour
         return null;
     }
 
-    void IniciarSalto(float altura, bool desdePlataforma = false)
+    void IniciarSalto(float altura, bool desdePlataforma = false, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -682,7 +706,7 @@ public class PlayerController2D : MonoBehaviour
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
-        if (foleySalto != null) foleySalto.Saltar();
+        if (foleySalto != null) foleySalto.Saltar(true, dobleSalto);
     }
 
     float EscalaDeGravedad(float aceleracion)
@@ -797,6 +821,8 @@ public class PlayerController2D : MonoBehaviour
         IntentarSuperSaltoPorPlataforma(collision);
         if (EsNivel2(collision.collider))
             PasarANivel2();
+        if (EsNivel3(collision.collider))
+            PasarANivel3();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -807,6 +833,8 @@ public class PlayerController2D : MonoBehaviour
             EntrarEscalera(other);
         if (EsNivel2(other))
             PasarANivel2();
+        if (EsNivel3(other))
+            PasarANivel3();
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -852,13 +880,43 @@ public class PlayerController2D : MonoBehaviour
         return n.Equals("NIVEL2", System.StringComparison.OrdinalIgnoreCase);
     }
 
+    bool EsNivel3(Collider2D col)
+    {
+        if (col == null) return false;
+        string n = col.gameObject.name.Replace(" ", "");
+        return n.Equals("NIVEL3", System.StringComparison.OrdinalIgnoreCase);
+    }
+
+    void PasarANivel3()
+    {
+        if (transicionNivel) return;
+        if (SceneManager.GetActiveScene().name == "Nivel_3") return;
+
+        transicionNivel = true;
+        if (musicaNivel != null) musicaNivel.CompletarNivel();
+        rb.velocity = Vector2.zero;
+        string escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
+        SceneManager.LoadScene(escena);
+    }
+
     void PasarANivel2()
     {
         if (transicionNivel) return;
         transicionNivel = true;
         if (musicaNivel != null) musicaNivel.CompletarNivel();
         rb.velocity = Vector2.zero;
-        string escena = SceneManager.GetActiveScene().name == "Nivel_2" ? "Menu" : "Nivel_2";
+        // Nivel 1 -> Nivel_2 -> Nivel_3 (el faro) -> Menu.
+        // Si Nivel_3 todavia no esta en Build Settings, del Nivel_2 va al Menu como antes.
+        string actual = SceneManager.GetActiveScene().name;
+        string escena;
+        if (actual == "Nivel_2")
+            escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        else if (actual == "Nivel_3")
+            escena = "Menu";
+        else
+            escena = "Nivel_2";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
         SceneManager.LoadScene(escena);
     }
 

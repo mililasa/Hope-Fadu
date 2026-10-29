@@ -22,11 +22,17 @@ public class Lantern : MonoBehaviour
     public string textoCartelE = "Encender con E";
     [Tooltip("Segundos que queda prendido un farol que no es de una ChaseZone antes de apagarse solo (0 = no se apaga).")]
     public float segundosPrendidoLibre = 6f;
-    [Header("Relieve del farol (editable con el juego parado)")]
-    [Tooltip("Que tan marcado se ve el borde iluminado del farol. Mas bajo = mas sutil.")]
-    [Range(0f, 3f)] public float intensidadRelieve = 0.55f;
-    [Tooltip("Grosor del contorno iluminado del farol. Mas bajo = linea mas fina.")]
-    [Range(0.25f, 8f)] public float grosorContornoRelieve = 0.7f;
+    [Header("Reflejo propio (no usa el grosor del escenario)")]
+    [Tooltip("Fuerza del volumen. Es el valor final, no se multiplica por el del piso.")]
+    [Range(0f, 3f)] public float intensidadRelieve = 1f;
+    [Tooltip("Grosor del borde iluminado, en pixeles del sprite. Es el valor final.")]
+    [Range(0.25f, 8f)] public float grosorContornoRelieve = 1.8f;
+    [Tooltip("Que tan brillante es la linea del borde.")]
+    [Range(0f, 3f)] public float brilloBordeRelieve = 1.15f;
+    [Tooltip("Que tan marcado tiene que ser el borde para dibujarse. Mas alto = menos linea.")]
+    [Range(0f, 0.6f)] public float umbralContornoRelieve = 0.035f;
+    [Tooltip("Color del borde que refleja la luz.")]
+    public Color colorBordeRelieve = new Color(1f, 0.84f, 0.12f, 1f);
     Animator animator;
     ChaseZone zona;
     PlayerController2D playerEnRango;
@@ -43,6 +49,7 @@ public class Lantern : MonoBehaviour
     Sprite spriteBarrilApagado;
 
     public Estado EstadoActual { get { return estado; } }
+    public bool EsBarril { get { return esBarril; } }
     public bool JugadorEnRango { get { return playerEnRango != null; } }
     public Vector3 PuntoApagado
     {
@@ -105,13 +112,20 @@ public class Lantern : MonoBehaviour
         else if (sr.GetComponent<RelieveSprite>() == null)
             sr.gameObject.AddComponent<RelieveSprite>();
 
-        RelieveSprite relieve = sr.GetComponent<RelieveSprite>();
-        if (relieve != null)
-        {
-            relieve.recibirLuz = true;
-            relieve.intensidadRelieve = intensidadRelieve;
-            relieve.grosorContorno = grosorContornoRelieve;
-        }
+        CopiarRelieve(sr.GetComponent<RelieveSprite>());
+    }
+
+    void CopiarRelieve(RelieveSprite relieve)
+    {
+        if (relieve == null) return;
+        relieve.recibirLuz = true;
+        relieve.usarParametrosPropios = true;
+        relieve.usarColorContorno = true;
+        relieve.intensidadRelieve = intensidadRelieve;
+        relieve.grosorContorno = grosorContornoRelieve;
+        relieve.brilloBorde = brilloBordeRelieve;
+        relieve.umbralContorno = umbralContornoRelieve;
+        relieve.colorContorno = colorBordeRelieve;
     }
 
 #if UNITY_EDITOR
@@ -119,8 +133,7 @@ public class Lantern : MonoBehaviour
     {
         RelieveSprite relieve = GetComponent<RelieveSprite>();
         if (relieve == null) return;
-        relieve.intensidadRelieve = intensidadRelieve;
-        relieve.grosorContorno = grosorContornoRelieve;
+        CopiarRelieve(relieve);
     }
 #endif
 
@@ -169,6 +182,7 @@ public class Lantern : MonoBehaviour
 
     void LateUpdate()
     {
+        CopiarRelieve(GetComponent<RelieveSprite>());
         if (!esBarril || estado != Estado.Off) return;
         MostrarBarrilApagado();
     }
@@ -281,7 +295,7 @@ public class Lantern : MonoBehaviour
         if (zona != null && zona.Hand != null)
             zona.Hand.NotifyLightingStarted(this);
 
-        if (pp != null)
+        if (pp != null && HopeLegacyAudioPolicy.Permitir(this))
         {
             HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
             if (audioFarol == null) audioFarol = gameObject.AddComponent<HopeLanternAudio>();
