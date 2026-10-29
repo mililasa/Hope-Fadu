@@ -799,6 +799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 114656137}
   - component: {fileID: 114656136}
+  - component: {fileID: 114656138}
   m_Layer: 0
   m_Name: plataforma_salto_precaria
   m_TagString: Untagged
@@ -847,7 +848,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 2be4cefa67b7fcd489ad4eab81963dd7, type: 3}
+  m_Sprite: {fileID: 1475479661, guid: 7c83ecb963c72e846b17ab50180f460b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -867,12 +868,33 @@ Transform:
   m_GameObject: {fileID: 114656135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 72.57, y: 0.815, z: 0}
+  m_LocalPosition: {x: 72.57, y: 0.929, z: 0}
   m_LocalScale: {x: 0.8866625, y: 0.8866625, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &114656138
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114656135}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf5f89698512d334f816ada36f20ff2a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &154405056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,8 +2445,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.63745385, y: -0.024698615}
-  - {x: 0.5, y: 0}
+  - {x: -0.65136987, y: -0.004699111}
+  - {x: 0.57419753, y: 0.006666541}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -5445,10 +5467,10 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1.0129828, y: 0.5009761}
-  - {x: -0.8935904, y: 0.54850537}
-  - {x: 0.9246922, y: 0.5399747}
-  - {x: 1.0302138, y: 0.4537484}
+  - {x: -1.0376205, y: 0.4024155}
+  - {x: -0.8935904, y: 0.47458482}
+  - {x: 0.95549715, y: 0.46605432}
+  - {x: 1.0363706, y: 0.37366796}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -5494,7 +5516,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2be4cefa67b7fcd489ad4eab81963dd7, type: 3}
+  m_Sprite: {fileID: 1475479661, guid: 7c83ecb963c72e846b17ab50180f460b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
