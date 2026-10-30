@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8e3136a9394501ac35232079826206, type: 3}
+  m_Name: HopeSpringSettings
+  m_EditorClassIdentifier:
+  pium:
+  - {fileID: 8300000, guid: 5da929d638c2474eba0b432d5edda6f3, type: 3}
+  - {fileID: 8300000, guid: ba4a608cff804be79f690fd8ab9f73c5, type: 3}
+  - {fileID: 8300000, guid: 56b1f950e0ff4cdebbe9b4f318ee1f46, type: 3}
+  metal:
+  - {fileID: 8300000, guid: e5f0cd4776bb45f193b5f0e34d1cf60e, type: 3}
+  - {fileID: 8300000, guid: 972ec402e23c44b6b6e3cf1a379c8ca9, type: 3}
+  volumenPium: 0.251189
+  volumenMetal: 0.057
+  retrasoMetal: 0.035

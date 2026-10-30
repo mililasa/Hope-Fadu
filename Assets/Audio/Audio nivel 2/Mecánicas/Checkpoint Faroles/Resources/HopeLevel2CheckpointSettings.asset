@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8475e49b8757da8fa990b63be4c69a, type: 3}
+  m_Name: HopeLevel2CheckpointSettings
+  m_EditorClassIdentifier: 
+  motivo: {fileID: 8300000, guid: 7e108cf49c4b43d7945905810d2ff92f, type: 3}
+  segundaVoz: {fileID: 8300000, guid: 73865dc5a35849268c29a7ab938f93ac, type: 3}
+  volumenMotivo: 0.070795
+  volumenSegundaVoz: 0.235294
+  entradaMotivo: 0.22
+  segundaVozPrimerFarol: 1.0290774
+  segundaVozSegundoFarol: 0.6371257

@@ -8,6 +8,11 @@ Shader "Hope/SpriteLuzRelieve"
         [Toggle] _UseBumpMap ("Usar Normal Map", Float) = 0
         _RelieveLocal ("Intensidad relieve", Range(0, 3)) = 1
         _GrosorLocal ("Grosor contorno", Range(0.25, 8)) = 1
+        _ColorContorno ("Color del borde", Color) = (1, 0.84, 0.12, 1)
+        _UsarColorContorno ("Usar color de borde", Float) = 0
+        _UsarParametrosPropios ("Parametros propios", Float) = 0
+        _RimLocal ("Brillo del borde", Range(0, 3)) = 1
+        _UmbralLocal ("Umbral del borde", Range(0, 0.6)) = 0.04
     }
 
     SubShader
@@ -39,6 +44,11 @@ Shader "Hope/SpriteLuzRelieve"
             float _UseBumpMap;
             float _RelieveLocal;
             float _GrosorLocal;
+            float4 _ColorContorno;
+            float _UsarColorContorno;
+            float _UsarParametrosPropios;
+            float _RimLocal;
+            float _UmbralLocal;
             fixed4 _Color;
 
             float4 _HopeLightPos;
@@ -106,7 +116,9 @@ Shader "Hope/SpriteLuzRelieve"
             float Altura(float2 uv)
             {
                 fixed4 s = tex2D(_MainTex, uv);
-                return dot(s.rgb, float3(0.299, 0.587, 0.114)) * s.a;
+                float lum = dot(s.rgb, float3(0.299, 0.587, 0.114));
+                // Un poco de alpha ayuda a siluetas planas, sin inflar todo el contorno.
+                return lerp(lum, max(lum, 0.25), 0.35) * s.a;
             }
 
             void Gradiente(float2 uv, float grosor, out float2 g, out float mag)
@@ -133,12 +145,16 @@ Shader "Hope/SpriteLuzRelieve"
                 atten = max(atten, ExtraHalo(i.worldXY));
                 float2 toLight = dist > 0.0001 ? delta / dist : float2(0, 1);
 
-                float grosor = max(_HopeGrosorContorno, 0.25) * max(_GrosorLocal, 0.25);
+                float propios = step(0.5, _UsarParametrosPropios);
+                float grosor = lerp(
+                    max(_HopeGrosorContorno, 0.25) * max(_GrosorLocal, 0.25),
+                    max(_GrosorLocal, 0.25),
+                    propios);
                 float2 g;
                 float mag;
                 Gradiente(i.uv, grosor, g, mag);
 
-                float umbral = saturate(_HopeUmbralContorno);
+                float umbral = lerp(saturate(_HopeUmbralContorno), saturate(_UmbralLocal), propios);
                 float ancho = max(grosor * 0.08, 0.02);
                 float edge = smoothstep(umbral, umbral + ancho, mag);
 
@@ -163,12 +179,14 @@ Shader "Hope/SpriteLuzRelieve"
                 float ndotl = saturate(dot(N, L));
                 // El relleno interior solo se aclara del lado de la luz.
                 float fill = lerp(0.35, 1.0, ndotl);
-                float relieve = _HopeRelieve * max(_RelieveLocal, 0.0);
-                float contorno = edge * haciaLaLuz * _HopeRim * atten * relieve;
+                float relieve = lerp(_HopeRelieve * max(_RelieveLocal, 0.0), max(_RelieveLocal, 0.0), propios);
+                float rim = lerp(_HopeRim, _RimLocal, propios);
+                float contorno = edge * haciaLaLuz * rim * atten * relieve;
 
                 float3 ambiente = c.rgb * _HopeColorAmbiente.rgb * _HopeOscuridad;
                 float3 directo = c.rgb * _HopeColorLuz.rgb * lerp(1.0, fill, saturate(relieve) * atten);
-                directo += _HopeColorLuz.rgb * contorno * c.a;
+                float3 colorBorde = lerp(_HopeColorLuz.rgb, _ColorContorno.rgb, saturate(_UsarColorContorno));
+                directo += colorBorde * contorno * c.a;
 
                 c.rgb = lerp(ambiente, directo, atten);
                 c.rgb *= c.a;

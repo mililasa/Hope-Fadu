@@ -1,6 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -30,6 +30,7 @@ public class PlayerController2D : MonoBehaviour
     [Header("Check point")]
     public Transform checkPoint;
     public float alturaDeCaida = -7f;
+    FarolCheckpoint farolCheckpoint;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -70,10 +71,10 @@ public class PlayerController2D : MonoBehaviour
     [Range(0f, 1f)]
     [Tooltip("0 = invisible, 1 = opaco.")]
     public float opacidadHalo = 1f;
-    [Tooltip("Capa de sorting del halo. Default queda atras del Foreground.")]
-    public string capaHalo = "Default";
-    [Tooltip("Orden dentro de esa capa. Mas bajo = mas atras.")]
-    public int ordenHalo = -1;
+    [Tooltip("Capa de sorting del halo. Piso queda arriba del escenario Default y abajo de Hope.")]
+    public string capaHalo = "Piso";
+    [Tooltip("Orden dentro de esa capa. 0 queda atras del personaje (suele estar en 1).")]
+    public int ordenHalo = 0;
 
     [Header("Escalera")]
     public float climbSpeed = 3f;
@@ -91,7 +92,6 @@ public class PlayerController2D : MonoBehaviour
     private bool enEscalera;
     private float gravedadOriginal = 3f;
     private bool transicionNivel;
-    private GameObject pantallaNivel2;
     private bool estabaEnPiso = true;
     private bool reproduciendoSalto;
     private Animator animatorHalo;
@@ -115,8 +115,18 @@ public class PlayerController2D : MonoBehaviour
     private Coroutine rutinaBloqueo;
     private bool reproduciendoPrendeFarol;
     private float velocidadPrendeFarol = 1f;
+    private float prendeFarolHasta;
+    // Solo se rearma al caer en el aire (no en Exit): evita re-impulsar a media altura.
+    private bool superSaltoListo = true;
+    private float superSaltoAlturaPendiente = -1f;
 
     public bool IsLocked { get { return movimientoBloqueado; } }
+
+    public void MarcarCheckpoint(Transform punto)
+    {
+        if (punto == null) return;
+        checkPoint = punto;
+    }
 
     void Awake()
     {
@@ -134,12 +144,20 @@ public class PlayerController2D : MonoBehaviour
             if (cp != null) checkPoint = cp.transform;
         }
 
+        GameObject farol6 = GameObject.Find("Farol (6)");
+        if (farol6 != null)
+        {
+            farolCheckpoint = farol6.GetComponent<FarolCheckpoint>();
+            if (farolCheckpoint == null)
+                farolCheckpoint = farol6.AddComponent<FarolCheckpoint>();
+        }
+
         gravedadOriginal = rb.gravityScale;
         moveSpeedOriginal = moveSpeed;
         AsegurarEscaleraTrigger();
         AsegurarColliderNivel2();
+        AsegurarColliderNivel3();
         AgregarAudio();
-        CrearPantallaNivel2();
         PrepararHaloSalto();
         AplicarClipsDeAnimacion();
         if (TieneAnimacionEspera() && animator != null)
@@ -152,6 +170,15 @@ public class PlayerController2D : MonoBehaviour
 
     void AgregarAudio()
     {
+        if (!HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (gameObject.scene.name == "Nivel_2")
+            {
+                foleySalto = GetComponent<HopeJumpLanding>();
+                if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+            }
+            return;
+        }
         if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
         secuenciaLejana = GetComponent<HopeDistantSequence>();
         if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
@@ -181,10 +208,12 @@ public class PlayerController2D : MonoBehaviour
         if (haloSalto == null) return;
         animatorHalo = haloSalto.GetComponent<Animator>();
         srHalo = haloSalto.GetComponent<SpriteRenderer>();
+        // El clip halo_salto pisa el Sprite con frames rotos (Missing).
+        // Queda el sprite estatico de la escena (halo_sprite).
+        if (animatorHalo != null)
+            animatorHalo.enabled = false;
         haloSalto.SetActive(true);
         AplicarCapaHalo();
-        if (animatorHalo != null)
-            animatorHalo.Play("halo_salto", 0, 0f);
     }
 
     void AplicarCapaHalo()
@@ -230,7 +259,8 @@ public class PlayerController2D : MonoBehaviour
     void LateUpdate()
     {
         AplicarOpacidadHalo();
-        AplicarCapaHalo();
+        // La capa se aplica solo al preparar: si se pisa cada frame,
+        // cualquier ajuste del sprite en la escena se pierde al dar Play.
     }
 
     void AsegurarEscaleraTrigger()
@@ -255,6 +285,20 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    void AsegurarColliderNivel3()
+    {
+        if (SceneManager.GetActiveScene().name != "Nivel_2") return;
+
+        GameObject n3 = GameObject.Find("NIVEL3");
+        if (n3 == null) n3 = GameObject.Find("NIVEL 3");
+        if (n3 == null) return;
+
+        Collider2D col = n3.GetComponent<Collider2D>();
+        if (col == null)
+            col = n3.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+    }
+
     void Update()
     {
         if (transicionNivel) return;
@@ -273,7 +317,15 @@ public class PlayerController2D : MonoBehaviour
         if (groundCheck != null)
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if (isGrounded)
+        bool sobrePadSalto = PlataformaSuperSaltoBajoLosPies() != null;
+
+        // Rearmar fuera del pad: cayendo hacia el próximo, o ya en piso normal.
+        // (Si solo se rearma en el aire, al caminar a Plataforma3 (5) nunca vuelve a saltar.)
+        if (!sobrePadSalto && (rb.velocity.y < -0.1f || isGrounded))
+            superSaltoListo = true;
+
+        // En pad no se recarga el doble salto (el pad da su altura fija sola).
+        if (isGrounded && !sobrePadSalto)
             saltosExtraRestantes = dobleSaltoActivado ? 1 : 0;
 
         if (isGrounded && rb.velocity.y <= 0.05f)
@@ -282,20 +334,21 @@ public class PlayerController2D : MonoBehaviour
             TerminarSaltoFisico();
         }
 
-        if (!estabaEnPiso && isGrounded && !enEscalera)
+        if (!estabaEnPiso && isGrounded && !enEscalera && !reproduciendoPrendeFarol)
             ReanudarCaminar();
         estabaEnPiso = isGrounded;
 
-        if (!movimientoBloqueado && Input.GetButtonDown("Jump") && !enEscalera)
+        // En pad: solo rebota la plataforma (altura fija). Afuera: salto / doble salto normal.
+        if (!movimientoBloqueado && Input.GetButtonDown("Jump") && !enEscalera && !sobrePadSalto)
         {
             if (isGrounded)
             {
-                IniciarSalto(alturaSalto, false);
+                IniciarSalto(alturaSalto);
             }
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto, true);
+                IniciarSalto(alturaSalto, false, true);
             }
         }
 
@@ -315,7 +368,11 @@ public class PlayerController2D : MonoBehaviour
         {
             if (reproduciendoPrendeFarol)
             {
+                // Mantener prendefarol aunque otra lógica intente pisarlo.
+                AsegurarEstadoPrendeFarol();
                 animator.speed = velocidadPrendeFarol;
+                if (Time.time >= prendeFarolHasta)
+                    TerminarPrendeFarol();
             }
             else if (enEscalera)
             {
@@ -360,6 +417,9 @@ public class PlayerController2D : MonoBehaviour
 
         wasMoving = isMoving;
 
+        if (farolCheckpoint != null)
+            farolCheckpoint.RegistrarPaso(transform.position.x);
+
         if (transform.position.y < alturaDeCaida && !transicionNivel)
         {
             SonarMuerte(false);
@@ -383,9 +443,17 @@ public class PlayerController2D : MonoBehaviour
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(0f, verticalInput * climbSpeed);
             faseSalto = FaseSalto.Nada;
+            superSaltoAlturaPendiente = -1f;
         }
         else
         {
+            // Aplicar rebote de pad acá (después de física del frame anterior): vy absoluta.
+            if (superSaltoAlturaPendiente > 0f)
+            {
+                AplicarRebotePlataforma(superSaltoAlturaPendiente);
+                superSaltoAlturaPendiente = -1f;
+            }
+
             ActualizarFaseSalto();
             if (faseSalto == FaseSalto.Nada && !transicionNivel)
                 rb.gravityScale = gravedadOriginal;
@@ -437,28 +505,82 @@ public class PlayerController2D : MonoBehaviour
             rutinaBloqueo = null;
         }
         movimientoBloqueado = false;
+        // Si prendefarol sigue activo, lo deja terminar por tiempo (no lo corta acá).
+    }
+
+    public void UnlockMovementYSoltarAnim()
+    {
+        UnlockMovement();
         TerminarPrendeFarol();
     }
 
     public void ReproducirPrendeFarol(float duracion = 0f)
     {
+        AsegurarClipPrendeFarol();
         reproduciendoPrendeFarol = true;
+        reproduciendoSalto = false;
         enIdle = false;
-        velocidadPrendeFarol = 1f;
         if (animator == null) return;
+
+        animator.enabled = true;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
         float largoClip = LargoClipPrendeFarol();
-        if (duracion > 0f && largoClip > 0f)
-            velocidadPrendeFarol = largoClip / duracion;
+        if (largoClip <= 0.01f) largoClip = 0.6f;
+        if (duracion <= 0.01f) duracion = largoClip;
+        velocidadPrendeFarol = largoClip / duracion;
+        prendeFarolHasta = Time.time + duracion;
+
+        string estado = NombreEstadoPrendeFarol();
         animator.speed = velocidadPrendeFarol;
-        animator.Play(prendeFarolStateName, 0, 0f);
+        animator.Play(estado, 0, 0f);
+        animator.Update(0f);
+    }
+
+    void AsegurarClipPrendeFarol()
+    {
+        if (animacionPrendeFarol != null) return;
+#if UNITY_EDITOR
+        animacionPrendeFarol = UnityEditor.AssetDatabase.LoadAssetAtPath<AnimationClip>(
+            "Assets/player_sprite/prendefarol.anim");
+#endif
+        if (animacionPrendeFarol != null)
+            AplicarClipsDeAnimacion();
+    }
+
+    void AsegurarEstadoPrendeFarol()
+    {
+        if (animator == null) return;
+        string estado = NombreEstadoPrendeFarol();
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        if (!info.IsName(estado))
+        {
+            animator.Play(estado, 0, 0f);
+            animator.Update(0f);
+        }
+    }
+
+    string NombreEstadoPrendeFarol()
+    {
+        if (!string.IsNullOrEmpty(prendeFarolStateName))
+            return prendeFarolStateName;
+        return "prendefarol";
     }
 
     float LargoClipPrendeFarol()
     {
         if (animacionPrendeFarol != null) return animacionPrendeFarol.length;
         if (animator == null || animator.runtimeAnimatorController == null) return 0f;
-        foreach (AnimationClip c in animator.runtimeAnimatorController.animationClips)
-            if (c != null && c.name == prendeFarolStateName) return c.length;
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        if (clips == null) return 0f;
+        string estado = NombreEstadoPrendeFarol();
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[i] == null) continue;
+            if (clips[i].name == estado ||
+                clips[i].name.IndexOf("prende", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return clips[i].length;
+        }
         return 0f;
     }
 
@@ -466,7 +588,9 @@ public class PlayerController2D : MonoBehaviour
     {
         if (!reproduciendoPrendeFarol) return;
         reproduciendoPrendeFarol = false;
+        prendeFarolHasta = 0f;
         if (animator == null) return;
+        animator.speed = 1f;
         if (TieneAnimacionEspera())
         {
             animator.Play(NombreEstadoEspera(), 0, 0f);
@@ -481,7 +605,94 @@ public class PlayerController2D : MonoBehaviour
             saltosExtraRestantes = activo ? 1 : 0;
     }
 
-    void IniciarSalto(float altura, bool dobleSalto = false)
+    public void ImpulsarSuperSalto(float alturaAbsoluta)
+    {
+        saltosExtraRestantes = 0;
+        AplicarRebotePlataforma(alturaAbsoluta);
+    }
+
+    // Gravedad constante + v = sqrt(2gh): siempre la misma altura, sin fases de salto.
+    void AplicarRebotePlataforma(float altura)
+    {
+        float h = Mathf.Max(0.05f, altura);
+        float g = Mathf.Abs(Physics2D.gravity.y) * Mathf.Max(0.01f, gravedadOriginal);
+        float vy = Mathf.Sqrt(2f * g * h);
+
+        saltosExtraRestantes = 0;
+        faseSalto = FaseSalto.Nada;
+        tiempoFloteRestante = 0f;
+        reproduciendoSalto = true;
+        rb.gravityScale = gravedadOriginal;
+        rb.velocity = new Vector2(rb.velocity.x, vy);
+        ReproducirSalto();
+        if (foleySalto != null) foleySalto.Saltar();
+        HopeSpringAudio.Impulsar(this);
+    }
+
+    // Solo Enter desde arriba. No rearma en Exit (eso re-impulsaba a media altura).
+    void IntentarSuperSaltoPorPlataforma(Collision2D collision)
+    {
+        if (movimientoBloqueado || enEscalera || transicionNivel) return;
+        if (!superSaltoListo) return;
+        // Bloquear solo si claramente sube (llegar con salto de Hope suele traer vy~0 o negativa).
+        if (rb != null && rb.velocity.y > 0.5f) return;
+
+        PlataformaSuperSalto pad = BuscarPlataformaSuperSalto(collision);
+        if (pad == null) return;
+        if (!ContactoDesdeArriba(collision)) return;
+
+        float h = pad.alturaSalto;
+        if (h < 0.05f && pad.multiplicadorAltura > 0.01f)
+            h = alturaSalto * pad.multiplicadorAltura;
+        if (h < 0.05f) h = 4f;
+
+        superSaltoListo = false;
+        superSaltoAlturaPendiente = h;
+    }
+
+    static bool ContactoDesdeArriba(Collision2D collision)
+    {
+        int n = collision.contactCount;
+        for (int i = 0; i < n; i++)
+        {
+            if (collision.GetContact(i).normal.y > 0.5f)
+                return true;
+        }
+        return n == 0;
+    }
+
+    PlataformaSuperSalto PlataformaSuperSaltoBajoLosPies()
+    {
+        if (groundCheck == null) return null;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i] == null) continue;
+            PlataformaSuperSalto pad = hits[i].GetComponent<PlataformaSuperSalto>();
+            if (pad == null) pad = hits[i].GetComponentInParent<PlataformaSuperSalto>();
+            if (pad != null) return pad;
+        }
+        return null;
+    }
+
+    static PlataformaSuperSalto BuscarPlataformaSuperSalto(Collision2D collision)
+    {
+        if (collision.collider != null)
+        {
+            PlataformaSuperSalto pad = collision.collider.GetComponent<PlataformaSuperSalto>();
+            if (pad == null) pad = collision.collider.GetComponentInParent<PlataformaSuperSalto>();
+            if (pad != null) return pad;
+        }
+        if (collision.otherCollider != null)
+        {
+            PlataformaSuperSalto pad = collision.otherCollider.GetComponent<PlataformaSuperSalto>();
+            if (pad == null) pad = collision.otherCollider.GetComponentInParent<PlataformaSuperSalto>();
+            if (pad != null) return pad;
+        }
+        return null;
+    }
+
+    void IniciarSalto(float altura, bool desdePlataforma = false, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -490,13 +701,13 @@ public class PlayerController2D : MonoBehaviour
         float velocidadInicial = accelSubida * tUp;
         gravedadCaida = (2f * h) / (tDown * tDown);
 
-        rb.velocity = new Vector2(rb.velocity.x, velocidadInicial);
         rb.gravityScale = EscalaDeGravedad(accelSubida);
+        rb.velocity = new Vector2(rb.velocity.x, velocidadInicial);
         faseSalto = FaseSalto.Subiendo;
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
-        if (foleySalto != null) foleySalto.Saltar(dobleSalto);
+        if (foleySalto != null) foleySalto.Saltar(true, dobleSalto);
     }
 
     float EscalaDeGravedad(float aceleracion)
@@ -596,6 +807,7 @@ public class PlayerController2D : MonoBehaviour
 
     void ReproducirSalto()
     {
+        if (reproduciendoPrendeFarol) return;
         if (animator != null && TieneAnimacionSalto())
         {
             animator.Play(NombreEstadoSalto(), 0, 0f);
@@ -607,8 +819,11 @@ public class PlayerController2D : MonoBehaviour
     {
         if (EsSaltador(collision.collider))
             ImpulsarResorte();
+        IntentarSuperSaltoPorPlataforma(collision);
         if (EsNivel2(collision.collider))
-            StartCoroutine(PasarANivel2());
+            PasarANivel2();
+        if (EsNivel3(collision.collider))
+            PasarANivel3();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -618,7 +833,9 @@ public class PlayerController2D : MonoBehaviour
         if (EsEscalera(other) && !transicionNivel)
             EntrarEscalera(other);
         if (EsNivel2(other))
-            StartCoroutine(PasarANivel2());
+            PasarANivel2();
+        if (EsNivel3(other))
+            PasarANivel3();
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -664,67 +881,44 @@ public class PlayerController2D : MonoBehaviour
         return n.Equals("NIVEL2", System.StringComparison.OrdinalIgnoreCase);
     }
 
-    IEnumerator PasarANivel2()
+    bool EsNivel3(Collider2D col)
     {
-        if (transicionNivel) yield break;
-        transicionNivel = true;
-        if (musicaNivel != null) musicaNivel.CompletarNivel();
-        SalirEscalera();
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = gravedadOriginal;
-        ReanudarCaminar();
-
-        if (pantallaNivel2 != null)
-            pantallaNivel2.SetActive(true);
-
-        yield return new WaitForSeconds(2f);
-
-        if (pantallaNivel2 != null)
-            pantallaNivel2.SetActive(false);
-
-        rb.gravityScale = gravedadOriginal;
-        rb.velocity = Vector2.zero;
-        transicionNivel = false;
-        VolverAlCheckPoint();
+        if (col == null) return false;
+        string n = col.gameObject.name.Replace(" ", "");
+        return n.Equals("NIVEL3", System.StringComparison.OrdinalIgnoreCase);
     }
 
-    void CrearPantallaNivel2()
+    void PasarANivel3()
     {
-        pantallaNivel2 = new GameObject("PantallaNivel2");
-        Canvas canvas = pantallaNivel2.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 500;
-        pantallaNivel2.AddComponent<CanvasScaler>();
+        if (transicionNivel) return;
+        if (SceneManager.GetActiveScene().name == "Nivel_3") return;
 
-        GameObject fondoGO = new GameObject("Fondo");
-        fondoGO.transform.SetParent(pantallaNivel2.transform, false);
-        Image fondo = fondoGO.AddComponent<Image>();
-        fondo.color = Color.black;
-        RectTransform fondoRt = fondo.rectTransform;
-        fondoRt.anchorMin = Vector2.zero;
-        fondoRt.anchorMax = Vector2.one;
-        fondoRt.offsetMin = Vector2.zero;
-        fondoRt.offsetMax = Vector2.zero;
+        transicionNivel = true;
+        if (musicaNivel != null) musicaNivel.CompletarNivel();
+        rb.velocity = Vector2.zero;
+        string escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
+        SceneManager.LoadScene(escena);
+    }
 
-        GameObject textoGO = new GameObject("Texto");
-        textoGO.transform.SetParent(pantallaNivel2.transform, false);
-        Text texto = textoGO.AddComponent<Text>();
-        texto.text = "NIVEL2";
-        texto.fontSize = 72;
-        texto.alignment = TextAnchor.MiddleCenter;
-        texto.color = Color.white;
-        texto.horizontalOverflow = HorizontalWrapMode.Overflow;
-        texto.verticalOverflow = VerticalWrapMode.Overflow;
-        Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        if (font == null) font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        texto.font = font;
-        RectTransform textoRt = texto.rectTransform;
-        textoRt.anchorMin = Vector2.zero;
-        textoRt.anchorMax = Vector2.one;
-        textoRt.offsetMin = Vector2.zero;
-        textoRt.offsetMax = Vector2.zero;
-
-        pantallaNivel2.SetActive(false);
+    void PasarANivel2()
+    {
+        if (transicionNivel) return;
+        transicionNivel = true;
+        if (musicaNivel != null) musicaNivel.CompletarNivel();
+        rb.velocity = Vector2.zero;
+        // Nivel 1 -> Nivel_2 -> Nivel_3 (el faro) -> Menu.
+        // Si Nivel_3 todavia no esta en Build Settings, del Nivel_2 va al Menu como antes.
+        string actual = SceneManager.GetActiveScene().name;
+        string escena;
+        if (actual == "Nivel_2")
+            escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        else if (actual == "Nivel_3")
+            escena = "Menu";
+        else
+            escena = "Nivel_2";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
+        SceneManager.LoadScene(escena);
     }
 
     void SalirEscalera()
@@ -736,6 +930,7 @@ public class PlayerController2D : MonoBehaviour
 
     void ReanudarCaminar()
     {
+        if (reproduciendoPrendeFarol) return;
         reproduciendoSalto = false;
         TerminarSaltoFisico();
         if (animator == null) return;
@@ -770,27 +965,49 @@ public class PlayerController2D : MonoBehaviour
 
     public void VolverAlCheckPoint()
     {
-        if (checkPoint == null) return;
+        Vector3 destino;
+        if (checkPoint != null)
+            destino = checkPoint.position;
+        else if (farolCheckpoint != null && farolCheckpoint.ConsumirParaReaparecer(out Vector3 puntoFarol))
+            destino = puntoFarol;
+        else
+            return;
 
         if (musicaNivel != null) musicaNivel.ReiniciarNivel();
         if (foleySalto != null) foleySalto.Reiniciar();
         if (secuenciaLejana != null) secuenciaLejana.Reiniciar();
 
-        transform.position = checkPoint.position;
+        UnlockMovementYSoltarAnim();
+        transform.position = destino;
         rb.velocity = Vector2.zero;
         rb.gravityScale = gravedadOriginal;
         saltosExtraRestantes = dobleSaltoActivado ? 1 : 0;
         escaleraActual = null;
         enEscalera = false;
         estabaEnPiso = true;
+        superSaltoListo = true;
+        superSaltoAlturaPendiente = -1f;
         ReanudarCaminar();
 
-        LuzFondoInteractiva luces = GetComponent<LuzFondoInteractiva>();
-        if (luces == null) luces = FindObjectOfType<LuzFondoInteractiva>();
-        if (luces != null) luces.Reiniciar();
-
+        // No re-disparar animaciones ya pasadas (cadáver, soldado, caballo, faroles lit).
         foreach (ChaseZone zona in FindObjectsOfType<ChaseZone>(true))
             zona.ReiniciarPorCheckpoint();
+
+        foreach (Lantern farol in FindObjectsOfType<Lantern>(true))
+            farol.ResetLantern();
+
+        CadaverChase[] cadaveres = FindObjectsOfType<CadaverChase>(true);
+        for (int i = 0; i < cadaveres.Length; i++)
+        {
+            if (cadaveres[i] != null)
+                cadaveres[i].ConservarEstadoEnCheckpoint();
+        }
+
+        foreach (SecuenciaSoldadoFarol secuencia in FindObjectsOfType<SecuenciaSoldadoFarol>(true))
+            secuencia.ConservarSiYaPaso();
+
+        foreach (CaballoEmbrujado caballo in FindObjectsOfType<CaballoEmbrujado>(true))
+            caballo.ConservarSiYaPaso();
     }
 
     // Verde = esta pisando piso (puede saltar). Rojo = en el aire.

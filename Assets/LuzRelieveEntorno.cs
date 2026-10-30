@@ -8,13 +8,13 @@ public class LuzRelieveEntorno : MonoBehaviour
     [Header("Quienes reciben la luz")]
     [Tooltip("Si esta tildado, solo objetos con el script RelieveSprite.")]
     public bool soloObjetosMarcados = false;
-    [Tooltip("Capas de sorting del escenario. El halo, Pp y Oscuridad no se tocan.")]
+    [Tooltip("Sorting layers que pueden recibir relieve. El escenario grande suele estar en Default.")]
     public string[] capasQueRecibenLuz =
     {
-        "Foreground", "Piso", "MidBuildings", "Bridge", "FarBuildings", "Default"
+        "Default", "Foreground", "Piso"
     };
     [Tooltip("La Mano tambien recibe relieve cuando la luz le pega.")]
-    public bool incluirMano = true;
+    public bool incluirMano = false;
 
     [Header("Luz (sigue a Oscuridad)")]
     [Tooltip("0 = usa el tamano de Oscuridad. Si lo pones a mano, es el radio en unidades.")]
@@ -49,6 +49,8 @@ public class LuzRelieveEntorno : MonoBehaviour
     public float planoNormal = 0.28f;
     [Range(0.05f, 1f)]
     public float bordeSuave = 0.5f;
+    [Tooltip("Color del borde iluminado en faroles y barriles.")]
+    public Color colorBordeInteractivo = new Color(1f, 0.84f, 0.12f, 1f);
 
     [Header("Shader")]
     public Shader shaderLuz;
@@ -95,43 +97,111 @@ public class LuzRelieveEntorno : MonoBehaviour
         if (materialesAsignados || materialLuz == null) return;
         materialesAsignados = true;
 
-        SpriteRenderer[] todos = FindObjectsOfType<SpriteRenderer>();
+        Material spriteDefault = null;
+        // Incluye inactivos (p.ej. linterna de Hope) para que ya tengan el material al activarse.
+        SpriteRenderer[] todos = FindObjectsOfType<SpriteRenderer>(true);
         for (int i = 0; i < todos.Length; i++)
         {
             SpriteRenderer sr = todos[i];
-            if (!DebeRecibirLuz(sr)) continue;
-            sr.sharedMaterial = materialLuz;
-            if (sr.GetComponent<RelieveSprite>() == null)
-                sr.gameObject.AddComponent<RelieveSprite>();
+            if (DebeRecibirLuz(sr))
+            {
+                sr.sharedMaterial = materialLuz;
+                if (sr.GetComponent<RelieveSprite>() == null)
+                    sr.gameObject.AddComponent<RelieveSprite>();
+                ConfigurarBordeInteractivo(sr);
+                continue;
+            }
+
+            // Saca el relieve del fondo y de lo que no deba tenerlo (queda de plays anteriores).
+            if (sr.sharedMaterial != null && sr.sharedMaterial.shader != null &&
+                sr.sharedMaterial.shader.name == "Hope/SpriteLuzRelieve")
+            {
+                if (spriteDefault == null)
+                    spriteDefault = Shader.Find("Sprites/Default") != null
+                        ? new Material(Shader.Find("Sprites/Default"))
+                        : null;
+                if (spriteDefault != null)
+                    sr.sharedMaterial = spriteDefault;
+                RelieveSprite marca = sr.GetComponent<RelieveSprite>();
+                if (marca != null)
+                    marca.recibirLuz = false;
+            }
         }
+    }
+
+    // Por si un sprite aparece despues del Start (faroles creados en editor, etc.).
+    public void AplicarA(SpriteRenderer sr)
+    {
+        if (sr == null) return;
+        if (materialLuz == null)
+        {
+            if (shaderLuz == null) shaderLuz = Shader.Find("Hope/SpriteLuzRelieve");
+            if (shaderLuz != null) materialLuz = new Material(shaderLuz);
+        }
+        if (materialLuz == null) return;
+        // Los faroles piden el material a proposito: no re-chequear filtros aca.
+        sr.sharedMaterial = materialLuz;
+        if (sr.GetComponent<RelieveSprite>() == null)
+            sr.gameObject.AddComponent<RelieveSprite>();
+        ConfigurarBordeInteractivo(sr);
+    }
+
+    void ConfigurarBordeInteractivo(SpriteRenderer sr)
+    {
+        if (!EsInteractivo(sr)) return;
+        RelieveSprite relieve = sr.GetComponent<RelieveSprite>();
+        if (relieve == null) return;
+        relieve.recibirLuz = true;
+        relieve.usarParametrosPropios = true;
+        relieve.usarColorContorno = true;
+        if (sr.GetComponent<Lantern>() != null) return;
+        relieve.colorContorno = colorBordeInteractivo;
+        relieve.intensidadRelieve = 1f;
+        relieve.grosorContorno = 1.8f;
+        relieve.brilloBorde = 1.15f;
+        relieve.umbralContorno = 0.035f;
+    }
+
+    static bool EsInteractivo(SpriteRenderer sr)
+    {
+        if (sr == null) return false;
+        if (sr.GetComponent<Lantern>() != null) return true;
+        return sr.gameObject.name.StartsWith("Barril");
     }
 
     bool DebeRecibirLuz(SpriteRenderer sr)
     {
         if (sr == null || sr == oscuridad) return false;
 
+        // Cuerpo del farol (no su mascara LuzFarol/Oscuridad ni la chispita).
+        if (EsCuerpoDeFarol(sr))
+            return true;
+
         Transform t = sr.transform;
         while (t != null)
         {
             string n = t.name;
-            if (n == "Pp" || n == "PP ana" || n == "Oscuridad") return false;
+            if (n == "Oscuridad" || n == "LuzFarol" || n == "Chispita") return false;
             if (n.IndexOf("halo", System.StringComparison.OrdinalIgnoreCase) >= 0) return false;
+            // Capas de atras: se ven, pero sin borde de relieve.
+            if (n == "FarBuildings" || n == "MidBuildings" || n == "Sky" || n == "Sky ")
+                return false;
+            // Hope no recibe relieve, salvo su linterna (el borde necesita el mismo efecto).
+            if (n == "Pp" || n == "PP ana")
+                return EsLamparaDeHope(sr);
             t = t.parent;
         }
 
+        // La mano nunca entra por capa: solo si incluirMano esta tildado.
+        if (EsMano(sr))
+            return incluirMano;
+
         RelieveSprite marca = sr.GetComponent<RelieveSprite>();
         if (soloObjetosMarcados)
-        {
-            if (incluirMano && EsMano(sr))
-                return marca == null || marca.recibirLuz;
             return marca != null && marca.recibirLuz;
-        }
 
         if (marca != null && !marca.recibirLuz)
             return false;
-
-        if (incluirMano && EsMano(sr))
-            return true;
 
         string capa = sr.sortingLayerName;
         if (capasQueRecibenLuz == null || capasQueRecibenLuz.Length == 0)
@@ -158,11 +228,44 @@ public class LuzRelieveEntorno : MonoBehaviour
         return false;
     }
 
+    bool EsLamparaDeHope(SpriteRenderer sr)
+    {
+        if (sr == null) return false;
+        Transform t = sr.transform;
+        while (t != null)
+        {
+            string n = t.name;
+            if (n == "Lantern" ||
+                n.IndexOf("Lampara", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                n.IndexOf("Lámpara", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            if (n == "Pp" || n == "PP ana") break;
+            t = t.parent;
+        }
+        return false;
+    }
+
+    bool EsCuerpoDeFarol(SpriteRenderer sr)
+    {
+        if (sr == null) return false;
+        string n = sr.gameObject.name;
+        if (n == "LuzFarol" || n == "Oscuridad" || n == "Chispita") return false;
+        if (sr.sortingLayerName == "Oscuridad") return false;
+        if (sr.GetComponent<Lantern>() != null) return true;
+        return n.StartsWith("Barril");
+    }
+
     void PublicarLuz()
     {
         Vector3 pos = transform.position;
         Shader.SetGlobalVector(IdPos, new Vector4(pos.x, pos.y, 0f, 0f));
-        Shader.SetGlobalFloat(IdRadio, RadioActual());
+        // El radio de relieve no puede ser menor que el agujero visual de Oscuridad:
+        // si no, se ve el farol por el halo pero queda sin contorno iluminado.
+        float radio = RadioActual();
+        HaloLuz halo = GetComponent<HaloLuz>();
+        if (halo != null)
+            radio = Mathf.Max(radio, halo.Radio);
+        Shader.SetGlobalFloat(IdRadio, radio);
         Shader.SetGlobalFloat(IdOscuridad, oscuridadAmbiente);
         Shader.SetGlobalFloat(IdRelieve, relieve);
         Shader.SetGlobalFloat(IdSuave, bordeSuave);
