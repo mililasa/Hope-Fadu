@@ -70,6 +70,7 @@ public class FaroFez : MonoBehaviour
     public GameObject[] activarAlGanar;
 
     // ---------------- estado ----------------
+    public float MezclaInteriorAudio { get; private set; }
     bool adentro;          // ¿Hope está adentro del faro?
     int vista;             // 0..3
     float angulo;          // giro actual del pivote, en grados
@@ -187,6 +188,7 @@ public class FaroFez : MonoBehaviour
     void IrAlInicio()
     {
         adentro = !empiezaAfuera;
+        MezclaInteriorAudio = adentro ? 1f : 0f;
         vista = vistaInicial;
         angulo = 90f * vista;
         pivote.localRotation = Quaternion.Euler(0f, angulo, 0f);
@@ -280,7 +282,7 @@ public class FaroFez : MonoBehaviour
             if (p != null)
             {
                 bool m1 = !adentro;
-                StartCoroutine(Transicion(m1, (vista + 2) % 4, m1 ? p.u : -p.u, 2, duracionPuerta, p.pared));
+                StartCoroutine(Transicion(m1, (vista + 2) % 4, m1 ? p.u : -p.u, 2, duracionPuerta, p.pared, p.p));
                 return;
             }
         }
@@ -369,12 +371,33 @@ public class FaroFez : MonoBehaviour
         }
     }
 
+    // Only the first entrance and the final exit cross the acoustic boundary.
+    // Intermediate doors/windows remain inside even if their visual panel flips.
+    float DestinoAudioPuerta(PuertaFaro puerta)
+    {
+        if (puerta == null) return MezclaInteriorAudio;
+        float primera = float.PositiveInfinity, ultima = float.NegativeInfinity;
+        foreach (Puerta p in puertas)
+        {
+            primera = Mathf.Min(primera, p.y);
+            ultima = Mathf.Max(ultima, p.y);
+        }
+        bool entrada = Mathf.Abs(puerta.altura - primera) < .05f;
+        bool salidaFinal = Mathf.Abs(puerta.altura - ultima) < .05f;
+        // Reversing through either boundary restores the other acoustic state.
+        if (entrada || salidaFinal) return MezclaInteriorAudio >= .5f ? 0f : 1f;
+        return 1f;
+    }
+
     // ---------------- GIRO (esquina o puerta) ----------------
     // dk = cuántas vistas gira (±1 en una esquina, 2 en una puerta). paredPuerta = -1 si es una esquina.
-    IEnumerator Transicion(bool m1, int k1, float u1, int dk, float duracion, int paredPuerta)
+    IEnumerator Transicion(bool m1, int k1, float u1, int dk, float duracion, int paredPuerta, PuertaFaro puertaAudio = null)
     {
         animando = true;
         bool esPuerta = paredPuerta >= 0;
+        // The visual side of a wall is independent from the acoustic interior.
+        float audioDesde = MezclaInteriorAudio;
+        float audioHasta = esPuerta ? DestinoAudioPuerta(puertaAudio) : audioDesde;
         bool m0 = adentro;
         int k0 = vista;
         float a0 = angulo, a1 = angulo + 90f * dk;
@@ -394,6 +417,7 @@ public class FaroFez : MonoBehaviour
         {
             t += Time.deltaTime / Mathf.Max(0.05f, duracion);
             float e = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t));
+            if (esPuerta) MezclaInteriorAudio = Mathf.Lerp(audioDesde, audioHasta, e);
             float a = Mathf.Lerp(a0, a1, e);
             pivote.localRotation = Quaternion.Euler(0f, a, 0f);
             Vector3 w = Quaternion.Euler(0f, a, 0f) * Vector3.Lerp(p0, p1, e);
@@ -405,6 +429,7 @@ public class FaroFez : MonoBehaviour
         }
 
         adentro = m1;
+        MezclaInteriorAudio = audioHasta;
         vista = k1;
         angulo = Mathf.Repeat(a1, 360f);
         pivote.localRotation = Quaternion.Euler(0f, angulo, 0f);

@@ -5,9 +5,16 @@ public sealed class HopeDeathAudio : MonoBehaviour
 {
     public HopeDeathSettings ajustes;
     AudioSource fuente;
+    HopeDeathNarrativeAudio narrativa;
     float ultimoDisparo = -10f;
     void Awake()
     {
+        if (gameObject.scene.name == "SampleScene")
+        {
+            narrativa = GetComponent<HopeDeathNarrativeAudio>();
+            if (narrativa == null) narrativa = gameObject.AddComponent<HopeDeathNarrativeAudio>();
+            return;
+        }
         if (ajustes == null) ajustes = Resources.Load<HopeDeathSettings>("HopeDeathSettings");
         var objeto = new GameObject("M - Muerte - 8bit Death Whirl");
         objeto.transform.SetParent(transform, false);
@@ -20,6 +27,7 @@ public sealed class HopeDeathAudio : MonoBehaviour
     }
     public void Reproducir(bool contactoMano = false)
     {
+        if (narrativa != null) { narrativa.Reproducir(contactoMano); return; }
         AudioClip clip = ajustes == null ? null : (contactoMano ? ajustes.sonidoMano : ajustes.sonidoCaida);
         float volumen = ajustes == null ? 0f : (contactoMano ? ajustes.volumenMano : ajustes.volumenCaida);
         if (clip == null)

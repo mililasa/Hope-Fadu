@@ -15,3 +15,9 @@ MonoBehaviour:
   sonido: {fileID: 8300000, guid: 6ea7e96461a952b687753c99f348538b, type: 3}
   volumenCanal: 0.145
   volumenFragmento: 0.153
+  variaciones:
+  - {fileID: 8300000, guid: 632d3410d82341a69ec74b2a82329539, type: 3}
+  - {fileID: 8300000, guid: adcdb3587dce4b01bc7ae6025ffe7416, type: 3}
+  - {fileID: 8300000, guid: f244b436b8974d72a97864f49c2fec31, type: 3}
+  - {fileID: 8300000, guid: 24483fa148b949b1a79911a9107a8643, type: 3}
+  - {fileID: 8300000, guid: 7b991e58326744deb2e1b4fa9bca7fad, type: 3}

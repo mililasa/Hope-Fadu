@@ -29,5 +29,6 @@ public static class HopeAudioRouting
         if (grupo != null) fuente.outputAudioMixerGroup = grupo;
         else if (avisados.Add(bus))
             Debug.LogWarning("Hope: no se pudo cargar el submixer para " + bus + ". RevisÃ¡ HopeMixer" + bus + " en Resources.", fuente);
+        HopeLighthouseExteriorAudio.Registrar(fuente);
     }
 }

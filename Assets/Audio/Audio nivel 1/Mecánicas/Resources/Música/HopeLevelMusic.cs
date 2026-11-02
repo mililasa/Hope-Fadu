@@ -17,6 +17,8 @@ public sealed class HopeLevelMusic : MonoBehaviour
 
     void Start()
     {
+        // Nivel 3 has its own door-controlled music, preserving levels 1 and 2.
+        if (gameObject.scene.name == "Nivel_3") { enabled = false; return; }
         jugador = GetComponent<PlayerController2D>();
         manos = FindObjectsOfType<HopeHandAudio>(true);
         if (ajustes == null) ajustes = Resources.Load<HopeMusicSettings>("HopeMusicSettings");
@@ -35,7 +37,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
         if (!soloFondo && salida == null) Debug.LogWarning("Hope: no se encontro el escenario de referencia de la puerta.", this);
         principal = CrearFuente("Musica Main", ajustes.musicaMain);
         paso = CrearFuente("Musica Paso de Nivel", ajustes.pasoDeNivel);
-        principal.volume = ajustes.volumenMain * HopeMusicTransition.GananciaFondo(gameObject.scene);
+        principal.volume = ajustes.volumenMain * HopeMusicTransition.GananciaFondo(gameObject.scene) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
         principal.Play();
     }
 
@@ -75,7 +77,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
         mezcla = Mathf.MoveTowards(mezcla, entrar ? 1f : 0f,
             Time.deltaTime / Mathf.Max(0.05f, ajustes.segundosFundido));
         // El volumen de Main se aplica en LateUpdate, despues del motivo de la mano.
-        paso.volume = ajustes.volumenPaso * mezcla;
+        paso.volume = ajustes.volumenPaso * mezcla * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
         if (!entrar && mezcla <= 0f && paso.isPlaying) paso.Stop();
     }
 
@@ -105,7 +107,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
         float tiempo = presencia > mezclaMano ? entrada : salidaMano;
         mezclaMano = Mathf.MoveTowards(mezclaMano, presencia, Time.deltaTime / Mathf.Max(0.01f, tiempo));
         // La mano desplaza Main; la mezcla de la cueva sigue teniendo su propio control.
-        principal.volume = ajustes.volumenMain * (1f - mezcla) * (1f - mezclaMano) * HopeMusicTransition.GananciaFondo(gameObject.scene);
+        principal.volume = ajustes.volumenMain * (1f - mezcla) * (1f - mezclaMano) * HopeMusicTransition.GananciaFondo(gameObject.scene) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
     }
 
     float DistanciaPuerta()

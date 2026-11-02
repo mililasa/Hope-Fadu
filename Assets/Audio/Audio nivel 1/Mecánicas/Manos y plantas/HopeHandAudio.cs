@@ -47,7 +47,7 @@ public sealed class HopeHandAudio : MonoBehaviour
         float duracion = objetivo > nivel ? ajustes.entrada : ajustes.salida;
         nivel = Mathf.MoveTowards(nivel, objetivo, Time.deltaTime / Mathf.Max(0.01f, duracion));
         if (objetivo > 0f && !fuente.isPlaying) fuente.Play();
-        fuente.volume = ajustes.volumen * nivel;
+        fuente.volume = ajustes.volumen * nivel * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
         if (nivel <= 0f && fuente.isPlaying) fuente.Stop();
     }
 

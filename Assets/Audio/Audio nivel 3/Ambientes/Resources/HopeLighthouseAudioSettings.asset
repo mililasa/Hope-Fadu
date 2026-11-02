@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b1263dc13342c2bb13972418e5c9bc, type: 3}
+  m_Name: HopeLighthouseAudioSettings
+  m_EditorClassIdentifier: 
+  ambientes: {fileID: 11400000, guid: f1f4a248974a4210950f7cc5714e0bca, type: 2}
+  guerra: {fileID: 11400000, guid: cf728362fa04483188585725038324a4, type: 2}
+  salidaAmbientes: {fileID: 24300010, guid: 2bd73e4dc32a4ba493edbb4356d68dd3, type: 2}
+  salidaGuerra: {fileID: 24300010, guid: e491009f12e2439c962bc8e16a13bd68, type: 2}
+  versionesInterior:
+  - exterior: {fileID: 8300000, guid: d9d95419001e421e9d3c46e6b9e69816, type: 3}
+    interior: {fileID: 8300000, guid: 2594b9407e264276ab93e5be8ce62f34, type: 3}
+  - exterior: {fileID: 8300000, guid: 49528e3d7e23436d87cb9f908e48f146, type: 3}
+    interior: {fileID: 8300000, guid: 4b0bdb7a85994bafacf37a936c78b019, type: 3}
+  - exterior: {fileID: 8300000, guid: 2504cab28ca253da962eed55d03e5427, type: 3}
+    interior: {fileID: 8300000, guid: f715df9eb6b54bcfa3f7a18cc9626ef5, type: 3}
+  - exterior: {fileID: 8300000, guid: 6a75c7a74e0a5a8a8b7fca8f73694897, type: 3}
+    interior: {fileID: 8300000, guid: 095036dd952e452c97117f6b6e3f1216, type: 3}
+  - exterior: {fileID: 8300000, guid: e670b99c3f5256288a7d8c706aea461f, type: 3}
+    interior: {fileID: 8300000, guid: 8a57ec4c29b54be4b9ed888f2d68b4e7, type: 3}
+  - exterior: {fileID: 8300000, guid: 5cd4018f462357aab3a90ccbf7641618, type: 3}
+    interior: {fileID: 8300000, guid: 86bde5b8f2c140b2b82f70352d0a520c, type: 3}
+  - exterior: {fileID: 8300000, guid: 473e3493dab554b0bbc4cdf1f2b5b141, type: 3}
+    interior: {fileID: 8300000, guid: 1da9945996a34afe81a4e59eb5b3ebf6, type: 3}
+  volumenInteriorAmbientesDb: -19.1
+  volumenInteriorGuerraDb: -20.1
+  corteInteriorHz: 850
+  corteExteriorHz: 22000
+  fundido: 0.6

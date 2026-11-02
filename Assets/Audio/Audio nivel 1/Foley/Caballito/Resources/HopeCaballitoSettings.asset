@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rechinidos:
   - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
-  - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
-  - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
+  - {fileID: 8300000, guid: 87edeb3ec86a4ac2a0c56e506ab09180, type: 3}
+  - {fileID: 8300000, guid: ef5c5e5618db4a1ea59fe9d5ce587363, type: 3}
   apoyo: {fileID: 8300000, guid: 2b6f3a32f5ea4606aab937efa3fca033, type: 3}
-  volumen: 0.03
+  volumen: 0.021
   volumenApoyo: 0.1
-  distanciaPlena: 2
-  distanciaMaxima: 11
+  distanciaPlena: 0.75
+  distanciaMaxima: 4.5
   panoramaMaximo: 0.55
   momentosNormal:
   - 0.08333

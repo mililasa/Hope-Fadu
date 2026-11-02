@@ -51,8 +51,8 @@ public sealed class HopeLevelAmbience : MonoBehaviour
     {
         if (viento == null) return;
         tiempo += Time.deltaTime;
-        viento.volume = ajustes.volumenViento * Mathf.Clamp01(tiempo);
-        presion.volume = ajustes.volumenPresion * Mathf.Clamp01(tiempo / 2f);
+        viento.volume = ajustes.volumenViento * Mathf.Clamp01(tiempo) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, false);
+        presion.volume = ajustes.volumenPresion * Mathf.Clamp01(tiempo / 2f) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, false);
         float objetivo = 0f;
         foreach (Renderer zona in zonas)
         {
@@ -66,7 +66,7 @@ public sealed class HopeLevelAmbience : MonoBehaviour
         // Una sola voz evita duplicar volumen si las zonas se superponen.
         intensidad = Mathf.MoveTowards(intensidad, objetivo, Time.deltaTime / Mathf.Max(0.1f, ajustes.fundidoArcos));
         if (objetivo > 0f && !arcos.isPlaying) arcos.Play();
-        arcos.volume = ajustes.volumenArcos * intensidad;
+        arcos.volume = ajustes.volumenArcos * intensidad * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, false);
         if (objetivo <= 0f && intensidad <= 0f && arcos.isPlaying) arcos.Stop();
     }
 }

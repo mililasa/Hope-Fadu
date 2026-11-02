@@ -10,10 +10,14 @@ public sealed class HopeJumpLanding : MonoBehaviour
     float tiempoAire, ignorarHasta;
 
     bool esNivel2, capaPausada;
+    bool esNivel1, esNivel3;
+    int ultimoSalto = -1;
     HopeLevel2CapeSettings ajustesCapaNivel2;
     void Awake()
     {
         jugador = GetComponent<PlayerController2D>();
+        esNivel1 = gameObject.scene.name == "SampleScene";
+        esNivel3 = gameObject.scene.name == "Nivel_3";
         esNivel2 = gameObject.scene.name == "Nivel_2";
         if (esNivel2)
         {
@@ -30,14 +34,14 @@ public sealed class HopeJumpLanding : MonoBehaviour
         if (capa == null) capa = Resources.Load<HopeFoleyClipSettings>("HopeCapeSettings");
         fuenteApoyo = Crear("F - Apoyos (canal 11)");
         fuenteSalto = Crear("F - Saltos (canal 12)");
-        fuenteCapa = Crear("F - Capa durante salto");
+        if (!esNivel1) fuenteCapa = Crear("F - Capa durante salto");
         if (esNivel2)
         {
             if (ajustesCapaNivel2 != null && ajustesCapaNivel2.salida != null)
                 fuenteCapa.outputAudioMixerGroup = ajustesCapaNivel2.salida;
             else Debug.LogError("Hope: falta el ajuste o la salida de Capa doble salto del nivel 2.", this);
         }
-        if (apoyos == null || saltos == null || capa == null)
+        if (apoyos == null || saltos == null || (!esNivel1 && capa == null))
             Debug.LogWarning("Hope: falta la configuracion de apoyos o saltos.", this);
         Reiniciar();
     }
@@ -88,6 +92,28 @@ public sealed class HopeJumpLanding : MonoBehaviour
             {
                 fuenteCapa.Stop(); fuenteCapa.volume = ajustesCapaNivel2.volumenCanal;
                 fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
+            }
+            return;
+        }
+        if (esNivel1 || esNivel3)
+        {
+            if (reproducirSaltoNormal && fuenteSalto != null && saltos != null)
+            {
+                var clips = saltos.variaciones;
+                if (clips != null && clips.Length > 0)
+                {
+                    int i = Random.Range(0, clips.Length);
+                    if (clips.Length > 1 && i == ultimoSalto) i = (i + Random.Range(1, clips.Length)) % clips.Length;
+                    ultimoSalto = i;
+                    fuenteSalto.volume = saltos.volumenCanal;
+                    if (clips[i] != null) fuenteSalto.PlayOneShot(clips[i], saltos.volumenFragmento);
+                }
+                else Reproducir(fuenteSalto, saltos);
+            }
+            if (esNivel3 && dobleSalto)
+            {
+                if (fuenteCapa != null) fuenteCapa.Stop();
+                Reproducir(fuenteCapa, capa);
             }
             return;
         }
