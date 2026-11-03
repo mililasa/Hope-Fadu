@@ -34,7 +34,10 @@ public sealed class HopeLevelMusic : MonoBehaviour
             if (destino != null) salida = destino.transform;
         }
         if (!soloFondo && salida == null) Debug.LogWarning("Hope: no se encontro el escenario de referencia de la puerta.", this);
-        principal = CrearFuente("Musica Main", ajustes.musicaMain);
+        AudioClip original = gameObject.scene.name == "SampleScene"
+            ? Resources.Load<AudioClip>("A - Hope_Pulso_Continuo_nivel1")
+            : null;
+        principal = CrearFuente("Musica Main", original != null ? original : ajustes.musicaMain);
         paso = CrearFuente("Musica Paso de Nivel", ajustes.pasoDeNivel);
         principal.volume = ajustes.volumenMain * HopeMusicTransition.GananciaFondo(gameObject.scene);
         principal.Play();

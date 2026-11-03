@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class MenuInicio : MonoBehaviour
 {
+    [SerializeField] UnityEngine.Audio.AudioMixerGroup salidaAudioMenu;
+    [SerializeField] AudioClip audioIntro;
     GameObject cartel;
     bool saliendo;
 
@@ -75,6 +77,6 @@ public class MenuInicio : MonoBehaviour
         if (!Input.anyKeyDown) return;
         saliendo = true;
         if (cartel != null) cartel.SetActive(false);
-        CinematicaInicio.Reproducir();
+        CinematicaInicio.Reproducir(salidaAudioMenu, audioIntro);
     }
 }

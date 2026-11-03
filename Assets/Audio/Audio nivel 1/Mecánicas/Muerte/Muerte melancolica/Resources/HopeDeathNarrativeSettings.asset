@@ -17,18 +17,18 @@ MonoBehaviour:
   lampara: {fileID: 8300000, guid: 8375115666104dd3b3f20f64a7478dfb, type: 3}
   entradaMano: {fileID: 8300000, guid: fc4ee62b7f6a4883a0e1e0148d8a2ad3, type: 3}
   entradaCaida: {fileID: 8300000, guid: 1c5da9582cb24a37b4a7628c97a8e9c2, type: 3}
-  volumenGeneral: 0.24
+  volumenGeneral: 1
   volumenPiano: 1
   volumenSoplo: 0
   volumenLampara: 1
   volumenEntrada: 1
-  fondoMusica: 0.32
-  fondoAmbientes: 0.55
-  bajada: 0.07
-  sostener: 0.65
+  fondoMusica: 0.08
+  fondoAmbientes: 0.2
+  bajada: 0.025
+  sostener: 1.5
   recuperacion: 1.2
   pulsoRoto: {fileID: 8300000, guid: e1f7eace7e064ef18fc11909b192f314, type: 3}
   electricidadMano: {fileID: 8300000, guid: c2e34fb5fa8048e8ba49c60225505ff4, type: 3}
   volumenPulsoRoto: 1
   volumenElectricidadMano: 1
-  fondoMusicaMano: 0.12
+  fondoMusicaMano: 0.06

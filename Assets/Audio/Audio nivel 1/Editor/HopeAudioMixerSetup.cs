@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[InitializeOnLoad]
 internal static class HopeAudioMixerSetup
 {
     const string Raiz = "Assets/Audio/Audio nivel 1/";
@@ -18,28 +17,16 @@ internal static class HopeAudioMixerSetup
         ("Musica", "M" + (char)0x00fa + "sica", "M" + (char)0x00fa + "sica")
     };
 
-    static HopeAudioMixerSetup()
-    {
-        EditorApplication.delayCall += ConfigurarAlImportar;
-    }
-
-    static void ConfigurarAlImportar()
-    {
-        if (EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode) return;
-        try { Configurar(); }
-        catch (Exception e) { Debug.LogError("Hope Audio Mixer: " + e); }
-    }
-
     [MenuItem("Hope/Audio/Configurar mezcladores")]
     public static void Configurar()
     {
-        const string generalPath = Raiz + "Mixer.mixer";
+        const string generalPath = Raiz + "Resources/Audio Nivel 1.mixer";
         AudioMixer general = AssetDatabase.LoadAssetAtPath<AudioMixer>(generalPath);
         if (general == null) throw new Exception("No se pudo abrir " + generalPath);
 
         foreach (var bus in Buses)
         {
-            string grupoPath = "Master/" + bus.grupo;
+            string grupoPath = "Audio Nivel 1/" + bus.grupo;
             AudioMixerGroup destino = BuscarGrupo(general, grupoPath);
             if (destino == null)
             {
@@ -77,7 +64,7 @@ internal static class HopeAudioMixerSetup
             EditorUtility.SetDirty(sub);
         }
         AssetDatabase.SaveAssets();
-        Debug.Log("Hope Audio Mixer: cuatro submixers conectados al Mixer general. Los AudioSource se asignan por categorÃ­a al crearse.");
+        Debug.Log("Hope Audio Mixer: cuatro submixers conectados a Audio Nivel 1. Los AudioSource se asignan por categorÃ­a al crearse.");
     }
 
     static AudioMixerGroup BuscarGrupo(AudioMixer mixer, string ruta)

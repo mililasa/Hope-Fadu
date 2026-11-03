@@ -19,7 +19,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9114534156934f2d90d032ee07db7aec, type: 3}
     - {fileID: 8300000, guid: 12d9017bcaea4ed79d481c9d155c9c54, type: 3}
     - {fileID: 8300000, guid: 1d492e15900247cdb833da1708ee11bc, type: 3}
-    salida: {fileID: 24300002, guid: 672012de8d744817b5538618d228ab93, type: 2}
+    salida: {fileID: 24309002, guid: 672012de8d744817b5538618d228ab93, type: 2}
     volumen: 0.436
     distanciaPlena: 3
     distanciaMaxima: 12
@@ -33,8 +33,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f97ee35787b74924be1f7d35f0853043, type: 3}
     - {fileID: 8300000, guid: 8ff2008ff237412e89a35cec1c5a7c27, type: 3}
     - {fileID: 8300000, guid: 85ccc61cc0f642809dba0b64b5e521d5, type: 3}
-    salida: {fileID: 24300002, guid: 672012de8d744817b5538618d228ab93, type: 2}
-    volumen: 0.65
+    salida: {fileID: 24309002, guid: 672012de8d744817b5538618d228ab93, type: 2}
+    volumen: 0.792
     distanciaPlena: 3
     distanciaMaxima: 12
     entrada: 0.12
@@ -48,7 +48,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 975acf604470403b9ab0949cccd53051, type: 3}
     - {fileID: 8300000, guid: 65241bacbfd3420eb8299f6cc04584df, type: 3}
     - {fileID: 8300000, guid: 3864d98952fb40859e2e3da1b0117d93, type: 3}
-    salida: {fileID: 24300002, guid: 672012de8d744817b5538618d228ab93, type: 2}
+    salida: {fileID: 24309002, guid: 672012de8d744817b5538618d228ab93, type: 2}
     volumen: 0.65
     distanciaPlena: 3
     distanciaMaxima: 12
@@ -60,7 +60,7 @@ MonoBehaviour:
     habilitada: 1
     clips:
     - {fileID: 8300000, guid: 8fa6dd6b478349ab9b135aa5160594ec, type: 3}
-    salida: {fileID: 24300002, guid: abdb42975b77e6d4d9a04d7443c716bd, type: 2}
+    salida: {fileID: 24309006, guid: ce389bf715bb41fda3cc4c240022cc17, type: 2}
     volumen: 1
     distanciaPlena: 3
     distanciaMaxima: 12

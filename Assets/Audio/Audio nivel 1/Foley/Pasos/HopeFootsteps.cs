@@ -6,6 +6,7 @@ public sealed class HopeFootsteps : MonoBehaviour
     public HopeFootstepSettings ajustes;
     PlayerController2D jugador;
     AudioSource fuente;
+    FaroFez faro;
     Vector3 anterior;
     float recorrido;
     bool primerPasoEmitido;
@@ -29,6 +30,7 @@ public sealed class HopeFootsteps : MonoBehaviour
         fuente.loop = false;
         fuente.spatialBlend = 0f;
         fuente.dopplerLevel = 0f;
+        if (gameObject.scene.name == "Nivel_3") faro = FindObjectOfType<FaroFez>();
         anterior = transform.position;
     }
 
@@ -73,6 +75,20 @@ public sealed class HopeFootsteps : MonoBehaviour
         ultimo = indice;
         if (ajustes.pasos[indice] == null) return;
         fuente.volume = ajustes.volumenCanal;
-        fuente.PlayOneShot(ajustes.pasos[indice], Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax));
+        float intensidad = Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax);
+        HopeSurfaceMix.Reproducir(fuente, ajustes.pasos[indice], intensidad);
+        float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
+        if (ajustes.ataquesAdoquin != null && indice < ajustes.ataquesAdoquin.Length &&
+            ajustes.ataquesAdoquin[indice] != null)
+        {
+            float nivel = Mathf.Lerp(ajustes.ataqueExterior, ajustes.ataqueInterior, interior);
+            fuente.PlayOneShot(ajustes.ataquesAdoquin[indice], intensidad * nivel);
+        }
+        if (ajustes.reverbsAdoquin != null && indice < ajustes.reverbsAdoquin.Length &&
+            ajustes.reverbsAdoquin[indice] != null)
+        {
+            float nivel = Mathf.Lerp(ajustes.reverbExterior, ajustes.reverbInterior, interior);
+            fuente.PlayOneShot(ajustes.reverbsAdoquin[indice], intensidad * nivel);
+        }
     }
 }

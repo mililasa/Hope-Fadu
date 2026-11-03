@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mixer Guerra Exterior Faro
-  m_OutputGroup: {fileID: 24300002, guid: 84f92bf859d4ab747a142b1eedf286b2, type: 2}
+  m_OutputGroup: {fileID: 24309023, guid: db6d6b1b1eb447f997e8f305279d8048, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}

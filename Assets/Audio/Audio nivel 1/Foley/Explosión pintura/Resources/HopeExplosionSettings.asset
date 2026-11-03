@@ -15,10 +15,10 @@ MonoBehaviour:
   detonacion: {fileID: 8300000, guid: e89234fbbf9a71b419529803ef47b219, type: 3}
   energia: {fileID: 8300000, guid: 1614902139922cd4d9f7d9f8bc6ffa1d, type: 3}
   pintura: {fileID: 8300000, guid: 0d7e40a80ab76494183db0fbb6c2072e, type: 3}
-  volumenGeneral: 0.25
-  volumenDetonacion: 0.85
-  volumenEnergia: 0.101192885
-  volumenPintura: 0.4
+  volumenGeneral: 0.188
+  volumenDetonacion: 0.755
+  volumenEnergia: 0.079
+  volumenPintura: 0.364
   distanciaPlena: 4
   distanciaMaxima: 18
   panoramaMaximo: 0.5

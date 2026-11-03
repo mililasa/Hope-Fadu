@@ -67,7 +67,11 @@ public sealed class HopeMusicTransition : MonoBehaviour
         var go = new GameObject("Musica de salida - continua entre niveles"); go.transform.SetParent(transform, false);
         fuente = go.AddComponent<AudioSource>(); fuente.playOnAwake = false;
         fuente.loop = true; fuente.clip = musica.pasoDeNivel; fuente.spatialBlend = 0; fuente.dopplerLevel = 0;
-        HopeAudioRouting.Asignar(fuente, HopeAudioBus.Musica); fuente.volume = 0;
+        var mixer = Resources.Load<UnityEngine.Audio.AudioMixer>("HopeMixerTransiciones");
+        var grupos = mixer != null ? mixer.FindMatchingGroups("Master") : null;
+        if (grupos != null && grupos.Length > 0) fuente.outputAudioMixerGroup = grupos[0];
+        else HopeAudioRouting.Asignar(fuente, HopeAudioBus.Musica);
+        fuente.volume = 0;
         return true;
     }
     void ReproducirSiHaceFalta()

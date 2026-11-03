@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entrada: {fileID: 8300000, guid: 73d9c33722754f0ebbcad0cb212544f0, type: 3}
   salida: {fileID: 8300000, guid: d2804b44e1984cdda3ea02a4ea31c096, type: 3}
-  salidaFoley: {fileID: 24300002, guid: 672012de8d744817b5538618d228ab93, type: 2}
-  volumenEntrada: 0.8
-  volumenSalida: 0.8
+  salidaFoley: {fileID: 24309001, guid: 672012de8d744817b5538618d228ab93, type: 2}
+  volumenEntrada: 1
+  volumenSalida: 1

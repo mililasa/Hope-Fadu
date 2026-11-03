@@ -181,6 +181,7 @@ public class PlayerController2D : MonoBehaviour
         {
             if (gameObject.scene.name == "Nivel_2")
             {
+                if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
                 foleySalto = GetComponent<HopeJumpLanding>();
                 if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
             }
