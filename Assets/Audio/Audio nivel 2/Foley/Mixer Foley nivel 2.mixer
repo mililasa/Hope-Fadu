@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mixer Foley nivel 2
-  m_OutputGroup: {fileID: 24300002, guid: 06bc0d2a42bbdd74489cee593689a6ac, type: 2}
+  m_OutputGroup: {fileID: 24309001, guid: ce389bf715bb41fda3cc4c240022cc17, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
@@ -28,6 +28,10 @@ AudioMixerController:
     - 3f815a9c6bea45139f3999bdc9fd7d35
     - 27fb1b56d9fb4fdf92e75e6870e3b504
     - c328aee6a01b47dfb380969491931c6c
+    - 04be08f3d21043aa86209b7772c15513
+    - 32d3ab68a5ab4147a71cec555db4253b
+    - f2bf84cd65154a4b84bddcfc27272d03
+    - e09d9f8a00224997a22a207788bdfcc4
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -41,6 +45,10 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 4b7b9b8a25af4b2c822edfa629fe4938
   m_Children:
+  - {fileID: 24309003}
+  - {fileID: 24309002}
+  - {fileID: 24309001}
+  - {fileID: 24309000}
   - {fileID: 24300200}
   - {fileID: 24300210}
   - {fileID: 24300500}
@@ -401,3 +409,135 @@ AudioMixerSnapshotController:
     373dbc151d584fd0be38032ea357ea7a: 0
     31729404984643d295578ff490f30131: 1
   m_TransitionOverrides: {}
+--- !u!243 &24309000
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Apoyos
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 04be08f3d21043aa86209b7772c15513
+  m_Children: []
+  m_Volume: 0e4bc45bafc949b087935e9646219502
+  m_Pitch: 6a286bc785cd419cba610be816f87903
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24409000}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24409000
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 27cbebc6a19b4423938a02fd2b1c8eeb
+  m_EffectName: Attenuation
+  m_MixLevel: a4c98d95c01a47e3895f26db40aa4aba
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &24309001
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Barriles esconderse
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 32d3ab68a5ab4147a71cec555db4253b
+  m_Children: []
+  m_Volume: 52d351b29942461da6835387792e8326
+  m_Pitch: b33f11c0f6d94352ae0def97edee327c
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24409001}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24409001
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: f5544bab867f41e3bfa598ee106fa732
+  m_EffectName: Attenuation
+  m_MixLevel: dc2ab0fd995748cf99068a7a424beb2a
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &24309002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemigo Hope V2
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: f2bf84cd65154a4b84bddcfc27272d03
+  m_Children: []
+  m_Volume: ac50feb629f84991967b4110bd855b3e
+  m_Pitch: 02b4a5344afa40cda620af0717df42af
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24409002}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24409002
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 07783c1f797e4c628aa5ffa9caed36f4
+  m_EffectName: Attenuation
+  m_MixLevel: 73bee5b4f1a24f7d91a2d87b585a1b12
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &24309003
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cajas de madera
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: e09d9f8a00224997a22a207788bdfcc4
+  m_Children: []
+  m_Volume: 3ff89d7c173f44fda417925519a0f207
+  m_Pitch: 7d35a3b87e8b4314847a7c1fc8a15460
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24409003}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24409003
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 919f5c59639b45d39c574546cd6f7192
+  m_EffectName: Attenuation
+  m_MixLevel: 5fa8a9e9fa3e42b2a3c9809cac93f548
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

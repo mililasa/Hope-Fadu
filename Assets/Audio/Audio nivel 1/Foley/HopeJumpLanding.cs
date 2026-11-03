@@ -11,7 +11,17 @@ public sealed class HopeJumpLanding : MonoBehaviour
 
     bool esNivel2, capaPausada;
     bool esNivel1, esNivel3;
-    int ultimoSalto = -1;
+    int ultimoSalto = -1, ultimoApoyo = -1;
+    FaroFez faro;
+    int ultimaCapa = -1;
+    static readonly Vector2[] rocesCapa =
+    {
+        new Vector2(.93f, .83f),
+        new Vector2(.97f, .96f),
+        new Vector2(1f, .88f),
+        new Vector2(1.04f, 1f),
+        new Vector2(1.08f, .79f)
+    };
     HopeLevel2CapeSettings ajustesCapaNivel2;
     void Awake()
     {
@@ -22,28 +32,33 @@ public sealed class HopeJumpLanding : MonoBehaviour
         if (esNivel2)
         {
             ajustesCapaNivel2 = Resources.Load<HopeLevel2CapeSettings>("HopeLevel2CapeSettings");
-            fuenteCapa = Crear("F - Capa doble salto nivel 2");
+            fuenteCapa = Crear("F - Capa durante salto nivel 2");
             if (ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null && ajustesCapaNivel2.salida != null)
                 fuenteCapa.outputAudioMixerGroup = ajustesCapaNivel2.salida;
             else Debug.LogError("Hope: falta el sonido o la salida de capa de Nivel 2.", this);
             Reiniciar();
             return;
         }
-        if (apoyos == null) apoyos = Resources.Load<HopeFoleyClipSettings>("HopeLandingSettings");
+        if (apoyos == null) apoyos = Resources.Load<HopeFoleyClipSettings>(esNivel3 ? "HopeLandingSettingsNivel3" : "HopeLandingSettings");
         if (saltos == null) saltos = Resources.Load<HopeFoleyClipSettings>(gameObject.scene.name == "Nivel_3" ? "HopeJumpSettingsFaroConservado" : "HopeJumpSettings");
-        if (capa == null) capa = Resources.Load<HopeFoleyClipSettings>("HopeCapeSettings");
+        if (capa == null) capa = Resources.Load<HopeFoleyClipSettings>(esNivel3 ? "HopeCapeSettingsNivel3" : "HopeCapeSettings");
         fuenteApoyo = Crear("F - Apoyos (canal 11)");
         fuenteSalto = Crear("F - Saltos (canal 12)");
-        if (!esNivel1) fuenteCapa = Crear("F - Capa durante salto");
+        fuenteCapa = Crear("F - Capa durante salto");
         if (esNivel2)
         {
             if (ajustesCapaNivel2 != null && ajustesCapaNivel2.salida != null)
                 fuenteCapa.outputAudioMixerGroup = ajustesCapaNivel2.salida;
             else Debug.LogError("Hope: falta el ajuste o la salida de Capa doble salto del nivel 2.", this);
         }
-        if (apoyos == null || saltos == null || (!esNivel1 && capa == null))
+        if (apoyos == null || saltos == null || capa == null)
             Debug.LogWarning("Hope: falta la configuracion de apoyos o saltos.", this);
         Reiniciar();
+    }
+
+    void Start()
+    {
+        if (esNivel3) faro = FindObjectOfType<FaroFez>();
     }
 
     AudioSource Crear(string nombre)
@@ -77,21 +92,50 @@ public sealed class HopeJumpLanding : MonoBehaviour
         if (!jugador.EnSueloParaFoley) tiempoAire += Time.deltaTime;
         else
         {
-            // Filtra pequeÃ±os cortes del sensor al caminar sobre bordes.
+            // Filtra pequeÃƒÂ±os cortes del sensor al caminar sobre bordes.
             if (tiempoAire >= 0.08f && !HopeCorpsePileAudio.TryPlayContacto(jugador, true))
-                Reproducir(fuenteApoyo, apoyos);
+                ReproducirApoyo();
             tiempoAire = 0f;
         }
+    }
+
+    void ReproducirApoyo()
+    {
+        var clips = apoyos != null ? apoyos.variaciones : null;
+        if (!esNivel3 || clips == null || clips.Length == 0)
+        {
+            if (esNivel1 && apoyos != null && fuenteApoyo != null)
+            {
+                fuenteApoyo.volume = apoyos.volumenCanal;
+                HopeSurfaceMix.Reproducir(fuenteApoyo, apoyos.sonido, apoyos.volumenFragmento);
+            }
+            else Reproducir(fuenteApoyo, apoyos);
+            return;
+        }
+
+        int indice = Random.Range(0, clips.Length);
+        if (clips.Length > 1 && indice == ultimoApoyo)
+            indice = (indice + Random.Range(1, clips.Length)) % clips.Length;
+        ultimoApoyo = indice;
+        fuenteApoyo.volume = apoyos.volumenCanal;
+        if (clips[indice] != null)
+            fuenteApoyo.PlayOneShot(clips[indice], apoyos.volumenFragmento);
+
+        var colas = apoyos.reverbsApoyo;
+        if (colas == null || indice >= colas.Length || colas[indice] == null) return;
+        float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
+        float reverb = Mathf.Lerp(apoyos.reverbApoyoExterior, apoyos.reverbApoyoInterior, interior);
+        fuenteApoyo.PlayOneShot(colas[indice], apoyos.volumenFragmento * reverb);
     }
 
     public void Saltar(bool reproducirSaltoNormal = true, bool dobleSalto = false)
     {
         if (esNivel2)
         {
-            if (dobleSalto && fuenteCapa != null && ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null)
+            if (reproducirSaltoNormal && !dobleSalto && fuenteCapa != null && ajustesCapaNivel2 != null && ajustesCapaNivel2.activarCapa && ajustesCapaNivel2.sonido != null)
             {
                 fuenteCapa.Stop(); fuenteCapa.volume = ajustesCapaNivel2.volumenCanal;
-                fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
+                ReproducirCapa(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
             }
             return;
         }
@@ -110,10 +154,14 @@ public sealed class HopeJumpLanding : MonoBehaviour
                 }
                 else Reproducir(fuenteSalto, saltos);
             }
-            if (esNivel3 && dobleSalto)
+            if (reproducirSaltoNormal && !dobleSalto)
             {
                 if (fuenteCapa != null) fuenteCapa.Stop();
-                Reproducir(fuenteCapa, capa);
+                if (fuenteCapa != null && capa != null && capa.activarCapa)
+                {
+                    fuenteCapa.volume = capa.volumenCanal;
+                    ReproducirCapa(capa.sonido, capa.volumenFragmento);
+                }
             }
             return;
         }
@@ -126,6 +174,18 @@ public sealed class HopeJumpLanding : MonoBehaviour
             fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
         }
         else Reproducir(fuenteCapa, capa);
+    }
+
+    void ReproducirCapa(AudioClip clip, float volumen)
+    {
+        if (clip == null) return;
+        int indice = Random.Range(0, rocesCapa.Length);
+        if (indice == ultimaCapa)
+            indice = (indice + Random.Range(1, rocesCapa.Length)) % rocesCapa.Length;
+        ultimaCapa = indice;
+        Vector2 roce = rocesCapa[indice];
+        fuenteCapa.pitch = roce.x;
+        fuenteCapa.PlayOneShot(clip, volumen * roce.y);
     }
 
     public void Reiniciar()

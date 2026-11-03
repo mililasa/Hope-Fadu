@@ -6,12 +6,13 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
 {
     public HopeLevel2FootstepSettings ajustes;
     PlayerController2D jugador;
-    AudioSource fuente;
+    AudioSource fuente, fuenteMadera;
     Vector3 anterior;
     float recorrido;
     bool primerPaso, pausado;
     int ultimo = -1, ultimaCaja = -1;
-    Collider2D pisoCajas;
+    HopeWoodCrateSurface cajas;
+    bool pasoEnCajas;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Preparar()
@@ -32,6 +33,11 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
     void Start()
     {
         jugador = GetComponent<PlayerController2D>();
+        foreach (var raiz in gameObject.scene.GetRootGameObjects())
+        {
+            cajas = raiz.GetComponentInChildren<HopeWoodCrateSurface>();
+            if (cajas != null) break;
+        }
         if (ajustes == null) ajustes = Resources.Load<HopeLevel2FootstepSettings>("HopeLevel2FootstepSettings");
         if (jugador == null || ajustes == null || ajustes.salida == null || ajustes.pasos == null || ajustes.pasos.Length == 0)
         { Debug.LogError("Hope: faltan ajustes, clips o salida de pasos de nivel 2.", this); enabled = false; return; }
@@ -46,9 +52,17 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
         fuente.dopplerLevel = 0;
         fuente.volume = 1;
         fuente.outputAudioMixerGroup = ajustes.salida;
+        if (ajustes.salidaCajas != null)
+        {
+            var objetoMadera = new GameObject("F - Cajas de madera nivel 2");
+            objetoMadera.transform.SetParent(transform, false);
+            fuenteMadera = objetoMadera.AddComponent<AudioSource>();
+            fuenteMadera.playOnAwake = false;
+            fuenteMadera.spatialBlend = 0f;
+            fuenteMadera.dopplerLevel = 0f;
+            fuenteMadera.outputAudioMixerGroup = ajustes.salidaCajas;
+        }
         anterior = transform.position;
-        var cajas = GameObject.Find("PisoBox/piso3");
-        if (cajas != null && cajas.scene == gameObject.scene) pisoCajas = cajas.GetComponent<Collider2D>();
     }
 
     void LateUpdate()
@@ -58,6 +72,10 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
         if (pausa != pausado)
         {
             if (pausa) fuente.Pause(); else fuente.UnPause();
+            if (fuenteMadera != null)
+            {
+                if (pausa) fuenteMadera.Pause(); else fuenteMadera.UnPause();
+            }
             pausado = pausa;
         }
         Vector3 actual = transform.position;
@@ -70,27 +88,34 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
         {
             recorrido = 0;
             primerPaso = false;
-            if (teletransporte) fuente.Stop();
+            if (teletransporte)
+            {
+                fuente.Stop();
+                if (fuenteMadera != null) fuenteMadera.Stop();
+            }
             return;
         }
-        if (!primerPaso)
+        bool sobreCajas = SobreCajas();
+        if (!primerPaso || sobreCajas != pasoEnCajas)
         {
             if (distancia <= .0001f) return;
+            if (primerPaso && sobreCajas) fuente.Stop();
             primerPaso = true;
+            pasoEnCajas = sobreCajas;
             recorrido = 0;
-            Paso();
+            Paso(sobreCajas);
             return;
         }
         recorrido += distancia;
         float zancada = Mathf.Max(.05f, Mathf.Abs(jugador.moveSpeed) * ajustes.segundosEntrePasos);
         if (recorrido < zancada) return;
         recorrido %= zancada;
-        Paso();
+        Paso(sobreCajas);
     }
 
-    void Paso()
+    void Paso(bool sobreCajas)
     {
-        bool madera = SobreCajas() && ajustes.pasosCajas != null && ajustes.pasosCajas.Length > 0;
+        bool madera = sobreCajas && ajustes.pasosCajas != null && ajustes.pasosCajas.Length > 0;
         AudioClip[] clips = madera ? ajustes.pasosCajas : ajustes.pasos;
         int anteriorIndice = madera ? ultimaCaja : ultimo;
         int cantidad = clips.Length;
@@ -101,16 +126,11 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
         float maximo = Mathf.Max(ajustes.intensidadMinima, ajustes.intensidadMaxima);
         // OneShot permite superponer las colas de sala sin cortar la pisada anterior.
         var clip = clips[indice];
-        if (clip != null) fuente.PlayOneShot(clip, Random.Range(minimo, maximo) * (madera ? ajustes.volumenCajas : 1f));
+        if (clip != null) HopeSurfaceMix.Reproducir(madera && fuenteMadera != null ? fuenteMadera : fuente, clip, Random.Range(minimo, maximo) * (madera ? ajustes.volumenCajas : 1f));
     }
     bool SobreCajas()
     {
-        if (pisoCajas == null || jugador.groundCheck == null) return false;
-        Vector2 pie = jugador.groundCheck.position;
-        // Solo el relieve de cajas del borde piso3 (el resto del borde es metal).
-        float x = pisoCajas.transform.InverseTransformPoint(pie).x;
-        if (x < -9.34f || x > -4.76f) return false;
-        RaycastHit2D apoyo = Physics2D.Raycast(pie + Vector2.up * .20f, Vector2.down, .48f, jugador.groundLayer);
-        return apoyo.collider == pisoCajas && apoyo.normal.y > .25f;
+        return cajas != null && jugador.groundCheck != null &&
+               cajas.ContieneApoyo(jugador.groundCheck.position);
     }
 }

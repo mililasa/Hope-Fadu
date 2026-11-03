@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3e8a3a58655e3f8722f53e57fc8c08, type: 3}
   m_Name: HopeCapeSettings
   m_EditorClassIdentifier: 
+  activarCapa: 0
   sonido: {fileID: 8300000, guid: 069358f05489d7e4da285f25d1bcb9fc, type: 3}
-  volumenCanal: 0.48
+  variaciones: []
+  volumenCanal: 0.1
   volumenFragmento: 0.45
+  reverbsApoyo: []
+  reverbApoyoExterior: 0.08
+  reverbApoyoInterior: 0.65

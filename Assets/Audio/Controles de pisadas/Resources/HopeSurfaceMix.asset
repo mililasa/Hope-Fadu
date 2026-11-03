@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f99621fd026433b9c71160488c21c20, type: 3}
+  m_Name: HopeSurfaceMix
+  m_EditorClassIdentifier: 
+  tierraNivel1:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: ad384b8c2b789f743a75c5c7fc5c63ac, type: 3}
+      suave: {fileID: 8300000, guid: 2f76ca06a0d740da9cf8259235018045, type: 3}
+      cola: {fileID: 8300000, guid: 8ea1125b2caa4205a40e52503080d981, type: 3}
+    - original: {fileID: 8300000, guid: f24fe6756bb62a44bb3ade4e2b7429d4, type: 3}
+      suave: {fileID: 8300000, guid: e54f013a335a44ae8ded2c35072788b0, type: 3}
+      cola: {fileID: 8300000, guid: b1f8368626cb41819f30dd64cfb3b5b5, type: 3}
+    - original: {fileID: 8300000, guid: fbcac05a447cf304ca4a2525e394915d, type: 3}
+      suave: {fileID: 8300000, guid: b997f2f49f7a4f708efd452327e63a07, type: 3}
+      cola: {fileID: 8300000, guid: 1bfb2623deee463a842511065252b23e, type: 3}
+    - original: {fileID: 8300000, guid: 07cb6247b25a3074d8e25c32b531967c, type: 3}
+      suave: {fileID: 8300000, guid: 47fadbd573c14c0c95bf3da027409552, type: 3}
+      cola: {fileID: 8300000, guid: d82b95bb5e5a487aa605180b461943af, type: 3}
+    - original: {fileID: 8300000, guid: 2d03ac01d207bdd4fb8356864e4ba0ee, type: 3}
+      suave: {fileID: 8300000, guid: 9868acfe46f24c129cde121f9cee4a0a, type: 3}
+      cola: {fileID: 8300000, guid: ed2d83af660f45d8bb925dc6117faf5a, type: 3}
+  maderaNivel1:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: a3d5dbffbcf145539add5cc643bd4d2d, type: 3}
+      suave: {fileID: 8300000, guid: 8e91596d948f4642bad50e65d58cb22e, type: 3}
+      cola: {fileID: 8300000, guid: 5836f3fffe7743139bf65db2fa0993a1, type: 3}
+    - original: {fileID: 8300000, guid: d74057617e4d4fd78c8379e4f4e3e23d, type: 3}
+      suave: {fileID: 8300000, guid: 6dbc9aa6f75245b48f13521f563a8e51, type: 3}
+      cola: {fileID: 8300000, guid: 16334487fac84eaead70783da345036d, type: 3}
+    - original: {fileID: 8300000, guid: 68c9bccf83fc44558573920f47987d69, type: 3}
+      suave: {fileID: 8300000, guid: 77dbf98da9ac4b07893e58b39c4a6fc5, type: 3}
+      cola: {fileID: 8300000, guid: 1b524b1c630a433ab189e4d10886b857, type: 3}
+    - original: {fileID: 8300000, guid: 14bfddfee3774ec88df7c72841619df2, type: 3}
+      suave: {fileID: 8300000, guid: 55cec2402de5432fb9f0af397e242d30, type: 3}
+      cola: {fileID: 8300000, guid: 90c38b0e5eb3412fa99f27ad97331fb6, type: 3}
+    - original: {fileID: 8300000, guid: d2da79c6c93047b08574252ef1618ec3, type: 3}
+      suave: {fileID: 8300000, guid: d071fb7a042b426fafc94aa52fe2cc96, type: 3}
+      cola: {fileID: 8300000, guid: 02bd8c3f4b2e404fb8ff0974cefe2bc9, type: 3}
+  apoyosNivel1:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: a2c176fb2b9355b41b409869ed209202, type: 3}
+      suave: {fileID: 8300000, guid: 8894424281c54f74b53c0a757da33715, type: 3}
+      cola: {fileID: 8300000, guid: 8e6fb70af7b54ef8b3ff44d901f08b61, type: 3}
+  metalNivel2:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: 56f3d0eb5ab94625913c35461305d155, type: 3}
+      suave: {fileID: 8300000, guid: b3a7128814d94e02a819c95c69526674, type: 3}
+      cola: {fileID: 8300000, guid: a8a063668fe840c286456e89e4650668, type: 3}
+    - original: {fileID: 8300000, guid: 0caa4dac374145ebb80d9d7dfba9643e, type: 3}
+      suave: {fileID: 8300000, guid: 5ffe2dca25a74422b992b6a7ba5785d1, type: 3}
+      cola: {fileID: 8300000, guid: ebac1be2759a4d7799b3d26baf883a8a, type: 3}
+    - original: {fileID: 8300000, guid: 2dadd34c9151457e8a15d738e3087fec, type: 3}
+      suave: {fileID: 8300000, guid: 25dbb6e503bf4dde8f3903d5b8bfd911, type: 3}
+      cola: {fileID: 8300000, guid: 62a635b911ff4bf6b182fc113a0699ae, type: 3}
+    - original: {fileID: 8300000, guid: d486eb706c25488190d1a4b173ae120a, type: 3}
+      suave: {fileID: 8300000, guid: 333022a19523471c8ce985f6817469da, type: 3}
+      cola: {fileID: 8300000, guid: e04523c908ea463484d6514fe8ac6c21, type: 3}
+    - original: {fileID: 8300000, guid: 4ad8ae8532864fdbb21edc9807d2e4e2, type: 3}
+      suave: {fileID: 8300000, guid: 3f45a4c4a8804076a4888db4a098214c, type: 3}
+      cola: {fileID: 8300000, guid: 32238085f4064503b146ec359469a01a, type: 3}
+  cajasNivel2:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: d3e833e00c2f4ee08576ff16fa76e005, type: 3}
+      suave: {fileID: 8300000, guid: e62aef6e17814003b487fafcec9c1b0c, type: 3}
+      cola: {fileID: 8300000, guid: a57e68dd2eb7488e95cefd554e193f69, type: 3}
+    - original: {fileID: 8300000, guid: ddf5e65d2b1e42efb015c28e73cf2eb7, type: 3}
+      suave: {fileID: 8300000, guid: 7e4108d0e92244a39c58173048e1ccfb, type: 3}
+      cola: {fileID: 8300000, guid: 63f2ae60d0af4420aac6ed944be55acb, type: 3}
+    - original: {fileID: 8300000, guid: b82c5b529e064142998532701211c5a0, type: 3}
+      suave: {fileID: 8300000, guid: 4179e3e3ad554bccbf40528edd8f3e47, type: 3}
+      cola: {fileID: 8300000, guid: 5f6258875481431b997675c83b5657da, type: 3}
+    - original: {fileID: 8300000, guid: c766f2e8e9a74219bd991f584b683140, type: 3}
+      suave: {fileID: 8300000, guid: 88903e1f07d549b2b76f5cadac364b9e, type: 3}
+      cola: {fileID: 8300000, guid: 6c1cc5378ee34fbdb81e588df063ab7a, type: 3}
+    - original: {fileID: 8300000, guid: ab03c74245874bddba34190efed5300d, type: 3}
+      suave: {fileID: 8300000, guid: ba0ecc2c32a54f0fb0f2dee4ceee9f76, type: 3}
+      cola: {fileID: 8300000, guid: c7b185a64cf4416da4fadd19d5dc1fd7, type: 3}
+  apoyosNivel2:
+    ataque: 1
+    reverb: 0
+    tomas:
+    - original: {fileID: 8300000, guid: 415d6e44fd4d49b98eb7c3d1ed700a5c, type: 3}
+      suave: {fileID: 8300000, guid: 683482c8769549e98022ef2c52d6b4e9, type: 3}
+      cola: {fileID: 8300000, guid: 7a193afec33a4fb3bd5a2c00a16f2b0c, type: 3}
+    - original: {fileID: 8300000, guid: 53e5c8cfc84c49aca95cd267574f6911, type: 3}
+      suave: {fileID: 8300000, guid: 13ae798492894398b6cc3093fac86bd9, type: 3}
+      cola: {fileID: 8300000, guid: 1ac63625a14a43ef806fc5c5b2d4a266, type: 3}
+    - original: {fileID: 8300000, guid: 6f81ba785b25426ca716fbbfb590bf62, type: 3}
+      suave: {fileID: 8300000, guid: ac57f3a870564d718eaf4a48a3ae1264, type: 3}
+      cola: {fileID: 8300000, guid: 6773fff47215481f8fd91ae4ac583a91, type: 3}
+    - original: {fileID: 8300000, guid: 42189e2f27fa4946a1e9d1f6bcd3d44c, type: 3}
+      suave: {fileID: 8300000, guid: 40dc59ee72b84f0b9ba5683f5e4667f4, type: 3}
+      cola: {fileID: 8300000, guid: 8f7e409f47904ceea31b8173009291a8, type: 3}
+    - original: {fileID: 8300000, guid: 924753ee975b47d58c7be05833429ca6, type: 3}
+      suave: {fileID: 8300000, guid: 74f9915dea2a4056a0de3af9a145f428, type: 3}
+      cola: {fileID: 8300000, guid: 3e85bbba8a6246558c591b232f3ed511, type: 3}

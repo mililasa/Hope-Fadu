@@ -23,14 +23,14 @@ MonoBehaviour:
   volumenPianoRoto: 1
   volumenPulsoRoto: 1
   volumenElectricidadMano: 1
-  fondoMusicaMano: 0.239
-  volumenGeneral: 0.708
+  fondoMusicaMano: 0.06
+  volumenGeneral: 1
   volumenPiano: 1
   volumenSoplo: 0
   volumenLampara: 1
   volumenEntrada: 1
-  fondoMusica: 0.32
-  fondoAmbientes: 0.55
-  bajada: 0.07
-  sostener: 0.65
+  fondoMusica: 0.08
+  fondoAmbientes: 0.2
+  bajada: 0.025
+  sostener: 1.5
   recuperacion: 1.2

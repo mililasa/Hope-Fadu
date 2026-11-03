@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3e8a3a58655e3f8722f53e57fc8c08, type: 3}
+  m_Name: HopeLandingSettingsNivel3
+  m_EditorClassIdentifier: 
+  sonido: {fileID: 0}
+  volumenCanal: 0.36
+  volumenFragmento: 0.281838
+  variaciones:
+  - {fileID: 8300000, guid: dfe65f334c92406a87d1e288fe69c776, type: 3}
+  - {fileID: 8300000, guid: 98b0550d831e4783bff12042d9439704, type: 3}
+  - {fileID: 8300000, guid: 7babc33f8e024b0b9a4d732642e37329, type: 3}
+  - {fileID: 8300000, guid: 7be59030b4554a52a4448125eae83c64, type: 3}
+  - {fileID: 8300000, guid: 7b7f7ba990f143d4bd5e09675d61b314, type: 3}
+  reverbsApoyo:
+  - {fileID: 8300000, guid: 89393f9b6d82415ebac28ed2566474c2, type: 3}
+  - {fileID: 8300000, guid: ff1ba8f517c84c409cd90622902771ce, type: 3}
+  - {fileID: 8300000, guid: 9b1ebbe57e714f309696e9d1ca3211f1, type: 3}
+  - {fileID: 8300000, guid: d60856744afe4a539fa522a7aed147e4, type: 3}
+  - {fileID: 8300000, guid: f0a532624cca4d22a17b3b0eee4f4082, type: 3}
+  reverbApoyoExterior: 0.08
+  reverbApoyoInterior: 0.65

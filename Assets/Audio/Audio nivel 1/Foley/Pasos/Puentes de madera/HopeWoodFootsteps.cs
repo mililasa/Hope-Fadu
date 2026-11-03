@@ -57,7 +57,7 @@ public sealed class HopeWoodFootsteps : MonoBehaviour
         if (ajustes.pasos.Length > 1 && i == ultimo) i = (i + Random.Range(1, ajustes.pasos.Length)) % ajustes.pasos.Length;
         ultimo = i;
         fuente.volume = ajustes.volumenCanal;
-        fuente.PlayOneShot(ajustes.pasos[i], Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax));
+        HopeSurfaceMix.Reproducir(fuente, ajustes.pasos[i], Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax));
         return true;
     }
 }

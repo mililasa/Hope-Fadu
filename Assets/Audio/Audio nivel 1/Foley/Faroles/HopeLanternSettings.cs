@@ -3,6 +3,8 @@ using UnityEngine;
 public sealed class HopeLanternSettings : ScriptableObject
 {
     public AudioClip chispa, encendido, fuego;
+    public AudioClip cuerpoBarril;
+    [Range(0,1)] public float volumenCuerpoBarril = .12f;
     [Range(0,1)] public float volumenChispa = 0.316228f;
     [Range(0,1)] public float volumenEncendido = 0.223872f;
     [Range(0,1)] public float volumenFuego = 0.003467335f;

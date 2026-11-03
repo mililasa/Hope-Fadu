@@ -18,15 +18,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2dadd34c9151457e8a15d738e3087fec, type: 3}
   - {fileID: 8300000, guid: d486eb706c25488190d1a4b173ae120a, type: 3}
   - {fileID: 8300000, guid: 4ad8ae8532864fdbb21edc9807d2e4e2, type: 3}
+  pasosCajas:
+  - {fileID: 8300000, guid: e62aef6e17814003b487fafcec9c1b0c, type: 3}
+  - {fileID: 8300000, guid: 7e4108d0e92244a39c58173048e1ccfb, type: 3}
+  - {fileID: 8300000, guid: 4179e3e3ad554bccbf40528edd8f3e47, type: 3}
+  - {fileID: 8300000, guid: 88903e1f07d549b2b76f5cadac364b9e, type: 3}
+  - {fileID: 8300000, guid: ba0ecc2c32a54f0fb0f2dee4ceee9f76, type: 3}
+  volumenCajas: 0.82
   salida: {fileID: 24300400, guid: 672012de8d744817b5538618d228ab93, type: 2}
   segundosEntrePasos: 0.65
   intensidadMinima: 0.95
   intensidadMaxima: 1
-
-  pasosCajas:
-  - {fileID: 8300000, guid: d3e833e00c2f4ee08576ff16fa76e005, type: 3}
-  - {fileID: 8300000, guid: ddf5e65d2b1e42efb015c28e73cf2eb7, type: 3}
-  - {fileID: 8300000, guid: b82c5b529e064142998532701211c5a0, type: 3}
-  - {fileID: 8300000, guid: c766f2e8e9a74219bd991f584b683140, type: 3}
-  - {fileID: 8300000, guid: ab03c74245874bddba34190efed5300d, type: 3}
-  volumenCajas: 0.82
+  salidaCajas: {fileID: 24309003, guid: 672012de8d744817b5538618d228ab93, type: 2}

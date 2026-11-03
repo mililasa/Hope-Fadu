@@ -5,7 +5,7 @@ using System.Collections;
 public sealed class HopeLanternAudio : MonoBehaviour
 {
     public HopeLanternSettings ajustes;
-    AudioSource chispa, encendido, fuego;
+    AudioSource chispa, encendido, fuego, cuerpoBarril;
     Transform oyente;
     GameObject luz;
     bool activo;
@@ -16,7 +16,9 @@ public sealed class HopeLanternAudio : MonoBehaviour
         if (ajustes == null) ajustes = Resources.Load<HopeLanternSettings>("HopeLanternSettings");
         chispa = Fuente("F - Faroles chispa (canal 14)", false);
         encendido = Fuente("F - Faroles encendido (canal 15)", false);
-        fuego = Fuente("F - Gas fuego faroles (canal 16)", true);
+        bool nivelDos = gameObject.scene.name == "Nivel_2";
+        fuego = Fuente(nivelDos ? "F - Barril leña" : "F - Gas fuego faroles (canal 16)", true);
+        if (nivelDos) cuerpoBarril = Fuente("F - Barril resonancia metálica", true);
     }
 
     AudioSource Fuente(string nombre, bool loop)
@@ -58,6 +60,12 @@ public sealed class HopeLanternAudio : MonoBehaviour
         inicioFuego = Time.time;
         fuego.volume = 0f;
         fuego.Play();
+        if (cuerpoBarril != null && ajustes.cuerpoBarril != null)
+        {
+            cuerpoBarril.clip = ajustes.cuerpoBarril;
+            cuerpoBarril.volume = 0f;
+            cuerpoBarril.Play();
+        }
     }
 
     void Update()
@@ -75,8 +83,15 @@ public sealed class HopeLanternAudio : MonoBehaviour
         float pan = Mathf.Clamp((transform.position.x - oyente.position.x) / Mathf.Max(0.1f, ajustes.alcance), -0.7f, 0.7f);
         chispa.volume = ajustes.volumenChispa * nivel;
         encendido.volume = ajustes.volumenEncendido * nivel;
-        fuego.volume = ajustes.volumenFuego * nivel * Mathf.Clamp01((Time.time - inicioFuego) / Mathf.Max(0.01f, ajustes.entradaFuego));
+        float entrada = Mathf.Clamp01((Time.time - inicioFuego) / Mathf.Max(0.01f, ajustes.entradaFuego));
+        float nivelFuego = cuerpoBarril != null ? Mathf.SmoothStep(0f, 1f, nivel) : nivel;
+        fuego.volume = ajustes.volumenFuego * nivelFuego * entrada;
         chispa.panStereo = encendido.panStereo = fuego.panStereo = pan;
+        if (cuerpoBarril != null)
+        {
+            cuerpoBarril.volume = ajustes.volumenCuerpoBarril * nivelFuego * entrada;
+            cuerpoBarril.panStereo = pan;
+        }
     }
 
     public void Reiniciar()
@@ -86,6 +101,7 @@ public sealed class HopeLanternAudio : MonoBehaviour
         if (chispa != null) chispa.Stop();
         if (encendido != null) encendido.Stop();
         if (fuego != null) fuego.Stop();
+        if (cuerpoBarril != null) cuerpoBarril.Stop();
     }
     void OnDisable() { Reiniciar(); }
 }

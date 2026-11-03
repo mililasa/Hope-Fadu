@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicaMain: {fileID: 8300000, guid: 863c9521e20e5410841fefa202ce0115, type: 3}
   pasoDeNivel: {fileID: 8300000, guid: 53d987feca7b5f2e8c0bc8db6aacde7f, type: 3}
-  volumenMain: 0.19952623
-  volumenPaso: 0.25703958
+  volumenMain: 0.704
+  volumenPaso: 0.305
   segundosFundido: 2
   segundosAnticipacion: 2
-  inicioPaso: 34.048993
+  inicioPaso: 34.048992
   margenRetirada: 1
   nombreSalida: Foreground
   puntoPuertaLocal: {x: 72.4375, y: -5.3125}

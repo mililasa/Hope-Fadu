@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chispa: {fileID: 8300000, guid: d06ac83fcf5beb643a937de79ce39e6d, type: 3}
   encendido: {fileID: 8300000, guid: a05103265ad687045aa78dab873052b7, type: 3}
-  fuego: {fileID: 8300000, guid: 91f820dda526d4841be6559f1bd9bb20, type: 3}
+  fuego: {fileID: 8300000, guid: d5f3810af76f49c3b2d7355ebf816ebb, type: 3}
+  cuerpoBarril: {fileID: 8300000, guid: b9f6326dcb964a4f85f18101d62f6dd9, type: 3}
+  volumenCuerpoBarril: 0.12
   volumenChispa: 0.316228
   volumenEncendido: 0.223872
-  volumenFuego: 0.00346733530932
+  volumenFuego: 0.32
   retrasoEncendido: 0.1
-  entradaFuego: 0.15
-  distanciaPlena: 2.5
-  alcance: 8
+  entradaFuego: 0.28
+  distanciaPlena: 0.7
+  alcance: 3.2

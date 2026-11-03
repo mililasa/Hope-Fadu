@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6f81ba785b25426ca716fbbfb590bf62, type: 3}
   - {fileID: 8300000, guid: 42189e2f27fa4946a1e9d1f6bcd3d44c, type: 3}
   - {fileID: 8300000, guid: 924753ee975b47d58c7be05833429ca6, type: 3}
-  salida: {fileID: 24300002, guid: 672012de8d744817b5538618d228ab93, type: 2}
+  salida: {fileID: 24309000, guid: 672012de8d744817b5538618d228ab93, type: 2}
   habilitado: 1
   volumen: 0.261
   minimoTiempoEnAire: 0.1

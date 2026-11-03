@@ -14,18 +14,23 @@ public class CinematicaInicio : MonoBehaviour
 
     static bool enCurso;
 
+    UnityEngine.Audio.AudioMixerGroup salidaAudio;
+    AudioClip audioIntro;
+    AudioSource voz;
     VideoPlayer video;
     RenderTexture textura;
     RawImage imagen;
     bool yendoAlJuego;
     float segundosEnPantalla;
 
-    public static void Reproducir()
+    public static void Reproducir(UnityEngine.Audio.AudioMixerGroup salidaAudio = null, AudioClip audioIntro = null)
     {
         if (enCurso) return;
         enCurso = true;
         var go = new GameObject("CinematicaInicio");
-        go.AddComponent<CinematicaInicio>();
+        var intro = go.AddComponent<CinematicaInicio>();
+        intro.salidaAudio = salidaAudio;
+        intro.audioIntro = audioIntro;
     }
 
     void Start()
@@ -42,18 +47,23 @@ public class CinematicaInicio : MonoBehaviour
         video.url = ruta;
         video.renderMode = VideoRenderMode.RenderTexture;
         video.aspectRatio = VideoAspectRatio.FitInside;
-        video.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        video.audioOutputMode = audioIntro != null ? VideoAudioOutputMode.None : VideoAudioOutputMode.AudioSource;
         video.waitForFirstFrame = true;
         video.skipOnDrop = false;
 
-        AudioSource voz = gameObject.AddComponent<AudioSource>();
+        voz = gameObject.AddComponent<AudioSource>();
         voz.playOnAwake = false;
         voz.spatialBlend = 0f;
+        voz.outputAudioMixerGroup = salidaAudio;
         try
         {
-            video.controlledAudioTrackCount = 1;
-            video.EnableAudioTrack(0, true);
-            video.SetTargetAudioSource(0, voz);
+            if (audioIntro != null) voz.clip = audioIntro;
+            else
+            {
+                video.controlledAudioTrackCount = 1;
+                video.EnableAudioTrack(0, true);
+                video.SetTargetAudioSource(0, voz);
+            }
         }
         catch (System.Exception e)
         {
@@ -128,6 +138,7 @@ public class CinematicaInicio : MonoBehaviour
                 ajuste.aspectRatio = (float)ancho / alto;
         }
         vp.Play();
+        if (audioIntro != null) voz.Play();
     }
 
     void AlTerminar(VideoPlayer vp)
@@ -146,6 +157,7 @@ public class CinematicaInicio : MonoBehaviour
         if (yendoAlJuego) return;
         yendoAlJuego = true;
         if (video != null) video.Stop();
+        if (voz != null) voz.Stop();
         FundidoAlJuego.Entrar(EscenaJuego, SegundosFadeIn);
     }
 

@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mixer Plataformas nivel 2
-  m_OutputGroup: {fileID: 5117590123145338468, guid: 06bc0d2a42bbdd74489cee593689a6ac, type: 2}
+  m_OutputGroup: {fileID: 24309002, guid: ce389bf715bb41fda3cc4c240022cc17, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}

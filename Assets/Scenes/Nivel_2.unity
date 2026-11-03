@@ -4469,6 +4469,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1080521340}
   - component: {fileID: 1080521341}
+  - component: {fileID: 1080521343}
+  - component: {fileID: 1080521342}
   m_Layer: 0
   m_Name: objetos_nivel_2
   m_TagString: Untagged
@@ -4543,6 +4545,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1080521342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080521339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f663a488c41345caac14932b06b50225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1080521343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080521339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb96c4023fa64ccb8c44aa76e33d2383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitud: 1.6
 --- !u!1 &1135564613
 GameObject:
   m_ObjectHideFlags: 0

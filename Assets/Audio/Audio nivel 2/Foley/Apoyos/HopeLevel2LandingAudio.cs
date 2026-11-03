@@ -49,7 +49,7 @@ public sealed class HopeLevel2LandingAudio : MonoBehaviour
             int i = Random.Range(0, ajustes.apoyos.Length);
             if (ajustes.apoyos.Length > 1 && i == ultimo) i = (i + Random.Range(1, ajustes.apoyos.Length)) % ajustes.apoyos.Length;
             ultimo = i;
-            if (ajustes.apoyos[i] != null) fuente.PlayOneShot(ajustes.apoyos[i]);
+            if (ajustes.apoyos[i] != null) HopeSurfaceMix.Reproducir(fuente, ajustes.apoyos[i], 1f);
         }
         aire = 0;
     }

@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a91c3b7d2f4a6480b6c1e9f3d70425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  salidaAudioMenu: {fileID: 24309100, guid: 06bc0d2a42bbdd74489cee593689a6ac, type: 2}
+  audioIntro: {fileID: 8300000, guid: da23af58d8e94581991c08330e7c9f5a, type: 3}
 --- !u!1 &1247032696
 GameObject:
   m_ObjectHideFlags: 0
