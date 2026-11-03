@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HopeMixerFoley
-  m_OutputGroup: {fileID: 5396872664514760419, guid: 079985861f797de4f886e44cd26b0a7d, type: 2}
+  m_OutputGroup: {fileID: 5396872664514760419, guid: 06bc0d2a42bbdd74489cee593689a6ac, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
