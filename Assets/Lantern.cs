@@ -59,7 +59,7 @@ public class Lantern : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        DetectarBarrilPorSprite();
+        if (gameObject.scene.name != "SampleScene") DetectarBarrilPorSprite();
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.isTrigger = true;
         AsegurarExplosionesHijas();

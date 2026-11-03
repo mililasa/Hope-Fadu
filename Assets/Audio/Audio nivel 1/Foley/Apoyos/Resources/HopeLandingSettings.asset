@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3e8a3a58655e3f8722f53e57fc8c08, type: 3}
   m_Name: HopeLandingSettings
   m_EditorClassIdentifier: 
-  sonido: {fileID: 8300000, guid: d8da40348ae9534889c8fc355bd4aaae, type: 3}
+  sonido: {fileID: 8300000, guid: a2c176fb2b9355b41b409869ed209202, type: 3}
   volumenCanal: 0.17378008
   volumenFragmento: 0.281838

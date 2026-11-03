@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7c1f491e154344bd6ccc605cf90213, type: 3}
   m_Name: HopeLevel2CapeSettings
   m_EditorClassIdentifier: 
-  sonido: {fileID: 8300000, guid: 6123e28c360b4fbc862aaea6c2e5dab2, type: 3}
+  sonido: {fileID: 8300000, guid: 069358f05489d7e4da285f25d1bcb9fc, type: 3}
   salida: {fileID: 24300700, guid: 672012de8d744817b5538618d228ab93, type: 2}
   volumenCanal: 0.827
   volumenFragmento: 0.817

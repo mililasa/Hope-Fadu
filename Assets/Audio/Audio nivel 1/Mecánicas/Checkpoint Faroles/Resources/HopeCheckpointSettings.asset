@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8475e49b8757da8fa990b63be4c69a, type: 3}
   m_Name: HopeCheckpointSettings
   m_EditorClassIdentifier: 
-  motivo: {fileID: 8300000, guid: 7beae2f4b2015b75a2a6bc61f1a78aa9, type: 3}
-  segundaVoz: {fileID: 8300000, guid: 3c718dedef7d5f0788c0fa3ac113ddce, type: 3}
+  motivo: {fileID: 8300000, guid: cb54b682b8718364da70736e6dce22af, type: 3}
+  segundaVoz: {fileID: 8300000, guid: 7184f819500d578408028bfbd877458b, type: 3}
   volumenMotivo: 0.070795
   volumenSegundaVoz: 0.235294
   entradaMotivo: 0.22

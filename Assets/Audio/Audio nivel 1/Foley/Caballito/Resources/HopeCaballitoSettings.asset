@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: HopeCaballitoSettings
   m_EditorClassIdentifier: 
   rechinidos:
-  - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
-  - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
-  - {fileID: 8300000, guid: c22b0d71d8e74330be78f99ddf9ae563, type: 3}
-  apoyo: {fileID: 8300000, guid: 2b6f3a32f5ea4606aab937efa3fca033, type: 3}
-  volumen: 0.05
+  - {fileID: 8300000, guid: 89383eb5e48f42d4fb32dadad0037100, type: 3}
+  - {fileID: 8300000, guid: 6dae76ece453b1745b2d01de21cade3e, type: 3}
+  - {fileID: 8300000, guid: 424c3da6ac79bce44823e066ab07a17e, type: 3}
+  apoyo: {fileID: 8300000, guid: b97c180ee3f0d3a468c6cabe4dd4871c, type: 3}
+  volumen: 0.021
   volumenApoyo: 0.1
-  distanciaPlena: 2
-  distanciaMaxima: 11
+  distanciaPlena: 0.75
+  distanciaMaxima: 4.5
   panoramaMaximo: 0.55
   momentosNormal:
   - 0.08333

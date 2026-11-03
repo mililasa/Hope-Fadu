@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: HopeFootstepSettings
   m_EditorClassIdentifier: 
   pasos:
-  - {fileID: 8300000, guid: 7477c3891c3b5c148de3c53c6444d463, type: 3}
-  - {fileID: 8300000, guid: 1610a98ad5a359dc951c70450dcea8df, type: 3}
-  - {fileID: 8300000, guid: bb1cd2c170c154de955d3967677a357e, type: 3}
-  - {fileID: 8300000, guid: e7d43dbc424657548ee627b8f4d732e4, type: 3}
-  - {fileID: 8300000, guid: 1b0909e4378452f2afefc0c27baa948b, type: 3}
-  volumenCanal: 0.351
+  - {fileID: 8300000, guid: ad384b8c2b789f743a75c5c7fc5c63ac, type: 3}
+  - {fileID: 8300000, guid: f24fe6756bb62a44bb3ade4e2b7429d4, type: 3}
+  - {fileID: 8300000, guid: fbcac05a447cf304ca4a2525e394915d, type: 3}
+  - {fileID: 8300000, guid: 07cb6247b25a3074d8e25c32b531967c, type: 3}
+  - {fileID: 8300000, guid: 2d03ac01d207bdd4fb8356864e4ba0ee, type: 3}
+  volumenCanal: 0.219
   volumenFragmentoMin: 0.194984
   volumenFragmentoMax: 0.25704
   segundosEntrePasos: 0.45

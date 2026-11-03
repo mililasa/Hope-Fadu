@@ -24,7 +24,7 @@ public sealed class HopeLevel2LanternAudio : MonoBehaviour
         if (escena.name != "Nivel_2") return;
         foreach (var raiz in escena.GetRootGameObjects())
             foreach (var farol in raiz.GetComponentsInChildren<Lantern>(true))
-                if (farol.name == "Farol (5)" && farol.GetComponent<HopeLevel2LanternAudio>() == null)
+                if (farol.GetComponent<HopeLevel2LanternAudio>() == null)
                     farol.gameObject.AddComponent<HopeLevel2LanternAudio>();
     }
 
@@ -68,7 +68,11 @@ public sealed class HopeLevel2LanternAudio : MonoBehaviour
         if (actual != Lantern.Estado.Off && anterior == Lantern.Estado.Off && jugador != null)
         {
             foley.Encender(gameObject, jugador);
-            checkpoint.Activar(gameObject, true);
+            bool primero = true;
+            foreach (var otro in FindObjectsOfType<Lantern>())
+                if (otro.gameObject.scene == gameObject.scene && otro.transform.position.x < transform.position.x)
+                { primero = false; break; }
+            checkpoint.Activar(gameObject, primero);
         }
         else if (actual == Lantern.Estado.Off && anterior != Lantern.Estado.Off)
         {

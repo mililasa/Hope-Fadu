@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HopeLampRattleSettings
   m_EditorClassIdentifier: 
   sonidos:
-  - {fileID: 8300000, guid: e8a386e7e380540391691c165350fc1f, type: 3}
-  - {fileID: 8300000, guid: d27e124bb9d251198cdec90220788d8c, type: 3}
-  - {fileID: 8300000, guid: a9b3aa9b98445f7a8797e7da74ce8b56, type: 3}
+  - {fileID: 8300000, guid: 39c3fece9254c8b46a1730c9a132c790, type: 3}
+  - {fileID: 8300000, guid: f5128a37e5f877946ba3329edd6b2ab8, type: 3}
+  - {fileID: 8300000, guid: 2e835f89a54de0c45b4b84afb008eea7, type: 3}
   volumenCanal: 0.0851138
   volumenFragmentoMin: 0.056234
   volumenFragmentoMax: 0.056234

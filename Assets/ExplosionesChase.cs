@@ -17,6 +17,9 @@ public class ExplosionesChase : MonoBehaviour
     SpriteRenderer sr;
     Transform hope;
     bool yaDisparada;
+    bool reproduciendo;
+    float avancePrevio;
+    static RuntimeAnimatorController controllerNivel1;
     static RuntimeAnimatorController controllerCache;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -69,9 +72,9 @@ public class ExplosionesChase : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             animator = gameObject.AddComponent<Animator>();
-        if (controllerExplosion == null)
+        if (controllerExplosion == null || gameObject.scene.name == "SampleScene")
             controllerExplosion = CargarController();
-        if (animator.runtimeAnimatorController == null && controllerExplosion != null)
+        if ((animator.runtimeAnimatorController == null || gameObject.scene.name == "SampleScene") && controllerExplosion != null)
             animator.runtimeAnimatorController = controllerExplosion;
         if (HopeLegacyAudioPolicy.Permitir(this) && GetComponent<HopeExplosionAudio>() == null)
             gameObject.AddComponent<HopeExplosionAudio>();
@@ -102,7 +105,12 @@ public class ExplosionesChase : MonoBehaviour
 
         // El pivote del sprite está en una esquina. Si se mide desde ahí, Hope
         // cruza la pintura y la explosión no arranca.
-        if (!HopeCerca()) return;
+        if (gameObject.scene.name == "SampleScene")
+        {
+            Vector2 delta = hope.position - transform.position;
+            if (Mathf.Abs(delta.x) > distanciaHorizontal || Mathf.Abs(delta.y) > distanciaVertical) return;
+        }
+        else if (!HopeCerca()) return;
 
         Reproducir();
     }
@@ -128,6 +136,11 @@ public class ExplosionesChase : MonoBehaviour
 
     static RuntimeAnimatorController CargarController()
     {
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            if (controllerNivel1 == null) controllerNivel1 = Resources.Load<RuntimeAnimatorController>("HopeN1ExplosionBackup");
+            return controllerNivel1;
+        }
         if (controllerCache != null) return controllerCache;
         controllerCache = Resources.Load<RuntimeAnimatorController>("explosion-Sheet_0");
 #if UNITY_EDITOR
@@ -189,7 +202,13 @@ public class ExplosionesChase : MonoBehaviour
             animator.Rebind();
             animator.Play(estadoExplosion, 0, 0f);
             animator.Update(0f);
-            StartCoroutine(OcultarDespues(Duracion()));
+            if (gameObject.scene.name == "SampleScene")
+            {
+                reproduciendo = true;
+                avancePrevio = 0;
+                StartCoroutine(OcultarAlTerminarBackup());
+            }
+            else StartCoroutine(OcultarDespues(Duracion()));
         }
         else
             StartCoroutine(OcultarDespues(0.5f));
@@ -209,6 +228,22 @@ public class ExplosionesChase : MonoBehaviour
         return 0.67f;
     }
 
+    IEnumerator OcultarAlTerminarBackup()
+    {
+        float tope = Time.time + 2f;
+        while (Time.time < tope && reproduciendo)
+        {
+            yield return null;
+            if (animator == null || !animator.enabled) break;
+            AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+            float avance = info.normalizedTime;
+            if (avance >= 0.98f || avance + 0.02f < avancePrevio)
+                break;
+            avancePrevio = avance;
+        }
+        Ocultar();
+    }
+
     IEnumerator OcultarDespues(float t)
     {
         yield return new WaitForSeconds(t);
@@ -217,6 +252,7 @@ public class ExplosionesChase : MonoBehaviour
 
     void Ocultar()
     {
+        reproduciendo = false;
         Mostrar(false);
         if (animator != null)
             animator.enabled = false;

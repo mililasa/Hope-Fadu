@@ -30,7 +30,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
             return;
         }
         if (apoyos == null) apoyos = Resources.Load<HopeFoleyClipSettings>("HopeLandingSettings");
-        if (saltos == null) saltos = Resources.Load<HopeFoleyClipSettings>("HopeJumpSettings");
+        if (saltos == null) saltos = Resources.Load<HopeFoleyClipSettings>(gameObject.scene.name == "Nivel_3" ? "HopeJumpSettingsFaroConservado" : "HopeJumpSettings");
         if (capa == null) capa = Resources.Load<HopeFoleyClipSettings>("HopeCapeSettings");
         fuenteApoyo = Crear("F - Apoyos (canal 11)");
         fuenteSalto = Crear("F - Saltos (canal 12)");

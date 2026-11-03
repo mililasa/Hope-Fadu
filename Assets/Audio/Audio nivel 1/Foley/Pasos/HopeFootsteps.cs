@@ -14,7 +14,7 @@ public sealed class HopeFootsteps : MonoBehaviour
     void Start()
     {
         jugador = GetComponent<PlayerController2D>();
-        if (ajustes == null) ajustes = Resources.Load<HopeFootstepSettings>("HopeFootstepSettings");
+        if (ajustes == null) ajustes = Resources.Load<HopeFootstepSettings>(gameObject.scene.name == "Nivel_3" ? "HopeFootstepSettingsFaroConservado" : "HopeFootstepSettings");
         if (jugador == null || ajustes == null || ajustes.pasos == null || ajustes.pasos.Length == 0)
         {
             Debug.LogWarning("Hope: faltan ajustes o clips del canal F - Pasos.", this);

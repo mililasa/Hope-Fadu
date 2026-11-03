@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890abba4792a59f0aa07a29d351834b5, type: 3}
   m_Name: HopeDistantSettings
   m_EditorClassIdentifier: 
-  motor: {fileID: 8300000, guid: 473e3493dab554b0bbc4cdf1f2b5b141, type: 3}
-  eco: {fileID: 8300000, guid: 5cd4018f462357aab3a90ccbf7641618, type: 3}
+  motor: {fileID: 8300000, guid: 4390ef398ab6dfc4aa5d7a937dac5e77, type: 3}
+  eco: {fileID: 8300000, guid: ea46e626ceb137b4f827beffe8c11eaf, type: 3}
   volumenMotor: 0.104
   volumenEco: 0.122
   esperaInicial: 5

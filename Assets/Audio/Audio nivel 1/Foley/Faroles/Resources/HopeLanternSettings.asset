@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d3055a8af6521e9356d288c2ae7b5f, type: 3}
   m_Name: HopeLanternSettings
   m_EditorClassIdentifier: 
-  chispa: {fileID: 8300000, guid: 5ec9212080175aa7905e293660f0c897, type: 3}
-  encendido: {fileID: 8300000, guid: 4300e550947a54798334eb2c82c05a86, type: 3}
-  fuego: {fileID: 8300000, guid: e674d7045bab59efb31568417baebaac, type: 3}
+  chispa: {fileID: 8300000, guid: d06ac83fcf5beb643a937de79ce39e6d, type: 3}
+  encendido: {fileID: 8300000, guid: a05103265ad687045aa78dab873052b7, type: 3}
+  fuego: {fileID: 8300000, guid: 91f820dda526d4841be6559f1bd9bb20, type: 3}
   volumenChispa: 0.316228
   volumenEncendido: 0.223872
   volumenFuego: 0.00346733530932

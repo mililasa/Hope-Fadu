@@ -18,110 +18,110 @@ MonoBehaviour:
     volumen: 1
     sonidos:
     - nombre: Carne y piel 01
-      sonido: {fileID: 8300000, guid: f73f2b77d4b74837ad756ad0ea177c29, type: 3}
+      sonido: {fileID: 8300000, guid: 9da8fb9dfbfe55b46af422e9a81d0b60, type: 3}
       volumen: 1
     - nombre: Carne y piel 02
-      sonido: {fileID: 8300000, guid: 3df9df580dea44cfa93f43c79c8dbb85, type: 3}
+      sonido: {fileID: 8300000, guid: 1303491ff5a6d32469104e429a25d1ee, type: 3}
       volumen: 1
     - nombre: Carne y piel 03
-      sonido: {fileID: 8300000, guid: 3189044f105d4809afc22ef89b9aa951, type: 3}
+      sonido: {fileID: 8300000, guid: 4d62c3fcdfc05ae43bdc6d4377276c01, type: 3}
       volumen: 1
     - nombre: Carne y piel 04
-      sonido: {fileID: 8300000, guid: 05cb11832b424b589fc36f3fb936a6f3, type: 3}
+      sonido: {fileID: 8300000, guid: 2c046a96e79df7946b28910383f363c6, type: 3}
       volumen: 1
   - nombre: Peso
     volumen: 1
     sonidos:
     - nombre: Peso 01
-      sonido: {fileID: 8300000, guid: da2f98915bb14161b459b67304af7ce0, type: 3}
+      sonido: {fileID: 8300000, guid: 30caed6a71e22e147af5540b55490f86, type: 3}
       volumen: 1
     - nombre: Peso 02
-      sonido: {fileID: 8300000, guid: e5e87da6b34949bf82766013dd077fb9, type: 3}
+      sonido: {fileID: 8300000, guid: a2b1ad91688a0e149b693b282209cca4, type: 3}
       volumen: 1
     - nombre: Peso 03
-      sonido: {fileID: 8300000, guid: 6fb9e31a6c394c8c85c7c0597c2b8b97, type: 3}
+      sonido: {fileID: 8300000, guid: 128ba7dc55b66b447835207d72d31eda, type: 3}
       volumen: 1
     - nombre: Peso 04
-      sonido: {fileID: 8300000, guid: cc1baa9c38ad44aa909486fedd9792f5, type: 3}
+      sonido: {fileID: 8300000, guid: a7b11ded962c33d428191e550604e4cc, type: 3}
       volumen: 1
   - nombre: Humedad
     volumen: 1
     sonidos:
     - nombre: Humedad 01
-      sonido: {fileID: 8300000, guid: 1322d90baeee4431be3299eac9eaadbf, type: 3}
+      sonido: {fileID: 8300000, guid: 3903211acfacf7147804207f660540d0, type: 3}
       volumen: 1
     - nombre: Humedad 02
-      sonido: {fileID: 8300000, guid: e25fc9b39f3a499c99d723776ec4272e, type: 3}
+      sonido: {fileID: 8300000, guid: 4eed26ae8e958654ab95c270ef5c486e, type: 3}
       volumen: 1
     - nombre: Humedad 03
-      sonido: {fileID: 8300000, guid: 96b38fac191144ac831b97a192228e1c, type: 3}
+      sonido: {fileID: 8300000, guid: 762f75e64d57d8b4aaf711e461088fd5, type: 3}
       volumen: 1
     - nombre: Humedad 04
-      sonido: {fileID: 8300000, guid: d75746907c4a4dea800fe136f6274dc3, type: 3}
+      sonido: {fileID: 8300000, guid: 326d16ed71f1e26489aa7d0b01e174e3, type: 3}
       volumen: 1
   - nombre: Ropa
     volumen: 1
     sonidos:
     - nombre: Ropa 01
-      sonido: {fileID: 8300000, guid: a0d72c87f8f04c71bd75b2eae9caf17a, type: 3}
+      sonido: {fileID: 8300000, guid: 9cf4d8f4218dea449aa88f9a898cb88c, type: 3}
       volumen: 1
     - nombre: Ropa 02
-      sonido: {fileID: 8300000, guid: a081e7a6e0ee420ebebe38d8b3d7c820, type: 3}
+      sonido: {fileID: 8300000, guid: e38ff72d1ff817741b4cb17f3600fa43, type: 3}
       volumen: 1
     - nombre: Ropa 03
-      sonido: {fileID: 8300000, guid: e79f271188f743cfbbe3ef5ecdb43a7b, type: 3}
+      sonido: {fileID: 8300000, guid: d97904d93defc1f4188d17d526e560eb, type: 3}
       volumen: 1
     - nombre: Ropa 04
-      sonido: {fileID: 8300000, guid: 541e4ba5c957449d824a515f724f212a, type: 3}
+      sonido: {fileID: 8300000, guid: b4282b4254f9a2145aa8f37d9679433a, type: 3}
       volumen: 1
   - nombre: "Compresi\xF3n"
     volumen: 1
     sonidos:
     - nombre: "Compresi\xF3n 01"
-      sonido: {fileID: 8300000, guid: 45e8f15d01a84342b0f6dbb7c26e9fd3, type: 3}
+      sonido: {fileID: 8300000, guid: 474efb496cb0684409b13feee061c9f9, type: 3}
       volumen: 1
     - nombre: "Compresi\xF3n 02"
-      sonido: {fileID: 8300000, guid: 5e02892d30584ccf89f5509fe75188e3, type: 3}
+      sonido: {fileID: 8300000, guid: 0a276cbaf52bb824d87fe20d2d99ec24, type: 3}
       volumen: 1
     - nombre: "Compresi\xF3n 03"
-      sonido: {fileID: 8300000, guid: 711605ff9d0f41a19b1f7eddd15e1054, type: 3}
+      sonido: {fileID: 8300000, guid: 83a402fb2a3ae144c8ebff8b0287474e, type: 3}
       volumen: 1
     - nombre: "Compresi\xF3n 04"
-      sonido: {fileID: 8300000, guid: 6ba1197e6a93419ab8fa1531ceaa430a, type: 3}
+      sonido: {fileID: 8300000, guid: 875e675eb22d05849855582751fd14ee, type: 3}
       volumen: 1
   - nombre: Despegue
     volumen: 1
     sonidos:
     - nombre: Despegue 01
-      sonido: {fileID: 8300000, guid: 6e5f2571ef7943259ca354ca4a03ce31, type: 3}
+      sonido: {fileID: 8300000, guid: 6b065b72b46ab764bb093a69d1f2f929, type: 3}
       volumen: 1
     - nombre: Despegue 02
-      sonido: {fileID: 8300000, guid: 927d73b588124642b4ddd6f0769d9743, type: 3}
+      sonido: {fileID: 8300000, guid: 4a423532103ff234894b4b04eb3a3db4, type: 3}
       volumen: 1
     - nombre: Despegue 03
-      sonido: {fileID: 8300000, guid: bf87f9f5240a4275b2eb8f422ef204cf, type: 3}
+      sonido: {fileID: 8300000, guid: 1dbf9b0d9dc56f548ae3eec8cbb5259a, type: 3}
       volumen: 1
     - nombre: Despegue 04
-      sonido: {fileID: 8300000, guid: abffe164fd25410688a356ceee7f8f36, type: 3}
+      sonido: {fileID: 8300000, guid: be579d8479f7fe242b8ccf3f12b743eb, type: 3}
       volumen: 1
   intensidadCaminata: 0.68
   intervaloMinimoContacto: 0.15
   volumenRespiraciones: 0.16
   respiraciones:
   - nombre: Quejido moribundo
-    sonido: {fileID: 8300000, guid: 427c3fc5fd554cdcb25f3a458dfb18b5, type: 3}
+    sonido: {fileID: 8300000, guid: 62ad8214c78188447b94d72154b4dcd3, type: 3}
     volumen: 0.1
   - nombre: Respiracion lenta
-    sonido: {fileID: 8300000, guid: 277f832af3b14075a283466d495759b4, type: 3}
+    sonido: {fileID: 8300000, guid: e001877657a424a4490aee782ca75136, type: 3}
     volumen: 0.29
   - nombre: Quejido otro registro
-    sonido: {fileID: 8300000, guid: 5aad28edf76444668230975e681d6ad8, type: 3}
+    sonido: {fileID: 8300000, guid: 415b00bb74eb927449142395ee82daed, type: 3}
     volumen: 0.1
   - nombre: Respiracion aguda
-    sonido: {fileID: 8300000, guid: 533c438b315a47f5bea1057f7b782779, type: 3}
+    sonido: {fileID: 8300000, guid: e203edd5599496c499982b636578d7d3, type: 3}
     volumen: 0.32
   - nombre: Respiracion grave
-    sonido: {fileID: 8300000, guid: b5eea97037714fc2b86f79e4c68af909, type: 3}
+    sonido: {fileID: 8300000, guid: fda02a7a4d12233448ce7356362cc411, type: 3}
     volumen: 0.34
   distanciaInicio: 6
   distanciaPlena: 1.5

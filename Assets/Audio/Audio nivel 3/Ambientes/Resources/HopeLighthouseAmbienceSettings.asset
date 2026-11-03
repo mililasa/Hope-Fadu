@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14737fb646d05969b68050bcee81b039, type: 3}
   m_Name: HopeLighthouseAmbienceSettings
   m_EditorClassIdentifier: 
-  viento: {fileID: 8300000, guid: e670b99c3f5256288a7d8c706aea461f, type: 3}
-  presion: {fileID: 8300000, guid: 6a75c7a74e0a5a8a8b7fca8f73694897, type: 3}
-  arcos: {fileID: 8300000, guid: 2504cab28ca253da962eed55d03e5427, type: 3}
+  viento: {fileID: 8300000, guid: a888538c1b760b546a3c41f5a76f07ab, type: 3}
+  presion: {fileID: 8300000, guid: a315ab530a72e0c49ab30fc39c4b4358, type: 3}
+  arcos: {fileID: 8300000, guid: dbed5bec217c7b74d87a48bd907029f7, type: 3}
   volumenViento: 0.019
   volumenPresion: 0.248
   volumenArcos: 0

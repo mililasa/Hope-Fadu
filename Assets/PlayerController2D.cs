@@ -321,7 +321,12 @@ public class PlayerController2D : MonoBehaviour
             verticalInput = Input.GetAxisRaw("Vertical");
         }
 
-        isGrounded = PisarSuelo();
+        if (gameObject.scene.name == "SampleScene")
+        {
+            if (groundCheck != null)
+                isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        }
+        else isGrounded = PisarSuelo();
 
         bool sobrePadSalto = PlataformaSuperSaltoBajoLosPies() != null;
 
@@ -457,7 +462,7 @@ public class PlayerController2D : MonoBehaviour
             // Aplicar rebote de pad acá (después de física del frame anterior): vy absoluta.
             if (superSaltoAlturaPendiente > 0f)
             {
-                if (superSaltoPadPendiente != null)
+                if (superSaltoPadPendiente != null && gameObject.scene.name != "SampleScene")
                     superSaltoPadPendiente.Rebotar();
                 AplicarRebotePlataforma(superSaltoAlturaPendiente);
                 superSaltoAlturaPendiente = -1f;
@@ -830,6 +835,11 @@ public class PlayerController2D : MonoBehaviour
         }
         else if (faseSalto == FaseSalto.Flotando)
         {
+            if (gameObject.scene.name == "SampleScene")
+            {
+                rb.gravityScale = 0f;
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
+            }
             tiempoFloteRestante -= Time.fixedDeltaTime;
             if (tiempoFloteRestante <= 0f)
                 EmpezarCaida();

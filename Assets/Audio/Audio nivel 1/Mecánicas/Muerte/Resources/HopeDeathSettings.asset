@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32669cde0e65a518fa2e5041353c496, type: 3}
   m_Name: HopeDeathSettings
   m_EditorClassIdentifier: 
-  sonidoCaida: {fileID: 8300000, guid: 802a1a8ab4c55b04bead016b73b22819, type: 3}
+  sonidoCaida: {fileID: 8300000, guid: f08260ccf5b36c649b51364b3f6c3f6f, type: 3}
   volumenCaida: 0
-  sonidoMano: {fileID: 8300000, guid: 57b4e850ffb024a4fb393aa7f7ef2b67, type: 3}
+  sonidoMano: {fileID: 8300000, guid: 6db4c224331f5a14e9c7d9ac5c4aa2e6, type: 3}
   volumenMano: 0.24

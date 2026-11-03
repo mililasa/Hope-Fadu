@@ -17,6 +17,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.scene.name == "Nivel_3") { enabled = false; return; }
         jugador = GetComponent<PlayerController2D>();
         manos = FindObjectsOfType<HopeHandAudio>(true);
         if (ajustes == null) ajustes = Resources.Load<HopeMusicSettings>("HopeMusicSettings");

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe62206529af46fda8897f353c94eaf1, type: 3}
   m_Name: HopeWoodFootstepSettings
   m_EditorClassIdentifier: 
-  frente: {fileID: 21300000, guid: ebdea44841035fe449ddf29b8010329b, type: 3}
+  frente: {fileID: 21300000, guid: c4bc432900da464a95f72f75481c5b5b, type: 3}
   pasos:
   - {fileID: 8300000, guid: a3d5dbffbcf145539add5cc643bd4d2d, type: 3}
   - {fileID: 8300000, guid: d74057617e4d4fd78c8379e4f4e3e23d, type: 3}

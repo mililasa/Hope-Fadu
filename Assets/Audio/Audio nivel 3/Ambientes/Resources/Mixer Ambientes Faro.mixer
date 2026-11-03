@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mixer Ambientes Faro
-  m_OutputGroup: {fileID: 24300002, guid: 69748e4ffd32f2a40a8831c267a4ee7f, type: 2}
+  m_OutputGroup: {fileID: 24300002, guid: c56525dbfae77d54fa73671d80ecd9a9, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
