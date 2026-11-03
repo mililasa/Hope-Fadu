@@ -1,0 +1,6 @@
+{
+  "source": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 1\\Biblioteca_Sonidos_Proyecto\\Ambientes\\A - Estampidas de Piedra\\EstampidaPiedras.wav",
+  "credit": "Bricks/Stones/Rocks/Gravel Falling - iwanPlays, CC0, https://freesound.org/people/iwanPlays/sounds/567249/",
+  "processing": "Filtro suave 95-1600 Hz, transitorios redondeados, anchura reducida y reflexiones difusas bajas. Pico -16 dBFS.",
+  "scheduling": "2 o 3 eventos por entrada a SampleScene, puntos aleatorios repartidos entre el 12 y el 82 por ciento del recorrido, retraso 0.5-2.5 s. No se reinicia al morir. Separacion minima 12 s."
+}

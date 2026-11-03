@@ -1,0 +1,3 @@
+Fuente: SRG774_Pulse_CC0.mp3 de A - Anticipacion Mano.
+Filtro suave 65-1150 Hz, imagen estrecha y reflexiones muy bajas para sugerir distancia.
+Aparece 2-3 s incluyendo fades de 0.45 y 0.65 s; silencios 4-5 s, tambien antes de la primera aparicion. Bus Ambientes, volumen inicial 0.045.

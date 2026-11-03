@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mixer Guerra Exterior Faro
+  m_OutputGroup: {fileID: 24300002, guid: ced4975bdcc94df45b2b7d6034c73d47, type: 2}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters:
+  - guid: 6acfcb3ab419454a9eade5a893048736
+    name: ParedExteriorDb
+  m_AudioMixerGroupViews:
+  - guids:
+    - 8c666712a637437b9106d0c0cf12e4a5
+    - fb0088f6be274c23924993b523d0f5bd
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PREMIX Mixer Guerra Exterior Faro
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 8c666712a637437b9106d0c0cf12e4a5
+  m_Children:
+  - {fileID: 24300010}
+  m_Volume: b7da002e34714ee8b2ba735b084b7f45
+  m_Pitch: 4e2cee02feb84fbf8239a727e3448b58
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400004}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24300010
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Exterior tras pared
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: fb0088f6be274c23924993b523d0f5bd
+  m_Children: []
+  m_Volume: 6acfcb3ab419454a9eade5a893048736
+  m_Pitch: ef3c5c8b562644ec832acb0c99cba7c3
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400010}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 63550b817fc140b28ec380cab5c5fa54
+  m_EffectName: Attenuation
+  m_MixLevel: 46b6dee2c86f406b80eed85266b39c83
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24400010
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 640810f8b7a7425d828e7198e9967186
+  m_EffectName: Attenuation
+  m_MixLevel: 62f07e61417d4df3bf6042cf08afb1ee
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Snapshot
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: e13712cd237c44fcb51fa31d429439b2
+  m_FloatValues:
+    b7da002e34714ee8b2ba735b084b7f45: 0
+    4e2cee02feb84fbf8239a727e3448b58: 1
+    6acfcb3ab419454a9eade5a893048736: 0
+    ef3c5c8b562644ec832acb0c99cba7c3: 1
+  m_TransitionOverrides: {}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c3f9b75de74c5fbc63785afcdb7c3b, type: 3}
+  m_Name: HopeLevel3MusicSettings
+  m_EditorClassIdentifier: 
+  pulsoInterior: {fileID: 8300000, guid: 68babd77d8ce4cff9f5863303bb948fb, type: 3}
+  marimbaInterior: {fileID: 8300000, guid: e5262204de3e407fba1762fa4ed345f7, type: 3}
+  cierreLuz: {fileID: 8300000, guid: a2a324ecea6d4af59a645c148e599b51, type: 3}
+  volumenGeneral: 0.715
+  volumenPulso: 1.42
+  volumenMarimba: 0.14
+  volumenCierre: 1
+  fundidoPuerta: 0.7
+  fundidoFinal: 0.12

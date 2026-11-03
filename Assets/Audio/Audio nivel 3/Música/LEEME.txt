@@ -1,0 +1,4 @@
+Version aprobada: V2 (+3 dB pulso), no V3/V4.
+Exterior: pulso original nivel 1. Interior: pulso y marimba V2 sincronizados, fundido siguiendo la puerta. Farol final Lit: cierre de marimba y salida del pulso.
+Controles independientes: Resources/HopeLevel3MusicSettings. Todos al submixer Musica existente, sin filtro de ambientes.
+Cierre: mismas notas del ejemplo, ultima cola reducida a 4 s para respetar la salida al Menu existente.

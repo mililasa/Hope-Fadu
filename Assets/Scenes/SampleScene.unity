@@ -405,9 +405,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &31212000
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -624,7 +621,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 41c824062c6f3f24298852be09f33839, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ebdea44841035fe449ddf29b8010329b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -734,9 +731,9 @@ Transform:
   m_GameObject: {fileID: 93960483}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.18, y: -4.07, z: 0}
-  m_LocalScale: {x: 0.44697315, y: 0.44697315, z: 0.65793097}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -14.1944, y: -3.0197, z: 0}
+  m_LocalScale: {x: 0.8866625, y: 0.8866625, z: 0.8866625}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 43383950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -781,7 +778,7 @@ SpriteRenderer:
   m_SortingLayerID: 1461551545
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 962f23428dd966c4fb383dfe83f11d50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c7bf57cf69c53dc4e9f305463b84409b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -792,6 +789,112 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &114656135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 114656137}
+  - component: {fileID: 114656136}
+  - component: {fileID: 114656138}
+  m_Layer: 0
+  m_Name: plataforma_salto_precaria
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &114656136
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114656135}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1561872467
+  m_SortingLayer: 5
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1475479661, guid: 7c83ecb963c72e846b17ab50180f460b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.1875, y: 0.75}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &114656137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114656135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 72.57, y: 0.929, z: 0}
+  m_LocalScale: {x: 0.8866625, y: 0.8866625, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &114656138
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114656135}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf5f89698512d334f816ada36f20ff2a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &154405056
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +1093,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &154405062
@@ -1002,7 +1105,7 @@ Transform:
   m_GameObject: {fileID: 154405056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 70.26, y: -1.69, z: 0}
+  m_LocalPosition: {x: -9.88, y: -3.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1074,9 +1177,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &158572677
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1404,9 +1504,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7293082, b: 0, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &181825066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2348,8 +2445,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.63745385, y: -0.024698615}
-  - {x: 0.5, y: 0}
+  - {x: -0.65136987, y: -0.004699111}
+  - {x: 0.57419753, y: 0.006666541}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -2685,7 +2782,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.02, y: -0.03, z: 0}
-  m_LocalScale: {x: 3.5049086, y: 3.5049086, z: 3.5049086}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 154405062}
@@ -3707,9 +3804,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &814528974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4388,9 +4482,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7766011, b: 0, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1054705960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4884,7 +4975,7 @@ SpriteRenderer:
   m_Size: {x: 0.2, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1174374884
@@ -5287,7 +5378,7 @@ Transform:
   m_GameObject: {fileID: 1315251782}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 68.87, y: -1.22, z: 0}
+  m_LocalPosition: {x: 69.6, y: -1.51, z: 0}
   m_LocalScale: {x: 0.73483, y: 0.73483, z: 0.73483}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5328,9 +5419,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315251782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 433f1854eb5ea4a48bf0ac288ff794f8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 790bd2c539c82d449af97a3f00e7a4ec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5376,10 +5467,10 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1.051014, y: 0.291847}
-  - {x: -0.93162155, y: 0.29184675}
-  - {x: 1.0908127, y: 0.30511248}
-  - {x: 1.0244827, y: 0.3449098}
+  - {x: -1.0376205, y: 0.4024155}
+  - {x: -0.8935904, y: 0.47458482}
+  - {x: 0.95549715, y: 0.46605432}
+  - {x: 1.0363706, y: 0.37366796}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -5425,7 +5516,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -552244526, guid: a956a73cfef33ac469b6bb561d9b73e2, type: 3}
+  m_Sprite: {fileID: 1475479661, guid: 7c83ecb963c72e846b17ab50180f460b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5897,9 +5988,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1484513143
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6310,8 +6398,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1461551545
   m_SortingLayer: 6
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e4297e3f2e50e07439f44e90f757c281, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: a29927acdbf1fba4f96291848c673bbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6331,8 +6419,8 @@ Transform:
   m_GameObject: {fileID: 1633945346}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.61, y: -2.71, z: 0}
-  m_LocalScale: {x: 0.63396204, y: 0.633962, z: 0.9331728}
+  m_LocalPosition: {x: -5.24, y: -2.012, z: 0}
+  m_LocalScale: {x: 0.8866625, y: 0.8866625, z: 0.8866625}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 43383950}
@@ -7955,9 +8043,6 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
-  ctrlBarrilPrendiendo: {fileID: 0}
-  ctrlBarrilPrendido: {fileID: 0}
-  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1994154952
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8414,3 +8499,4 @@ SceneRoots:
   - {fileID: 1054705963}
   - {fileID: 181825069}
   - {fileID: 1840560762}
+  - {fileID: 114656137}

@@ -1,0 +1,3 @@
+Nivel 3: ambientes y eventos exteriores reutilizan WAV del nivel 1. Configuraciones independientes en Ambientes/Resources.
+Puerta y ventanas: el filtro sigue MezclaInteriorAudio de FaroFez durante el cruce. Interior: ambientes -18 dB, guerra -21 dB, corte 850 Hz. Exterior: 0 dB y 22 kHz.
+Dos submixers conservan el enrutamiento original Ambientes/Foley hacia el master. El fader PREMIX es manual; el grupo Exterior tras pared se automatiza. Los pasos, lampara y musica no pasan por ese filtro.

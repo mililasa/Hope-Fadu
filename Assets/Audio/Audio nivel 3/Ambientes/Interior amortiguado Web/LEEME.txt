@@ -1,0 +1,1 @@
+Respaldo WebGL 2022: los clips interiores ya tienen el filtro de 850 Hz y una imagen estrecha. Se cruzan mediante AudioSource.volume al pasar por puertas y ventanas; no dependen de filtros o mixer del navegador. En Editor y Windows se usa el filtro en tiempo real. Para cambiar el corte WebGL hay que regenerar estas copias.
