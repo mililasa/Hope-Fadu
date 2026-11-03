@@ -13,10 +13,10 @@ public sealed class HopeDeathNarrativeAudio : MonoBehaviour
     void Awake()
     {
         instancia = this;
-        ajustes = Resources.Load<HopeDeathNarrativeSettings>("HopeDeathNarrativeSettings");
-        fuentes = new AudioSource[6];
-        string[] nombres = { "Muerte caida - piano", "Muerte caida - soplo", "Muerte caida - lampara", "Muerte caida - golpe suave", "Muerte mano - pulso desarmado", "Muerte mano - electricidad" };
-        for (int i = 0; i < 6; i++)
+        ajustes = Resources.Load<HopeDeathNarrativeSettings>(gameObject.scene.name == "Nivel_2" ? "HopeDeathNarrativeSettingsNivel2" : "HopeDeathNarrativeSettings");
+        fuentes = new AudioSource[7];
+        string[] nombres = { "Muerte caida - piano", "Muerte caida - soplo", "Muerte caida - lampara", "Muerte caida - golpe suave", "Muerte mano - pulso desarmado", "Muerte mano - electricidad", "Muerte enemigo - piano desarmado" };
+        for (int i = 0; i < 7; i++)
         {
             var go = new GameObject(nombres[i]); go.transform.SetParent(transform, false);
             var s = go.AddComponent<AudioSource>(); s.playOnAwake = false; s.loop = false; s.spatialBlend = 0;
@@ -28,17 +28,21 @@ public sealed class HopeDeathNarrativeAudio : MonoBehaviour
         if (ajustes == null || Time.time - inicio < .15f) return;
         inicio = Time.time;
         muerteMano = mano;
-        AudioClip[] clips = { mano ? null : ajustes.piano, mano ? null : ajustes.soplo, mano ? null : ajustes.lampara, mano ? null : ajustes.entradaMano, mano ? ajustes.pulsoRoto : null, mano ? ajustes.electricidadMano : null };
+        AudioClip[] clips = { mano ? null : ajustes.piano, mano ? null : ajustes.soplo, mano ? null : ajustes.lampara, mano ? null : ajustes.entradaMano, mano ? ajustes.pulsoRoto : null, mano ? ajustes.electricidadMano : null, mano ? ajustes.pianoRoto : null };
         double cuando = AudioSettings.dspTime + .015;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
             fuentes[i].Stop(); fuentes[i].clip = clips[i]; fuentes[i].volume = Volumen(i);
-            if (clips[i] != null) fuentes[i].PlayScheduled(cuando);
+            if (clips[i] != null)
+            {
+                if (mano) fuentes[i].Play();
+                else fuentes[i].PlayScheduled(cuando);
+            }
         }
     }
     float Volumen(int i)
     {
-        float v = i == 0 ? ajustes.volumenPiano : i == 1 ? ajustes.volumenSoplo : i == 2 ? ajustes.volumenLampara : i == 3 ? ajustes.volumenEntrada : i == 4 ? ajustes.volumenPulsoRoto : ajustes.volumenElectricidadMano;
+        float v = i == 0 ? ajustes.volumenPiano : i == 1 ? ajustes.volumenSoplo : i == 2 ? ajustes.volumenLampara : i == 3 ? ajustes.volumenEntrada : i == 4 ? ajustes.volumenPulsoRoto : i == 5 ? ajustes.volumenElectricidadMano : ajustes.volumenPianoRoto;
         return ajustes.volumenGeneral * v;
     }
     void Update()
@@ -55,7 +59,7 @@ public sealed class HopeDeathNarrativeAudio : MonoBehaviour
     public static float GananciaFondo(Scene escena, bool musica)
     {
         var t = instancia;
-        if (t == null || t.ajustes == null || escena.name != "SampleScene" || t.gameObject.scene != escena) return 1;
+        if (t == null || t.ajustes == null || (escena.name != "SampleScene" && escena.name != "Nivel_2") || t.gameObject.scene != escena) return 1;
         var a = t.ajustes;
         float dt = Time.time - t.inicio;
         float ataque = Mathf.Max(.01f, a.bajada), salida = Mathf.Max(.01f, a.recuperacion);

@@ -340,8 +340,19 @@ public class ChaseZone : MonoBehaviour
         if (player != null)
         {
             player.SonarMuerte(true);
-            player.VolverAlCheckPoint();
+            if (gameObject.scene.name == "SampleScene")
+            {
+                player.LockMovement(.12f);
+                StartCoroutine(VolverTrasSonidoDeCaptura());
+            }
+            else player.VolverAlCheckPoint();
         }
+    }
+
+    System.Collections.IEnumerator VolverTrasSonidoDeCaptura()
+    {
+        yield return new WaitForSeconds(.12f);
+        if (player != null) player.VolverAlCheckPoint();
     }
 
     // Al morir: no re-arma la persecución si ya se ganó; conserva cadáver y Farol (4).

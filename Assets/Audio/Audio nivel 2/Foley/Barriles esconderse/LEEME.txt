@@ -1,0 +1,4 @@
+Motivo aprobado de caja musical oscura: entrada La-Fa-Mi, salida Mi-Fa-La. Sintesis original.
+Entrada 1.5 s; salida 17/12 s. Sin pasos ni efectos descartados de las pruebas anteriores.
+Los eventos se disparan en Empezar y Continuar de BarrilesInteraccion; Cancelar detiene el audio.
+Ajustes de volumen independientes en Resources/HopeBarrelHideSettings. Salida al premix Foley nivel 2 existente.

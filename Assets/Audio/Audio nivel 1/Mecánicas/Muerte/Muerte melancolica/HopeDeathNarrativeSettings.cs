@@ -4,6 +4,8 @@ public sealed class HopeDeathNarrativeSettings : ScriptableObject
 {
     public AudioClip piano, soplo, lampara, entradaMano, entradaCaida;
     public AudioClip pulsoRoto, electricidadMano;
+    public AudioClip pianoRoto;
+    [Range(0, 1)] public float volumenPianoRoto = 1;
     [Range(0, 1)] public float volumenPulsoRoto = 1, volumenElectricidadMano = 1;
     [Range(0, 1)] public float fondoMusicaMano = .12f;
     [Range(0, 1)] public float volumenGeneral = .24f;

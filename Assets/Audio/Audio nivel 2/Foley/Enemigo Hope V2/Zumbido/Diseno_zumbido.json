@@ -1,0 +1,9 @@
+{
+  "fuente": "Sintesis original, sin muestras externas.",
+  "idea": "Resonancia hueca grave/medios, tonos cercanos desafinados y rastro electrico tenue. Sin pulso ritmico adicional.",
+  "entrada_s": 0.48,
+  "salida_s": 1.05,
+  "nivel_pico_loop_dbfs": -24,
+  "escucha": "Primero zumbido solo. Luego presencia del enemigo con deteccion a los 2.1 s de esa segunda parte.",
+  "estado": "Prueba de sonido, no integrada en Unity."
+}

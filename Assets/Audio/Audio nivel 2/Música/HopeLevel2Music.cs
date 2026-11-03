@@ -37,7 +37,7 @@ public sealed class HopeLevel2Music : MonoBehaviour
         jugador = FindObjectOfType<PlayerController2D>();
         var destino = GameObject.Find("NIVEL3");
         if (destino != null) salidaNivel = destino.GetComponent<Collider2D>();
-        pulso.volume = piano.volume = HopeMusicTransition.GananciaFondo(gameObject.scene);
+        pulso.volume = piano.volume = HopeMusicTransition.GananciaFondo(gameObject.scene) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
         double inicio = AudioSettings.dspTime + .2;
         origenRitmico = inicio;
         pulso.PlayScheduled(inicio); piano.PlayScheduled(inicio);
@@ -81,7 +81,7 @@ public sealed class HopeLevel2Music : MonoBehaviour
             else if (cercaSalida && distancia > anticipacion + 1) cercaSalida = false;
             HopeMusicTransition.SolicitarSalida(gameObject.scene, cercaSalida);
         }
-        pulso.volume = piano.volume = HopeMusicTransition.GananciaFondo(gameObject.scene);
+        pulso.volume = piano.volume = HopeMusicTransition.GananciaFondo(gameObject.scene) * HopeDeathNarrativeAudio.GananciaFondo(gameObject.scene, true);
     }
     // Grid follows the same DSP clock as the scheduled music, including resume.
     public bool ProximaCorchea(double anticipacion, out double cuando)

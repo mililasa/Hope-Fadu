@@ -9,7 +9,7 @@ public sealed class HopeDeathAudio : MonoBehaviour
     float ultimoDisparo = -10f;
     void Awake()
     {
-        if (gameObject.scene.name == "SampleScene")
+        if (gameObject.scene.name == "SampleScene" || gameObject.scene.name == "Nivel_2")
         {
             narrativa = GetComponent<HopeDeathNarrativeAudio>();
             if (narrativa == null) narrativa = gameObject.AddComponent<HopeDeathNarrativeAudio>();

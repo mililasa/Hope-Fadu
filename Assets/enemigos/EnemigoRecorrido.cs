@@ -24,6 +24,8 @@ public class EnemigoRecorrido : MonoBehaviour
     int indice;
     float gracia;
     bool persiguiendo;
+    public bool PersiguiendoParaAudio { get { return persiguiendo; } }
+    public Vector2 PosicionSonora { get { return CentroAgarre(); } }
     SpriteRenderer sr;
     PlayerController2D hope;
     BarrilesInteraccion barriles;
@@ -55,6 +57,7 @@ public class EnemigoRecorrido : MonoBehaviour
         FijarPuntosEnElMundo();
         indice = 0;
         ApoyarEnElPiso();
+        HopeEnemyAudio.Conectar(this);
     }
 
     void FijarPuntosEnElMundo()
@@ -254,8 +257,20 @@ public class EnemigoRecorrido : MonoBehaviour
     {
         gracia = graciaTrasCaptura;
         persiguiendo = false;
-        hope.SonarMuerte(false);
-        hope.VolverAlCheckPoint();
+        bool nivelDos = gameObject.scene.name == "Nivel_2";
+        hope.SonarMuerte(nivelDos);
+        if (nivelDos)
+        {
+            hope.LockMovement(.12f);
+            StartCoroutine(VolverTrasCapturaSonora());
+        }
+        else hope.VolverAlCheckPoint();
+    }
+
+    System.Collections.IEnumerator VolverTrasCapturaSonora()
+    {
+        yield return new WaitForSeconds(.12f);
+        if (hope != null) hope.VolverAlCheckPoint();
     }
 
     void JuntarPuntosHijos()

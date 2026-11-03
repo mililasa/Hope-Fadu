@@ -10,7 +10,8 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
     Vector3 anterior;
     float recorrido;
     bool primerPaso, pausado;
-    int ultimo = -1;
+    int ultimo = -1, ultimaCaja = -1;
+    Collider2D pisoCajas;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Preparar()
@@ -46,6 +47,8 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
         fuente.volume = 1;
         fuente.outputAudioMixerGroup = ajustes.salida;
         anterior = transform.position;
+        var cajas = GameObject.Find("PisoBox/piso3");
+        if (cajas != null && cajas.scene == gameObject.scene) pisoCajas = cajas.GetComponent<Collider2D>();
     }
 
     void LateUpdate()
@@ -87,13 +90,27 @@ public sealed class HopeLevel2Footsteps : MonoBehaviour
 
     void Paso()
     {
-        int cantidad = ajustes.pasos.Length;
+        bool madera = SobreCajas() && ajustes.pasosCajas != null && ajustes.pasosCajas.Length > 0;
+        AudioClip[] clips = madera ? ajustes.pasosCajas : ajustes.pasos;
+        int anteriorIndice = madera ? ultimaCaja : ultimo;
+        int cantidad = clips.Length;
         int indice = Random.Range(0, cantidad);
-        if (cantidad > 1 && indice == ultimo) indice = (indice + Random.Range(1, cantidad)) % cantidad;
-        ultimo = indice;
+        if (cantidad > 1 && indice == anteriorIndice) indice = (indice + Random.Range(1, cantidad)) % cantidad;
+        if (madera) ultimaCaja = indice; else ultimo = indice;
         float minimo = Mathf.Min(ajustes.intensidadMinima, ajustes.intensidadMaxima);
         float maximo = Mathf.Max(ajustes.intensidadMinima, ajustes.intensidadMaxima);
         // OneShot permite superponer las colas de sala sin cortar la pisada anterior.
-        fuente.PlayOneShot(ajustes.pasos[indice], Random.Range(minimo, maximo));
+        var clip = clips[indice];
+        if (clip != null) fuente.PlayOneShot(clip, Random.Range(minimo, maximo) * (madera ? ajustes.volumenCajas : 1f));
+    }
+    bool SobreCajas()
+    {
+        if (pisoCajas == null || jugador.groundCheck == null) return false;
+        Vector2 pie = jugador.groundCheck.position;
+        // Solo el relieve de cajas del borde piso3 (el resto del borde es metal).
+        float x = pisoCajas.transform.InverseTransformPoint(pie).x;
+        if (x < -9.34f || x > -4.76f) return false;
+        RaycastHit2D apoyo = Physics2D.Raycast(pie + Vector2.up * .20f, Vector2.down, .48f, jugador.groundLayer);
+        return apoyo.collider == pisoCajas && apoyo.normal.y > .25f;
     }
 }

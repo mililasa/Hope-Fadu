@@ -167,6 +167,8 @@ public class BarrilesInteraccion : MonoBehaviour
 
     public void Cancelar()
     {
+        if (barriles != null)
+            foreach (var barril in barriles) HopeBarrelHideAudio.Cancelar(barril.transform);
         RestaurarLuz();
         if (hope != null)
         {
@@ -189,6 +191,7 @@ public class BarrilesInteraccion : MonoBehaviour
         b.sr.flipX = false;
         hope.BloquearParaBarril();
         Reproducir(b, 0f, 1f);
+        HopeBarrelHideAudio.Reproducir(b.transform, true);
     }
 
     void Continuar(Barril b, bool salirALaDerecha)
@@ -197,6 +200,7 @@ public class BarrilesInteraccion : MonoBehaviour
         b.fase = Fase.Saliendo;
         b.vistoUltimo = -1f;
         b.anim.speed = 1f;
+        HopeBarrelHideAudio.Reproducir(b.transform, false);
     }
 
     void Avanzar(Barril b)
