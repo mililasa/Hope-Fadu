@@ -95,7 +95,7 @@ public class LuzFondoInteractiva : MonoBehaviour
     {
         luz.SetActive(true);
         Transform zonaAudio = luz == luzfondo ? primeraLuz : segundaLuz;
-        if (zonaAudio != null)
+        if (zonaAudio != null && HopeLegacyAudioPolicy.Permitir(this))
         {
             HopeLanternAudio audioFarol = zonaAudio.GetComponent<HopeLanternAudio>();
             if (audioFarol == null) audioFarol = zonaAudio.gameObject.AddComponent<HopeLanternAudio>();

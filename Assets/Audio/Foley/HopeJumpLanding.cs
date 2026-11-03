@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 [DisallowMultipleComponent]
 public sealed class HopeJumpLanding : MonoBehaviour
@@ -8,15 +9,34 @@ public sealed class HopeJumpLanding : MonoBehaviour
     PlayerController2D jugador;
     float tiempoAire, ignorarHasta;
 
+    bool esNivel2, capaPausada;
+    HopeLevel2CapeSettings ajustesCapaNivel2;
     void Awake()
     {
         jugador = GetComponent<PlayerController2D>();
+        esNivel2 = gameObject.scene.name == "Nivel_2";
+        if (esNivel2)
+        {
+            ajustesCapaNivel2 = Resources.Load<HopeLevel2CapeSettings>("HopeLevel2CapeSettings");
+            fuenteCapa = Crear("F - Capa doble salto nivel 2");
+            if (ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null && ajustesCapaNivel2.salida != null)
+                fuenteCapa.outputAudioMixerGroup = ajustesCapaNivel2.salida;
+            else Debug.LogError("Hope: falta el sonido o la salida de capa de Nivel 2.", this);
+            Reiniciar();
+            return;
+        }
         if (apoyos == null) apoyos = Resources.Load<HopeFoleyClipSettings>("HopeLandingSettings");
         if (saltos == null) saltos = Resources.Load<HopeFoleyClipSettings>("HopeJumpSettings");
         if (capa == null) capa = Resources.Load<HopeFoleyClipSettings>("HopeCapeSettings");
         fuenteApoyo = Crear("F - Apoyos (canal 11)");
         fuenteSalto = Crear("F - Saltos (canal 12)");
         fuenteCapa = Crear("F - Capa durante salto");
+        if (esNivel2)
+        {
+            if (ajustesCapaNivel2 != null && ajustesCapaNivel2.salida != null)
+                fuenteCapa.outputAudioMixerGroup = ajustesCapaNivel2.salida;
+            else Debug.LogError("Hope: falta el ajuste o la salida de Capa doble salto del nivel 2.", this);
+        }
         if (apoyos == null || saltos == null || capa == null)
             Debug.LogWarning("Hope: falta la configuracion de apoyos o saltos.", this);
         Reiniciar();
@@ -37,6 +57,13 @@ public sealed class HopeJumpLanding : MonoBehaviour
 
     void LateUpdate()
     {
+        if (esNivel2)
+        {
+            bool pausa = Time.timeScale == 0;
+            if (pausa != capaPausada && fuenteCapa != null)
+            { if (pausa) fuenteCapa.Pause(); else fuenteCapa.UnPause(); capaPausada = pausa; }
+            return;
+        }
         if (jugador == null || !jugador.enabled || jugador.BloqueaFoleyDeSalto || Time.time < ignorarHasta)
         {
             tiempoAire = 0f;
@@ -46,18 +73,33 @@ public sealed class HopeJumpLanding : MonoBehaviour
         if (!jugador.EnSueloParaFoley) tiempoAire += Time.deltaTime;
         else
         {
-            // Filtra pequeños cortes del sensor al caminar sobre bordes.
+            // Filtra pequeÃ±os cortes del sensor al caminar sobre bordes.
             if (tiempoAire >= 0.08f && !HopeCorpsePileAudio.TryPlayContacto(jugador, true))
                 Reproducir(fuenteApoyo, apoyos);
             tiempoAire = 0f;
         }
     }
 
-    public void Saltar(bool reproducirSaltoNormal = true)
+    public void Saltar(bool reproducirSaltoNormal = true, bool dobleSalto = false)
     {
+        if (esNivel2)
+        {
+            if (dobleSalto && fuenteCapa != null && ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null)
+            {
+                fuenteCapa.Stop(); fuenteCapa.volume = ajustesCapaNivel2.volumenCanal;
+                fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
+            }
+            return;
+        }
         if (reproducirSaltoNormal) Reproducir(fuenteSalto, saltos);
+        if (esNivel2 && !dobleSalto) return;
         if (fuenteCapa != null) fuenteCapa.Stop();
-        Reproducir(fuenteCapa, capa);
+        if (esNivel2 && ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null)
+        {
+            fuenteCapa.volume = ajustesCapaNivel2.volumenCanal;
+            fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
+        }
+        else Reproducir(fuenteCapa, capa);
     }
 
     public void Reiniciar()

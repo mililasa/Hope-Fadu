@@ -44,9 +44,9 @@ public class Lantern : MonoBehaviour
     GameObject cartelE;
     Coroutine apagadoLibre;
     bool esBarril;
-    RuntimeAnimatorController ctrlBarrilPrendiendo;
-    RuntimeAnimatorController ctrlBarrilPrendido;
-    Sprite spriteBarrilApagado;
+    [SerializeField] RuntimeAnimatorController ctrlBarrilPrendiendo;
+    [SerializeField] RuntimeAnimatorController ctrlBarrilPrendido;
+    [SerializeField] Sprite spriteBarrilApagado;
 
     public Estado EstadoActual { get { return estado; } }
     public bool EsBarril { get { return esBarril; } }
@@ -59,6 +59,7 @@ public class Lantern : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        DetectarBarrilPorSprite();
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.isTrigger = true;
         AsegurarExplosionesHijas();
@@ -164,7 +165,36 @@ public class Lantern : MonoBehaviour
         }
     }
 
-    // Solo los faroles de una ChaseZone: barrilprendiendose al prender, barrilprendido mientras queda prendido.
+    // Un farol con el dibujo del barril (aunque no esté en una ChaseZone) usa la animación de prendido.
+    void DetectarBarrilPorSprite()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr == null || sr.sprite == null) return;
+        if (sr.sprite.name.IndexOf("barril", System.StringComparison.OrdinalIgnoreCase) < 0)
+            return;
+        CargarAnimacionesDeBarril();
+        if (spriteBarrilApagado == null)
+            spriteBarrilApagado = sr.sprite;
+        ConfigurarComoBarril(ctrlBarrilPrendiendo, ctrlBarrilPrendido, spriteBarrilApagado);
+    }
+
+    void CargarAnimacionesDeBarril()
+    {
+        if (ctrlBarrilPrendiendo != null && ctrlBarrilPrendido != null)
+            return;
+#if UNITY_EDITOR
+        if (ctrlBarrilPrendiendo == null)
+            ctrlBarrilPrendiendo = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(
+                "Assets/farol/Barri-Encendiendosel-Sheet_0.controller");
+        if (ctrlBarrilPrendido == null)
+            ctrlBarrilPrendido = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(
+                "Assets/farol/Barril-Prendido-Sheet_0.controller");
+        if (spriteBarrilApagado == null)
+            spriteBarrilApagado = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/farol/Barril1.png");
+#endif
+    }
+
+    // barrilprendiendose al prender, barrilprendido mientras queda prendido.
     public void ConfigurarComoBarril(RuntimeAnimatorController prendiendo, RuntimeAnimatorController prendido, Sprite apagado)
     {
         if (prendiendo != null) ctrlBarrilPrendiendo = prendiendo;
@@ -295,7 +325,7 @@ public class Lantern : MonoBehaviour
         if (zona != null && zona.Hand != null)
             zona.Hand.NotifyLightingStarted(this);
 
-        if (pp != null)
+        if (pp != null && HopeLegacyAudioPolicy.Permitir(this))
         {
             HopeLanternAudio audioFarol = GetComponent<HopeLanternAudio>();
             if (audioFarol == null) audioFarol = gameObject.AddComponent<HopeLanternAudio>();
@@ -519,19 +549,23 @@ public class Lantern : MonoBehaviour
     void MostrarBarrilPrendiendo()
     {
         if (animator == null || ctrlBarrilPrendiendo == null) return;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         animator.enabled = true;
         animator.runtimeAnimatorController = ctrlBarrilPrendiendo;
         animator.speed = 1f;
         animator.Play("barrilprendiendose", 0, 0f);
+        animator.Update(0f);
     }
 
     void MostrarBarrilPrendido()
     {
         if (animator == null || ctrlBarrilPrendido == null) return;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         animator.enabled = true;
         animator.runtimeAnimatorController = ctrlBarrilPrendido;
         animator.speed = 1f;
         animator.Play("barrilprendido", 0, 0f);
+        animator.Update(0f);
     }
 
     IEnumerator SostenerBarrilPrendiendo(float duracion)

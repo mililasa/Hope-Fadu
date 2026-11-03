@@ -1,0 +1,74 @@
+{
+  "archivo": "Hope_Pila_Cadaveres_Prueba_03_Respiraciones.wav",
+  "duracion_s": 8.5,
+  "formato": "WAV PCM 24 bits / 48000 Hz / stereo",
+  "pico_dbfs": -6,
+  "fuentes": [
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\Justsoundeffects - Gore Mini Pack\\GOREFlsh_Flesh Drops on Floor 03_JSE_GMP.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\Justsoundeffects - Gore Mini Pack\\GORESplt_Gore Splatter 01_JSE_GMP.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale – Owen – Character Playset\\HMNBrth_Human, Adult, Male, Exhale, Mouth, Dying_UberDuo_INHL_09.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale – Owen – Character Playset\\HMNBrth_Human, Adult, Male, Breathe, Mouth, Slow,_UberDuo_INHL.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\InMotionAudio - Torn T-Shirt\\CLOTHRip_CottonRips13_InMotionAudio_TornTShirt.wav"
+  ],
+  "capas": "Cuatro apoyos de carne/piel, salpicadura breve, cuerpo grave y roce tenue de tela. Tres voces de exhalacion cansada/moribunda con variaciones de tono, filtradas y mas bajas que los pasos.",
+  "recortes_carne_s": [
+    7.15,
+    9.57,
+    13.79,
+    25.87
+  ],
+  "recortes_humedad_s": [
+    0.11,
+    2.53,
+    4.87,
+    9.81
+  ],
+  "recorte_voz_moribunda_s": 4.09,
+  "recorte_respiracion_s": 0.0,
+  "momentos_pisadas_demo_s": [
+    0.45,
+    1.25,
+    2.05,
+    2.85,
+    3.65,
+    4.45,
+    5.25,
+    6.05
+  ],
+  "momentos_voces_demo_s": [
+    1.38,
+    2.48,
+    3.81,
+    5.12,
+    6.16
+  ],
+  "estado": "Integracion Unity: 24 archivos de apoyos separados en seis capas, cuatro variantes alineadas por capa; cinco voces separadas. Contactos fisicos de Piso8 dentro de la pila, sustitucion de pasos y aterrizajes, fade de proximidad desde seis unidades del dibujo.",
+  "licencia": "Sonniss GDC 2024; ver License - GDC Game Audio.pdf en la biblioteca original.",
+  "revision": 3,
+  "fuentes_adicionales": [
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\TheWorkRoom Audio Post - Neoprene - Wet- Wetsuit\\NEOW030.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\TheWorkRoom Audio Post - Neoprene - Wet- Wetsuit\\NEOW003.wav"
+  ],
+  "capas_adicionales": "Compresion de piel/cuerpo con neopreno humedo; apoyo grave de tejido procesado; despegue humedo independiente 270-297 ms despues del apoyo. Cuatro combinaciones distintas, sin modificar los quejidos.",
+  "recortes_compresion_s": [
+    4.69,
+    17.25,
+    23.95,
+    26.51
+  ],
+  "recortes_despegue_s": [
+    3.93,
+    9.57,
+    15.23,
+    24.89
+  ],
+  "fuentes_respiraciones_adicionales": [
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale – Tanja – Character Playset\\HMNBrth_Human, Adult, Female, Panting, Nose, Loop_UberDuo_INHL.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale – Owen – Character Playset\\HMNBrth_Human, Adult, Male, Breath, Surprise, Gasp_UberDuo_INHL_17.wav"
+  ],
+  "recortes_respiraciones_s": [
+    9.2,
+    0.12
+  ],
+  "respiraciones_adicionales": "Registro femenino mas alto y entrecortado, filtrado 180-3100 Hz; aspiracion masculina bajada de tono, ataque suavizado y filtro 120-2300 Hz. Se intercalan con los tres quejidos anteriores, con leve separacion estereo."
+}

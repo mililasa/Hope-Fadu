@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: "Mixer M\xFAsica nivel 2"
+  m_OutputGroup: {fileID: 7373918364175136615, guid: 079985861f797de4f886e44cd26b0a7d, type: 2}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters: []
+  m_AudioMixerGroupViews:
+  - guids:
+    - 22ff2c1785b84c2fa3ace90fe4c37cd0
+    - 8979f9308e894d9098cca2d663ae104a
+    - 467d715aadcb4fc7a7e0ae82de3e9642
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: "M\xFAsica N2 - PREMIX"
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 22ff2c1785b84c2fa3ace90fe4c37cd0
+  m_Children:
+  - {fileID: 24300801}
+  - {fileID: 24300802}
+  m_Volume: b98d396b6d424690954f5958ed883375
+  m_Pitch: e985520eb8924b95b11dc18fd34460ac
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400004}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24300801
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pulso Hope
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 8979f9308e894d9098cca2d663ae104a
+  m_Children: []
+  m_Volume: aa91431cbc1940f1ba8fc5417213307a
+  m_Pitch: 599f75fc4d6c4dc0b237dbb36e05edcc
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400801}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24300802
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Piano respuesta
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 467d715aadcb4fc7a7e0ae82de3e9642
+  m_Children: []
+  m_Volume: accc22ec6ac74e7495f5d9bf3388bc6f
+  m_Pitch: 55fd37bc7fbd4b78ad74f6dcc38d9057
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400802}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 485802551d1c40a49829afec2647d75b
+  m_EffectName: Attenuation
+  m_MixLevel: 041f243104ba4f7ead6cb35d10d6c8b9
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24400801
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: d5938b740d534df6a48ece82803a8313
+  m_EffectName: Attenuation
+  m_MixLevel: 624e399a9494454fbb6dd882ac3ced84
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24400802
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 6b600b31590a45a3954fc76b7505270f
+  m_EffectName: Attenuation
+  m_MixLevel: b66ae1d95a794ce48d768b3c853cb70c
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Snapshot
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: b2c3f05a170f45478fe138366a4c745e
+  m_FloatValues:
+    b98d396b6d424690954f5958ed883375: -0.13958031
+    aa91431cbc1940f1ba8fc5417213307a: 0
+    55fd37bc7fbd4b78ad74f6dcc38d9057: 1
+    accc22ec6ac74e7495f5d9bf3388bc6f: 0
+    599f75fc4d6c4dc0b237dbb36e05edcc: 1
+    e985520eb8924b95b11dc18fd34460ac: 1
+  m_TransitionOverrides: {}

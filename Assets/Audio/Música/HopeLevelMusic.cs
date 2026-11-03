@@ -35,7 +35,7 @@ public sealed class HopeLevelMusic : MonoBehaviour
         if (!soloFondo && salida == null) Debug.LogWarning("Hope: no se encontro el escenario de referencia de la puerta.", this);
         principal = CrearFuente("Musica Main", ajustes.musicaMain);
         paso = CrearFuente("Musica Paso de Nivel", ajustes.pasoDeNivel);
-        principal.volume = ajustes.volumenMain;
+        principal.volume = ajustes.volumenMain * HopeMusicTransition.GananciaFondo(gameObject.scene);
         principal.Play();
     }
 
@@ -105,12 +105,23 @@ public sealed class HopeLevelMusic : MonoBehaviour
         float tiempo = presencia > mezclaMano ? entrada : salidaMano;
         mezclaMano = Mathf.MoveTowards(mezclaMano, presencia, Time.deltaTime / Mathf.Max(0.01f, tiempo));
         // La mano desplaza Main; la mezcla de la cueva sigue teniendo su propio control.
-        principal.volume = ajustes.volumenMain * (1f - mezcla) * (1f - mezclaMano);
+        principal.volume = ajustes.volumenMain * (1f - mezcla) * (1f - mezclaMano) * HopeMusicTransition.GananciaFondo(gameObject.scene);
     }
 
     float DistanciaPuerta()
     {
         return Vector2.Distance(transform.position, salida.TransformPoint(ajustes.puntoPuertaLocal));
+    }
+
+    public AudioSource ObtenerSalidaParaTransicion()
+    {
+        if (paso == null || ajustes == null) return null;
+        if (!paso.isPlaying)
+        {
+            paso.time = Mathf.Clamp(ajustes.inicioPaso, 0, Mathf.Max(0, paso.clip.length - .05f));
+            paso.Play();
+        }
+        return paso;
     }
 
     public void CompletarNivel()

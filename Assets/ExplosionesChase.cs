@@ -17,8 +17,6 @@ public class ExplosionesChase : MonoBehaviour
     SpriteRenderer sr;
     Transform hope;
     bool yaDisparada;
-    bool reproduciendo;
-    float avancePrevio;
     static RuntimeAnimatorController controllerCache;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -75,7 +73,7 @@ public class ExplosionesChase : MonoBehaviour
             controllerExplosion = CargarController();
         if (animator.runtimeAnimatorController == null && controllerExplosion != null)
             animator.runtimeAnimatorController = controllerExplosion;
-        if (GetComponent<HopeExplosionAudio>() == null)
+        if (HopeLegacyAudioPolicy.Permitir(this) && GetComponent<HopeExplosionAudio>() == null)
             gameObject.AddComponent<HopeExplosionAudio>();
         Ocultar();
     }
@@ -102,11 +100,30 @@ public class ExplosionesChase : MonoBehaviour
             if (hope == null) return;
         }
 
-        Vector2 delta = hope.position - transform.position;
-        if (Mathf.Abs(delta.x) > distanciaHorizontal || Mathf.Abs(delta.y) > distanciaVertical)
-            return;
+        // El pivote del sprite está en una esquina. Si se mide desde ahí, Hope
+        // cruza la pintura y la explosión no arranca.
+        if (!HopeCerca()) return;
 
         Reproducir();
+    }
+
+    bool HopeCerca()
+    {
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        Vector2 p = hope.position;
+        if (sr != null && sr.sprite != null)
+        {
+            Bounds b = sr.sprite.bounds;
+            Vector3 a = transform.TransformPoint(b.min);
+            Vector3 c = transform.TransformPoint(b.max);
+            float x0 = Mathf.Min(a.x, c.x) - distanciaHorizontal;
+            float x1 = Mathf.Max(a.x, c.x) + distanciaHorizontal;
+            float y0 = Mathf.Min(a.y, c.y) - distanciaVertical;
+            float y1 = Mathf.Max(a.y, c.y) + distanciaVertical;
+            return p.x >= x0 && p.x <= x1 && p.y >= y0 && p.y <= y1;
+        }
+        Vector2 delta = p - (Vector2)transform.position;
+        return Mathf.Abs(delta.x) <= distanciaHorizontal && Mathf.Abs(delta.y) <= distanciaVertical;
     }
 
     static RuntimeAnimatorController CargarController()
@@ -116,7 +133,7 @@ public class ExplosionesChase : MonoBehaviour
 #if UNITY_EDITOR
         if (controllerCache == null)
             controllerCache = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(
-                "Assets/fondo/explosion-Sheet_0.controller");
+                "Assets/fondo/Resources/explosion-Sheet_0.controller");
 #endif
         return controllerCache;
     }
@@ -155,8 +172,6 @@ public class ExplosionesChase : MonoBehaviour
     {
         if (yaDisparada || PadreEsBarril()) return;
         yaDisparada = true;
-        reproduciendo = true;
-        avancePrevio = 0f;
         StopAllCoroutines();
         if (animator == null) animator = GetComponent<Animator>();
         if (animator != null && animator.runtimeAnimatorController == null)
@@ -165,31 +180,33 @@ public class ExplosionesChase : MonoBehaviour
             animator.runtimeAnimatorController = controllerExplosion;
         }
         Mostrar(true);
-        if (animator != null)
+        if (animator != null && animator.runtimeAnimatorController != null)
         {
+            // Si el animator nace apagado, se queda en el primer cuadro.
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             animator.enabled = true;
-            animator.Play(estadoExplosion, 0, 0f);
             animator.speed = 1f;
-            StartCoroutine(OcultarAlTerminar());
+            animator.Rebind();
+            animator.Play(estadoExplosion, 0, 0f);
+            animator.Update(0f);
+            StartCoroutine(OcultarDespues(Duracion()));
         }
         else
             StartCoroutine(OcultarDespues(0.5f));
     }
 
-    IEnumerator OcultarAlTerminar()
+    float Duracion()
     {
-        float tope = Time.time + 2f;
-        while (Time.time < tope && reproduciendo)
+        if (animator != null && animator.runtimeAnimatorController != null)
         {
-            yield return null;
-            if (animator == null || !animator.enabled) break;
-            AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-            float avance = info.normalizedTime;
-            if (avance >= 0.98f || avance + 0.02f < avancePrevio)
-                break;
-            avancePrevio = avance;
+            AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+            for (int i = 0; i < clips.Length; i++)
+            {
+                if (clips[i] != null && clips[i].name == estadoExplosion)
+                    return Mathf.Max(0.1f, clips[i].length);
+            }
         }
-        Ocultar();
+        return 0.67f;
     }
 
     IEnumerator OcultarDespues(float t)
@@ -200,13 +217,9 @@ public class ExplosionesChase : MonoBehaviour
 
     void Ocultar()
     {
-        reproduciendo = false;
         Mostrar(false);
         if (animator != null)
-        {
-            animator.speed = 0f;
             animator.enabled = false;
-        }
     }
 
     void Mostrar(bool visible)

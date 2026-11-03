@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b40d8b32d324054ae5b7ebd1be3073d, type: 3}
+  m_Name: HopeLevel2FootstepSettings
+  m_EditorClassIdentifier: 
+  pasos:
+  - {fileID: 8300000, guid: 56f3d0eb5ab94625913c35461305d155, type: 3}
+  - {fileID: 8300000, guid: 0caa4dac374145ebb80d9d7dfba9643e, type: 3}
+  - {fileID: 8300000, guid: 2dadd34c9151457e8a15d738e3087fec, type: 3}
+  - {fileID: 8300000, guid: d486eb706c25488190d1a4b173ae120a, type: 3}
+  - {fileID: 8300000, guid: 4ad8ae8532864fdbb21edc9807d2e4e2, type: 3}
+  salida: {fileID: 24300400, guid: 672012de8d744817b5538618d228ab93, type: 2}
+  segundosEntrePasos: 0.65
+  intensidadMinima: 0.95
+  intensidadMaxima: 1

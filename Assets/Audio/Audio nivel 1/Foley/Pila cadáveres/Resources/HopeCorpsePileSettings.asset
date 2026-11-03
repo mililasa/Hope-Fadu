@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0cd11d156548b78db652ae7df5e098, type: 3}
+  m_Name: HopeCorpsePileSettings
+  m_EditorClassIdentifier: 
+  volumenContactos: 0.15
+  capasContacto:
+  - nombre: Carne y piel
+    volumen: 1
+    sonidos:
+    - nombre: Carne y piel 01
+      sonido: {fileID: 8300000, guid: f73f2b77d4b74837ad756ad0ea177c29, type: 3}
+      volumen: 1
+    - nombre: Carne y piel 02
+      sonido: {fileID: 8300000, guid: 3df9df580dea44cfa93f43c79c8dbb85, type: 3}
+      volumen: 1
+    - nombre: Carne y piel 03
+      sonido: {fileID: 8300000, guid: 3189044f105d4809afc22ef89b9aa951, type: 3}
+      volumen: 1
+    - nombre: Carne y piel 04
+      sonido: {fileID: 8300000, guid: 05cb11832b424b589fc36f3fb936a6f3, type: 3}
+      volumen: 1
+  - nombre: Peso
+    volumen: 1
+    sonidos:
+    - nombre: Peso 01
+      sonido: {fileID: 8300000, guid: da2f98915bb14161b459b67304af7ce0, type: 3}
+      volumen: 1
+    - nombre: Peso 02
+      sonido: {fileID: 8300000, guid: e5e87da6b34949bf82766013dd077fb9, type: 3}
+      volumen: 1
+    - nombre: Peso 03
+      sonido: {fileID: 8300000, guid: 6fb9e31a6c394c8c85c7c0597c2b8b97, type: 3}
+      volumen: 1
+    - nombre: Peso 04
+      sonido: {fileID: 8300000, guid: cc1baa9c38ad44aa909486fedd9792f5, type: 3}
+      volumen: 1
+  - nombre: Humedad
+    volumen: 1
+    sonidos:
+    - nombre: Humedad 01
+      sonido: {fileID: 8300000, guid: 1322d90baeee4431be3299eac9eaadbf, type: 3}
+      volumen: 1
+    - nombre: Humedad 02
+      sonido: {fileID: 8300000, guid: e25fc9b39f3a499c99d723776ec4272e, type: 3}
+      volumen: 1
+    - nombre: Humedad 03
+      sonido: {fileID: 8300000, guid: 96b38fac191144ac831b97a192228e1c, type: 3}
+      volumen: 1
+    - nombre: Humedad 04
+      sonido: {fileID: 8300000, guid: d75746907c4a4dea800fe136f6274dc3, type: 3}
+      volumen: 1
+  - nombre: Ropa
+    volumen: 1
+    sonidos:
+    - nombre: Ropa 01
+      sonido: {fileID: 8300000, guid: a0d72c87f8f04c71bd75b2eae9caf17a, type: 3}
+      volumen: 1
+    - nombre: Ropa 02
+      sonido: {fileID: 8300000, guid: a081e7a6e0ee420ebebe38d8b3d7c820, type: 3}
+      volumen: 1
+    - nombre: Ropa 03
+      sonido: {fileID: 8300000, guid: e79f271188f743cfbbe3ef5ecdb43a7b, type: 3}
+      volumen: 1
+    - nombre: Ropa 04
+      sonido: {fileID: 8300000, guid: 541e4ba5c957449d824a515f724f212a, type: 3}
+      volumen: 1
+  - nombre: "Compresi\xF3n"
+    volumen: 1
+    sonidos:
+    - nombre: "Compresi\xF3n 01"
+      sonido: {fileID: 8300000, guid: 45e8f15d01a84342b0f6dbb7c26e9fd3, type: 3}
+      volumen: 1
+    - nombre: "Compresi\xF3n 02"
+      sonido: {fileID: 8300000, guid: 5e02892d30584ccf89f5509fe75188e3, type: 3}
+      volumen: 1
+    - nombre: "Compresi\xF3n 03"
+      sonido: {fileID: 8300000, guid: 711605ff9d0f41a19b1f7eddd15e1054, type: 3}
+      volumen: 1
+    - nombre: "Compresi\xF3n 04"
+      sonido: {fileID: 8300000, guid: 6ba1197e6a93419ab8fa1531ceaa430a, type: 3}
+      volumen: 1
+  - nombre: Despegue
+    volumen: 1
+    sonidos:
+    - nombre: Despegue 01
+      sonido: {fileID: 8300000, guid: 6e5f2571ef7943259ca354ca4a03ce31, type: 3}
+      volumen: 1
+    - nombre: Despegue 02
+      sonido: {fileID: 8300000, guid: 927d73b588124642b4ddd6f0769d9743, type: 3}
+      volumen: 1
+    - nombre: Despegue 03
+      sonido: {fileID: 8300000, guid: bf87f9f5240a4275b2eb8f422ef204cf, type: 3}
+      volumen: 1
+    - nombre: Despegue 04
+      sonido: {fileID: 8300000, guid: abffe164fd25410688a356ceee7f8f36, type: 3}
+      volumen: 1
+  intensidadCaminata: 0.68
+  intervaloMinimoContacto: 0.15
+  volumenRespiraciones: 0.16
+  respiraciones:
+  - nombre: Quejido moribundo
+    sonido: {fileID: 8300000, guid: 427c3fc5fd554cdcb25f3a458dfb18b5, type: 3}
+    volumen: 0.1
+  - nombre: Respiracion lenta
+    sonido: {fileID: 8300000, guid: 277f832af3b14075a283466d495759b4, type: 3}
+    volumen: 0.29
+  - nombre: Quejido otro registro
+    sonido: {fileID: 8300000, guid: 5aad28edf76444668230975e681d6ad8, type: 3}
+    volumen: 0.1
+  - nombre: Respiracion aguda
+    sonido: {fileID: 8300000, guid: 533c438b315a47f5bea1057f7b782779, type: 3}
+    volumen: 0.32
+  - nombre: Respiracion grave
+    sonido: {fileID: 8300000, guid: b5eea97037714fc2b86f79e4c68af909, type: 3}
+    volumen: 0.34
+  distanciaInicio: 6
+  distanciaPlena: 1.5
+  fadeEntrada: 1.1
+  fadeSalida: 1.3
+  intervaloVozMin: 1.2
+  intervaloVozMax: 2.1
+  panoramaMaximo: 0.45
+  nombreColliderSuelo: Piso8
+  bordeIzquierdo: 0.045
+  bordeDerecho: 0.885

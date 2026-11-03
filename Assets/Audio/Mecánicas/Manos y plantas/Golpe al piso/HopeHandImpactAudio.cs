@@ -84,6 +84,7 @@ public sealed class HopeHandImpactAudio : MonoBehaviour
         preparacion = null;
         if (barrido != null) barrido.Stop();
         Reproducir(impacto, ajustes.impacto);
+        HopeHandSizzle.Reproducir(this);
     }
 
     static void Reproducir(AudioSource fuente, AudioClip clip)
@@ -95,6 +96,7 @@ public sealed class HopeHandImpactAudio : MonoBehaviour
 
     public void Reiniciar()
     {
+        HopeHandSizzle.Detener(this);
         if (preparacion != null) StopCoroutine(preparacion);
         preparacion = null;
         golpePendiente = false;

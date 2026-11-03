@@ -106,6 +106,13 @@ public static class ConstructorFaro
     // ------------------------------------------------------------------
     public static void Construir(FaroFez faro, float alturaFarol = -1f)
     {
+        // Medidas del faro de ejemplo (recto, sin tus dibujos)
+        faro.medioAncho = 4f; faro.medioAnchoArriba = 4f; faro.grosorMuro = 0.4f;
+        faro.salidaRepisa = 1f; faro.salidaTecho = 1f; faro.alturaLinterna = 30f;
+        faro.puertasDeFrente = false;
+        Transform fondoViejo = faro.transform.Find("Fondo (dibujo)");
+        if (fondoViejo != null) Undo.DestroyObjectImmediate(fondoViejo.gameObject);
+
         Materiales mats = PrepararMateriales();
         float h = faro.medioAncho, T = faro.grosorMuro, H = faro.alturaLinterna, sale = faro.salidaRepisa;
         float bordeAfuera = h + T * 0.5f + sale;
@@ -165,7 +172,7 @@ public static class ConstructorFaro
             int w = IndicePared(d.pared);
             int k = FaroFez.VistaDePared(d.adentro, w);
             float largo = d.b - d.a, grosor = 0.35f;
-            Vector3 centro = FaroFez.PuntoDePanel(d.adentro, k, (d.a + d.b) * 0.5f, d.y - grosor * 0.5f, sale * 0.5f, h, T);
+            Vector3 centro = faro.PuntoDePanel(d.adentro, k, (d.a + d.b) * 0.5f, d.y - grosor * 0.5f, sale * 0.5f);
             Vector3 tam = (k % 2 == 0) ? new Vector3(largo, grosor, sale) : new Vector3(sale, grosor, largo);
             string nombre = "Repisa " + (++n1) + " " + NOMBRES[w] + (d.rota ? " (rota)" : "");
             GameObject r = Cubo(d.adentro ? grupoAdentro : grupoAfuera, nombre, centro, tam, d.rota ? mats.repisaRota : mats.repisa, new Vector2(2f, 0f));
@@ -186,7 +193,7 @@ public static class ConstructorFaro
             Vector3 n = NORMAL[w];
             GameObject puerta = new GameObject((p.tipo == PuertaFaro.Tipo.Ventana ? "Ventana " : "Puerta ") + NOMBRES[w]);
             puerta.transform.SetParent(grupoPuertas, false);
-            puerta.transform.localPosition = FaroFez.PuntoDePanel(true, w, p.u, p.y, -T * 0.5f, h, T);   // sobre el centro del muro
+            puerta.transform.localPosition = faro.PuntoDePanel(true, w, p.u, p.y, -T * 0.5f);   // sobre el centro del muro
             PuertaFaro pf = puerta.AddComponent<PuertaFaro>();
             pf.tipo = p.tipo;
             pf.pared = CARAS[w];
@@ -272,7 +279,7 @@ public static class ConstructorFaro
     }
 
     // Hope y el checkpoint afuera, frente a la entrada; el farol arriba; la cámara centrada en el faro.
-    static void UbicarEscena(FaroFez faro, float alturaFarol)
+    internal static void UbicarEscena(FaroFez faro, float alturaFarol)
     {
         float H = faro.alturaLinterna;
         PlayerController2D pp = Object.FindObjectOfType<PlayerController2D>();
@@ -342,7 +349,7 @@ public static class ConstructorFaro
     // Se crean una sola vez en Assets/Nivel3_Faro/Texturas. Si reemplazás un
     // PNG por tu propio dibujo (mismo nombre), el faro usa el tuyo.
     // ------------------------------------------------------------------
-    class Materiales
+    internal class Materiales
     {
         public Material paredAdentro, paredAfuera, piedra, suelo, repisa, repisaRota, oscuro, mar, techo;
         public Material puertaAdentro, puertaAfuera, ventana, flecha, haz;
@@ -350,7 +357,7 @@ public static class ConstructorFaro
 
     static Color32 C(string hex) { ColorUtility.TryParseHtmlString(hex, out Color c); return c; }
 
-    static Materiales PrepararMateriales()
+    internal static Materiales PrepararMateriales()
     {
         Directory.CreateDirectory(CARPETA + "/Texturas");
         Directory.CreateDirectory(CARPETA + "/Materiales");
@@ -526,8 +533,15 @@ public class FaroFezEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.HelpBox(
             "Para editar el nivel: mové, estirá o duplicá las repisas y puertas adentro de Pivote (sin rotarlas).\n" +
+            "Las repisas invisibles (cajas de líneas en Scene) son las que Hope pisa sobre tus dibujos.\n" +
             "Las flechas de esquina se calculan solas al dar Play.", MessageType.Info);
         if (Application.isPlaying) return;
+        GUI.backgroundColor = new Color(0.8f, 0.7f, 1f);
+        if (GUILayout.Button("Armar faro con mis dibujos (borra tus cambios)", GUILayout.Height(26)))
+        {
+            if (EditorUtility.DisplayDialog("Faro", "Se borra el Pivote con todas las repisas y puertas, y se arma el faro con tus PNG de Nivel3_Faro/Dibujos. ¿Seguro?", "Armar", "Cancelar"))
+                ConstructorFaroDibujo.Construir((FaroFez)target);
+        }
         GUI.backgroundColor = new Color(1f, 0.75f, 0.75f);
         if (GUILayout.Button("Reconstruir faro de ejemplo (borra tus cambios)", GUILayout.Height(26)))
         {

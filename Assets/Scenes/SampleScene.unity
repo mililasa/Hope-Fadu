@@ -405,6 +405,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &31212000
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -731,7 +734,7 @@ Transform:
   m_GameObject: {fileID: 93960483}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.6377, y: -4.2339, z: 0}
+  m_LocalPosition: {x: -13.18, y: -4.07, z: 0}
   m_LocalScale: {x: 0.44697315, y: 0.44697315, z: 0.65793097}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -778,7 +781,7 @@ SpriteRenderer:
   m_SortingLayerID: 1461551545
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: -875970417, guid: a57c32606c3efe64a9b87b1a6dcbb64d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 962f23428dd966c4fb383dfe83f11d50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -999,7 +1002,7 @@ Transform:
   m_GameObject: {fileID: 154405056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.88, y: -3.95, z: 0}
+  m_LocalPosition: {x: 70.26, y: -1.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1071,6 +1074,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &158572677
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1398,6 +1404,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7293082, b: 0, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &181825066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3698,6 +3707,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &814528974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4376,6 +4388,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7766011, b: 0, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1054705960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5272,7 +5287,7 @@ Transform:
   m_GameObject: {fileID: 1315251782}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 69.6, y: -1.51, z: 0}
+  m_LocalPosition: {x: 68.87, y: -1.22, z: 0}
   m_LocalScale: {x: 0.73483, y: 0.73483, z: 0.73483}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5315,7 +5330,7 @@ Animator:
   m_GameObject: {fileID: 1315251782}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 790bd2c539c82d449af97a3f00e7a4ec, type: 2}
+  m_Controller: {fileID: 9100000, guid: 433f1854eb5ea4a48bf0ac288ff794f8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5410,7 +5425,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1269789603, guid: 60ba3ba03bff259428c133f9d6bb5cf0, type: 3}
+  m_Sprite: {fileID: -552244526, guid: a956a73cfef33ac469b6bb561d9b73e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5882,6 +5897,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1484513143
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6293,7 +6311,7 @@ SpriteRenderer:
   m_SortingLayerID: 1461551545
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1906552301, guid: a57c32606c3efe64a9b87b1a6dcbb64d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4297e3f2e50e07439f44e90f757c281, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6313,7 +6331,7 @@ Transform:
   m_GameObject: {fileID: 1633945346}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.28, y: -3.73, z: 0}
+  m_LocalPosition: {x: -4.61, y: -2.71, z: 0}
   m_LocalScale: {x: 0.63396204, y: 0.633962, z: 0.9331728}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7937,6 +7955,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1994154952
 BoxCollider2D:
   m_ObjectHideFlags: 0

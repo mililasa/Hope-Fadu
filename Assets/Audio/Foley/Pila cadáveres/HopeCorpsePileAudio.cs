@@ -48,6 +48,7 @@ public sealed class HopeCorpsePileAudio : MonoBehaviour
     {
         foreach (SpriteRenderer sr in Object.FindObjectsOfType<SpriteRenderer>())
         {
+            if (!HopeLegacyAudioPolicy.Permitir(sr)) continue;
             if (sr.gameObject.name != "pilacadaver") continue;
             var audio = sr.GetComponent<HopeCorpsePileAudio>();
             if (audio == null) audio = sr.gameObject.AddComponent<HopeCorpsePileAudio>();

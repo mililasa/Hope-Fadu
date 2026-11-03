@@ -11,7 +11,12 @@ using UnityEngine;
 //   Posicion  a lo largo de la pared, medida como se ve DESDE ADENTRO (-4 a 4)
 //   Altura    donde apoya los pies Hope (tiene que haber piso o repisa a esa
 //             altura de los dos lados de la pared)
+//   Desnivel Afuera  si afuera Hope se para más arriba o más abajo que adentro
+//             (por ejemplo: adentro el piso, afuera el alféizar de la ventana)
 // Podés cambiar los números o arrastrarla en la escena.
+//
+// Con "Puertas De Frente" (en Faro_Nivel3) la posición es la misma adentro y
+// afuera, y las caras de la puerta pueden quedar vacías: el dibujo ya la muestra.
 // ============================================================================
 [ExecuteAlways]
 public class PuertaFaro : MonoBehaviour
@@ -22,6 +27,8 @@ public class PuertaFaro : MonoBehaviour
     public PiezaFaro.Cara pared = PiezaFaro.Cara.Sur;
     public float posicion = 0f;
     public float altura = 0f;
+    [Tooltip("Afuera los pies quedan a Altura + este número (0 = a la misma altura).")]
+    public float desnivelAfuera = 0f;
     public Renderer caraAdentro;
     public Renderer caraAfuera;
 
@@ -38,7 +45,7 @@ public class PuertaFaro : MonoBehaviour
     {
         if (f == null || f.pivote == null) return;
         int w = ParedIndice;
-        Vector3 local = FaroFez.PuntoDePanel(true, w, posicion, altura, -f.grosorMuro * 0.5f, f.medioAncho, f.grosorMuro);   // centro del muro
+        Vector3 local = f.PuntoDePanel(true, w, posicion, altura, -f.grosorMuro * 0.5f);   // centro del muro
         transform.position = f.pivote.TransformPoint(local);
         transform.rotation = f.pivote.rotation;
         Vector3 n = NORMAL[w];

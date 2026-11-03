@@ -13,6 +13,11 @@ using UnityEngine;
 //   - Para pasarla a otra pared, cambiá "Pared" en el Inspector.
 // "Desde" y "Hasta" se miden de izquierda a derecha como se ve esa pared de
 // frente (de -4 a 4 adentro, de -5 a 5 afuera).
+//
+// REPISAS INVISIBLES: si el objeto no tiene dibujo (sin Mesh Renderer), es una
+// repisa "solo para pisar": el dibujo ya está en la lámina (tu PNG de
+// plataformas). En la ventana Scene se ve como una caja de líneas verdes
+// (adentro) o celestes (afuera).
 // ============================================================================
 [ExecuteAlways]
 public class PiezaFaro : MonoBehaviour
@@ -32,6 +37,8 @@ public class PiezaFaro : MonoBehaviour
     public Cara pared = Cara.Norte;
     [Tooltip("Repisa rota: se pisa, pero nunca lleva flecha.")]
     public bool rota;
+    [Tooltip("No poner flecha aunque siga a la vuelta de la esquina (por ejemplo, los pisos que cruzan todo el faro).")]
+    public bool sinFlecha;
 
     [Header("Lugar de la repisa en su pared")]
     public float desde = -1f;
@@ -60,7 +67,7 @@ public class PiezaFaro : MonoBehaviour
         int k = FaroFez.VistaDePared(EsAdentro, ParedIndice);
         float largo = Mathf.Max(0.2f, hasta - desde);
         grosor = Mathf.Max(0.05f, grosor);
-        Vector3 local = FaroFez.PuntoDePanel(EsAdentro, k, (desde + hasta) * 0.5f, altura - grosor * 0.5f, f.salidaRepisa * 0.5f, f.medioAncho, f.grosorMuro);
+        Vector3 local = f.PuntoDePanel(EsAdentro, k, (desde + hasta) * 0.5f, altura - grosor * 0.5f, f.salidaRepisa * 0.5f);
         transform.position = f.pivote.TransformPoint(local);
         transform.rotation = f.pivote.rotation;
         transform.localScale = (k % 2 == 0) ? new Vector3(largo, grosor, f.salidaRepisa) : new Vector3(f.salidaRepisa, grosor, largo);
@@ -104,4 +111,14 @@ public class PiezaFaro : MonoBehaviour
         UnityEditor.EditorUtility.SetDirty(this);
     }
 #endif
+
+    // Las repisas invisibles (sin dibujo) se ven como cajas de líneas en la ventana Scene
+    void OnDrawGizmos()
+    {
+        if (tipo != Tipo.Repisa || GetComponent<Renderer>() != null) return;
+        Gizmos.color = EsAdentro ? new Color(0.4f, 1f, 0.5f, 0.9f) : new Color(0.4f, 0.85f, 1f, 0.9f);
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+        Gizmos.matrix = Matrix4x4.identity;
+    }
 }

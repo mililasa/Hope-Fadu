@@ -1,12 +1,15 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuInicio : MonoBehaviour
 {
+    GameObject cartel;
+    bool saliendo;
+
     void Start()
     {
-        var lienzo = new GameObject("MenuCanvas");
+        cartel = new GameObject("MenuCanvas");
+        var lienzo = cartel;
         var canvas = lienzo.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 100;
@@ -68,7 +71,10 @@ public class MenuInicio : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKeyDown)
-            SceneManager.LoadScene("SampleScene");
+        if (saliendo) return;
+        if (!Input.anyKeyDown) return;
+        saliendo = true;
+        if (cartel != null) cartel.SetActive(false);
+        CinematicaInicio.Reproducir();
     }
 }

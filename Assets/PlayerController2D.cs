@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
@@ -119,8 +120,14 @@ public class PlayerController2D : MonoBehaviour
     // Solo se rearma al caer en el aire (no en Exit): evita re-impulsar a media altura.
     private bool superSaltoListo = true;
     private float superSaltoAlturaPendiente = -1f;
+    private PlataformaSuperSalto superSaltoPadPendiente;
+    readonly ContactPoint2D[] contactosPiso = new ContactPoint2D[12];
 
     public bool IsLocked { get { return movimientoBloqueado; } }
+    public bool EstaEnSuelo { get { return isGrounded; } }
+
+    SpriteRenderer[] spritesOcultosBarril;
+    bool ocultoEnBarril;
 
     public void MarcarCheckpoint(Transform punto)
     {
@@ -170,6 +177,15 @@ public class PlayerController2D : MonoBehaviour
 
     void AgregarAudio()
     {
+        if (!HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (gameObject.scene.name == "Nivel_2")
+            {
+                foleySalto = GetComponent<HopeJumpLanding>();
+                if (foleySalto == null) foleySalto = gameObject.AddComponent<HopeJumpLanding>();
+            }
+            return;
+        }
         if (GetComponent<HopeDeathAudio>() == null) gameObject.AddComponent<HopeDeathAudio>();
         secuenciaLejana = GetComponent<HopeDistantSequence>();
         if (secuenciaLejana == null) secuenciaLejana = gameObject.AddComponent<HopeDistantSequence>();
@@ -305,8 +321,7 @@ public class PlayerController2D : MonoBehaviour
             verticalInput = Input.GetAxisRaw("Vertical");
         }
 
-        if (groundCheck != null)
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        isGrounded = PisarSuelo();
 
         bool sobrePadSalto = PlataformaSuperSaltoBajoLosPies() != null;
 
@@ -339,7 +354,7 @@ public class PlayerController2D : MonoBehaviour
             else if (dobleSaltoActivado && saltosExtraRestantes > 0)
             {
                 saltosExtraRestantes--;
-                IniciarSalto(alturaSalto);
+                IniciarSalto(alturaSalto, false, true);
             }
         }
 
@@ -435,14 +450,18 @@ public class PlayerController2D : MonoBehaviour
             rb.velocity = new Vector2(0f, verticalInput * climbSpeed);
             faseSalto = FaseSalto.Nada;
             superSaltoAlturaPendiente = -1f;
+            superSaltoPadPendiente = null;
         }
         else
         {
             // Aplicar rebote de pad acá (después de física del frame anterior): vy absoluta.
             if (superSaltoAlturaPendiente > 0f)
             {
+                if (superSaltoPadPendiente != null)
+                    superSaltoPadPendiente.Rebotar();
                 AplicarRebotePlataforma(superSaltoAlturaPendiente);
                 superSaltoAlturaPendiente = -1f;
+                superSaltoPadPendiente = null;
             }
 
             ActualizarFaseSalto();
@@ -486,6 +505,89 @@ public class PlayerController2D : MonoBehaviour
         }
         movimientoBloqueado = false;
         rutinaBloqueo = null;
+    }
+
+    public void BloquearParaBarril()
+    {
+        if (rutinaBloqueo != null)
+        {
+            StopCoroutine(rutinaBloqueo);
+            rutinaBloqueo = null;
+        }
+        movimientoBloqueado = true;
+        horizontalInput = 0f;
+        verticalInput = 0f;
+        if (rb != null)
+            rb.velocity = Vector2.zero;
+    }
+
+    public void OcultarSpriteBarril()
+    {
+        if (ocultoEnBarril) return;
+        ocultoEnBarril = true;
+        List<SpriteRenderer> lista = new List<SpriteRenderer>();
+        SpriteRenderer[] todos = GetComponentsInChildren<SpriteRenderer>(false);
+        for (int i = 0; i < todos.Length; i++)
+        {
+            SpriteRenderer r = todos[i];
+            if (r == null || !r.enabled) continue;
+            if (r.gameObject.name == "Oscuridad") continue;
+            r.enabled = false;
+            lista.Add(r);
+        }
+        spritesOcultosBarril = lista.ToArray();
+    }
+
+    public float PiesLocalY()
+    {
+        CapsuleCollider2D cap = GetComponent<CapsuleCollider2D>();
+        if (cap != null)
+            return cap.offset.y - cap.size.y * 0.5f;
+        return -0.5f;
+    }
+
+    public void AparecerTrasBarril(Vector2 posicion, bool mirarDerecha)
+    {
+        MostrarSpriteBarril();
+        Vector3 p = transform.position;
+        p.x = posicion.x;
+        p.y = posicion.y;
+        transform.position = p;
+        if (rb != null)
+        {
+            rb.position = posicion;
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = gravedadOriginal;
+        }
+
+        float baseDir = spriteMiraALaDerecha ? 1f : -1f;
+        Vector3 s = transform.localScale;
+        s.x = Mathf.Abs(s.x) * (mirarDerecha ? baseDir : -baseDir);
+        transform.localScale = s;
+
+        if (rutinaBloqueo != null)
+        {
+            StopCoroutine(rutinaBloqueo);
+            rutinaBloqueo = null;
+        }
+        movimientoBloqueado = false;
+        faseSalto = FaseSalto.Nada;
+        tiempoFloteRestante = 0f;
+        ReanudarCaminar();
+    }
+
+    public void MostrarSpriteBarril()
+    {
+        if (spritesOcultosBarril != null)
+        {
+            for (int i = 0; i < spritesOcultosBarril.Length; i++)
+            {
+                if (spritesOcultosBarril[i] != null)
+                    spritesOcultosBarril[i].enabled = true;
+            }
+            spritesOcultosBarril = null;
+        }
+        ocultoEnBarril = false;
     }
 
     public void UnlockMovement()
@@ -617,6 +719,7 @@ public class PlayerController2D : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, vy);
         ReproducirSalto();
         if (foleySalto != null) foleySalto.Saltar();
+        HopeSpringAudio.Impulsar(this);
     }
 
     // Solo Enter desde arriba. No rearma en Exit (eso re-impulsaba a media altura).
@@ -638,6 +741,7 @@ public class PlayerController2D : MonoBehaviour
 
         superSaltoListo = false;
         superSaltoAlturaPendiente = h;
+        superSaltoPadPendiente = pad;
     }
 
     static bool ContactoDesdeArriba(Collision2D collision)
@@ -682,7 +786,7 @@ public class PlayerController2D : MonoBehaviour
         return null;
     }
 
-    void IniciarSalto(float altura, bool desdePlataforma = false)
+    void IniciarSalto(float altura, bool desdePlataforma = false, bool dobleSalto = false)
     {
         float h = Mathf.Max(0.05f, altura);
         float tUp = Mathf.Max(0.05f, tiempoHastaElPico);
@@ -697,7 +801,7 @@ public class PlayerController2D : MonoBehaviour
         tiempoFloteRestante = Mathf.Max(0f, tiempoFlotando);
         reproduciendoSalto = true;
         ReproducirSalto();
-        if (foleySalto != null) foleySalto.Saltar();
+        if (foleySalto != null) foleySalto.Saltar(true, dobleSalto);
     }
 
     float EscalaDeGravedad(float aceleracion)
@@ -726,11 +830,14 @@ public class PlayerController2D : MonoBehaviour
         }
         else if (faseSalto == FaseSalto.Flotando)
         {
-            rb.gravityScale = 0f;
-            rb.velocity = new Vector2(rb.velocity.x, 0f);
             tiempoFloteRestante -= Time.fixedDeltaTime;
             if (tiempoFloteRestante <= 0f)
                 EmpezarCaida();
+            else
+            {
+                rb.gravityScale = 0f;
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
+            }
         }
     }
 
@@ -745,6 +852,41 @@ public class PlayerController2D : MonoBehaviour
         if (faseSalto == FaseSalto.Nada) return;
         faseSalto = FaseSalto.Nada;
         rb.gravityScale = gravedadOriginal;
+    }
+
+    bool PisarSuelo()
+    {
+        if (rb != null)
+        {
+            int n = rb.GetContacts(contactosPiso);
+            for (int i = 0; i < n; i++)
+            {
+                if (contactosPiso[i].collider == null || contactosPiso[i].collider.isTrigger)
+                    continue;
+                if (contactosPiso[i].normal.y > 0.4f)
+                    return true;
+            }
+        }
+
+        if (groundCheck == null) return false;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (EsColliderDePisoBajoLosPies(hits[i]))
+                return true;
+        }
+
+        Vector2 origen = (Vector2)groundCheck.position + Vector2.up * 0.08f;
+        RaycastHit2D rayo = Physics2D.Raycast(origen, Vector2.down, 0.35f, groundLayer);
+        return EsColliderDePisoBajoLosPies(rayo.collider);
+    }
+
+    bool EsColliderDePisoBajoLosPies(Collider2D col)
+    {
+        if (col == null || col.isTrigger) return false;
+        if (col.transform == transform || col.transform.IsChildOf(transform))
+            return false;
+        return true;
     }
 
     bool TieneAnimacionSalto()
@@ -887,6 +1029,7 @@ public class PlayerController2D : MonoBehaviour
         if (musicaNivel != null) musicaNivel.CompletarNivel();
         rb.velocity = Vector2.zero;
         string escena = Application.CanStreamedLevelBeLoaded("Nivel_3") ? "Nivel_3" : "Menu";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
         SceneManager.LoadScene(escena);
     }
 
@@ -906,6 +1049,7 @@ public class PlayerController2D : MonoBehaviour
             escena = "Menu";
         else
             escena = "Nivel_2";
+        HopeMusicTransition.PrepararCambio(gameObject.scene, escena);
         SceneManager.LoadScene(escena);
     }
 
@@ -961,6 +1105,9 @@ public class PlayerController2D : MonoBehaviour
         else
             return;
 
+        BarrilesInteraccion barriles = FindObjectOfType<BarrilesInteraccion>();
+        if (barriles != null) barriles.Cancelar();
+
         if (musicaNivel != null) musicaNivel.ReiniciarNivel();
         if (foleySalto != null) foleySalto.Reiniciar();
         if (secuenciaLejana != null) secuenciaLejana.Reiniciar();
@@ -975,6 +1122,7 @@ public class PlayerController2D : MonoBehaviour
         estabaEnPiso = true;
         superSaltoListo = true;
         superSaltoAlturaPendiente = -1f;
+        superSaltoPadPendiente = null;
         ReanudarCaminar();
 
         // No re-disparar animaciones ya pasadas (cadáver, soldado, caballo, faroles lit).

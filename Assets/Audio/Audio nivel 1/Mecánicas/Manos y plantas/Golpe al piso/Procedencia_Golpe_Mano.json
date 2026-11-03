@@ -1,0 +1,14 @@
+{
+  "fuentes": [
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\BluezoneCorp - High Voltage\\Bluezone_BC0299_electricity_surge_discharge_electrical_arc_crackling_002_01.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle6of9\\Rescopic Sound - Distinct Whooshes\\WHSH_Pure SciFi-Whoosh Fast 03_RSCPC_DW.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\BluezoneCorp - Stone Impact\\Bluezone_BC0297_stone_impact_041.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\InMotionAudio - Wood\\WOODBrk_Snap09_InMotionAudio_Wood.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\BluezoneCorp - Alien Tripod\\Bluezone_BC0292_alien_tripod_debris_rock_collapse_earthquake_rumble_large_005.wav"
+  ],
+  "formato": "PCM 24 bits, 48000 Hz, estereo",
+  "barrido": "Fuente completa conservada; variante de juego comprimida a 0.38 s por vocoder de fase, para la animacion actual.",
+  "temblor": "Empieza junto al barrido y continua despues del golpe. Filtrado 35-650 Hz.",
+  "sincronizacion": "Mismo inicio y golpe que la animacion de HandChaser, con proteccion contra disparos duplicados.",
+  "licencia_origen": "Sonniss GDC 2024, licencia incluida en la biblioteca original."
+}

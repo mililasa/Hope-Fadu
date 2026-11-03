@@ -32,6 +32,7 @@ public sealed class HopeExplosionAudio : MonoBehaviour
     {
         foreach (Animator a in Object.FindObjectsOfType<Animator>())
         {
+            if (!HopeLegacyAudioPolicy.Permitir(a)) continue;
             string n = a.gameObject.name;
             if (n != "explosion-Sheet_0" &&
                 n.IndexOf("explosion", System.StringComparison.OrdinalIgnoreCase) < 0)

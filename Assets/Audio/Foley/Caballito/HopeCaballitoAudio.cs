@@ -31,6 +31,7 @@ public sealed class HopeCaballitoAudio : MonoBehaviour
     {
         foreach (Animator a in Object.FindObjectsOfType<Animator>())
         {
+            if (!HopeLegacyAudioPolicy.Permitir(a)) continue;
             if (a.gameObject.name != "caballo") continue;
             if (a.GetComponent<HopeCaballitoAudio>() == null)
                 a.gameObject.AddComponent<HopeCaballitoAudio>();
