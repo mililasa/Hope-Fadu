@@ -470,7 +470,7 @@ public class PlayerController2D : MonoBehaviour
             // Aplicar rebote de pad acá (después de física del frame anterior): vy absoluta.
             if (superSaltoAlturaPendiente > 0f)
             {
-                if (superSaltoPadPendiente != null && gameObject.scene.name != "SampleScene")
+                if (superSaltoPadPendiente != null)
                     superSaltoPadPendiente.Rebotar();
                 AplicarRebotePlataforma(superSaltoAlturaPendiente);
                 superSaltoAlturaPendiente = -1f;
