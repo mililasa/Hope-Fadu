@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dibujo plataformas afuera
-  m_Shader: {fileID: 4800000, guid: 69a5aff9774a66a4494f45c689b45e27, type: 3}
+  m_Shader: {fileID: 4800000, guid: 75ca672160e169240a29fa409c3c83b6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3c4cbd9b0ecd03040978f949120137b4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 928514f1195d9fe45b15374c9f8876cb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

@@ -38,9 +38,19 @@ public class FaroFez : MonoBehaviour
     public float alturaLinterna = 30f;
     [Tooltip("Cuánto sobresale el piso de arriba (afuera) más allá de la pared. 0 = solo el techo.")]
     public float salidaTecho = 1f;
+    [Tooltip("Afuera se puede pisar el techo de la torre. El botón violeta lo destilda si hay linterna dibujada (n3_exterior_luz_faro): ahí se pisa su balcón.")]
+    public bool pisarTechoAfuera = true;
+
+    [Header("Tamaño (para achicar a Hope respecto del faro)")]
+    [Tooltip("1 = la puerta mide 1,5 Hopes. 1.5 = todo el faro 1,5 veces más grande (Hope se ve más chica).\n" +
+             "Cambialo y tocá el botón violeta. (Si escalaste Faro_Nivel3, el botón violeta pasa esa escala acá solo.)")]
+    public float tamano = 1f;
+    [Tooltip("Qué tan alto salta Hope en este nivel. 0 = el salto de Hope multiplicado por Tamaño " +
+             "(así los saltos del dibujo le siguen dando). Con Tamaño 1.5 necesita al menos 2.1.")]
+    public float alturaSaltoEnFaro = 0f;
 
     [Header("Dibujo (dónde cae el faro en tus PNG)")]
-    [Tooltip("Cuántos píxeles de tu dibujo son 1 unidad de Unity (Hope mide más o menos 1).")]
+    [Tooltip("Cuántos píxeles de tu dibujo son 1 unidad de Unity. Lo pone el botón violeta: 97 / Tamaño.")]
     public float pixelesPorUnidad = 97f;
     [Tooltip("Columna del centro del faro en tu PNG (en píxeles, desde la izquierda).")]
     public float centroDibujoX = 767.5f;
@@ -48,6 +58,8 @@ public class FaroFez : MonoBehaviour
     public float sueloDibujoY = 2309f;
     [Tooltip("Qué tan lejos, detrás del faro, va el fondo.")]
     public float distanciaFondo = 25f;
+    [Tooltip("Tildado: el cielo (n3_fondo) también se ve cuando Hope está adentro.")]
+    public bool cieloAdentro = false;
 
     [Header("Dónde empieza Hope")]
     public bool empiezaAfuera = true;
@@ -71,18 +83,25 @@ public class FaroFez : MonoBehaviour
     public bool puertasDeFrente = false;
     [Tooltip("Segundos del fundido a negro al pasar por una puerta (con Puertas De Frente).")]
     public float duracionFundido = 0.6f;
+    [Tooltip("Escribe en la Consola por qué el faro no gira cuando Hope empuja contra el borde (para encontrar problemas).")]
+    public bool diagnostico = true;
+    [HideInInspector] public int versionArmado;   // la pone el botón violeta; 4 = dibujos por cara + montones + linterna + Tamaño
 
     [Header("Cámara")]
     public float zoomAdentro = 4.5f;
     public float zoomAfuera = 5f;
 
     [Header("Profundidad en los giros")]
-    [Tooltip("Al doblar una esquina adentro, el faro se ve con perspectiva a la altura de Hope: el rincón se achica y se nota que es una esquina de adentro.")]
-    public bool profundidadDeCostado = false;
-    [Tooltip("Lo mismo al doblar afuera: la esquina se acerca y se nota que es una esquina de afuera.")]
+    [Tooltip("Al doblar una esquina ADENTRO, el rincón (que está lejos) se aleja: se achica hacia los pies de Hope, las repisas " +
+             "forman una V y se oscurece. Las puntas de las paredes no se mueven (la torre no se abre). Sin esto, adentro y afuera giran igual.")]
+    public bool profundidadDeCostado = true;
+    [Tooltip("Lo mismo al doblar afuera (la esquina se acerca).")]
     public bool profundidadAfuera = false;
-    [Tooltip("Qué tan fuerte se angosta el rincón. Menos = más fuerte (7 es muy fuerte, 25 apenas se nota).")]
-    public float distanciaRincon = 11f;
+    [Tooltip("Destildado: el rincón se achica de costado y de alto, hacia los pies de Hope (las repisas forman una V; el piso donde está Hope queda derecho).\n" +
+             "Tildado: solo se achica de costado.")]
+    public bool profundidadSoloDeCostado = false;
+    [Tooltip("Qué tan lejos se va el rincón en el giro de adentro. Menos = más lejos (más V). 1 = como la vista previa; 2 = suave.")]
+    public float perspectivaRincon = 1f;
     [Tooltip("Cuánto se oscurece el rincón durante el giro (0 = nada, 1 = negro).")]
     [Range(0f, 1f)] public float sombraRincon = 0.45f;
 
@@ -108,7 +127,6 @@ public class FaroFez : MonoBehaviour
     public GameObject[] activarAlGanar;
 
     // ---------------- estado ----------------
-    public float MezclaInteriorAudio { get; private set; }
     bool adentro;          // ¿Hope está adentro del faro?
     int vista;             // 0..3
     float angulo;          // giro actual del pivote, en grados
@@ -124,6 +142,9 @@ public class FaroFez : MonoBehaviour
     readonly List<Puerta> puertas = new List<Puerta>();
     PiezaFaro[] piezas;
     LaminaFaro[] laminas;
+    [Header("Láminas (los dibujos; las arma el botón violeta)")]
+    [Tooltip("Cada dibujo del faro: qué es, de qué cara y qué objeto lo dibuja.")]
+    public List<LaminaFaro> laminasDibujo = new List<LaminaFaro>();
     Renderer fundido;      // cuadro negro delante de la cámara (para pasar por puertas de frente)
 
     Rigidbody2D rb;
@@ -141,6 +162,11 @@ public class FaroFez : MonoBehaviour
     // ---------------- cuentas de paneles ----------------
     public static int ParedDeVista(bool adentro, int k) { return adentro ? k : (k + 2) % 4; }
     public static int VistaDePared(bool adentro, int pared) { return adentro ? pared : (pared + 2) % 4; }
+    // Con los dibujos por cara: el interior de la cara c se ve en la vista de adentro (6 - c) % 4,
+    // pegado a esa pared. Así, adentro como afuera, a la derecha del frente está la cara derecha.
+    // (frente → vista 0, derecha → 3, atrás → 2, izquierda → 1)
+    public static int ParedAdentroDeCara(int cara) { return (6 - cara) % 4; }
+    public static int VistaDeCara(bool adentro, int cara) { return adentro ? ParedAdentroDeCara(cara) : VistaDePared(false, cara); }
     // Para qué lado gira (en vistas) al doblar la esquina hacia "lado" (+1 derecha, -1 izquierda)
     public static int GiroPorBorde(bool adentro, int lado) { return lado * (adentro ? -1 : 1); }
 
@@ -184,6 +210,19 @@ public class FaroFez : MonoBehaviour
         }
         rb = hope.GetComponent<Rigidbody2D>();
         colHope = hope.GetComponent<Collider2D>();
+        // Si el faro está escalado desde el Transform, los dibujos crecen pero las repisas invisibles no.
+        float escalaObjeto = pivote.lossyScale.x;
+        if (Mathf.Abs(escalaObjeto - 1f) > 0.01f)
+            Debug.LogWarning("Faro: Faro_Nivel3 (o su Pivote) tiene escala " + escalaObjeto.ToString("0.##") +
+                             ". Así los dibujos y las repisas invisibles no coinciden. Tocá el botón violeta 'Armar faro con mis dibujos': " +
+                             "pasa esa escala a 'Tamaño' y deja la escala en 1.", this);
+        // Faro más grande = los saltos del dibujo son más altos: Hope salta en proporción
+        float salto = alturaSaltoEnFaro > 0f ? alturaSaltoEnFaro : hope.alturaSalto * Mathf.Max(0.1f, tamano);
+        if (Mathf.Abs(salto - hope.alturaSalto) > 0.001f)
+        {
+            if (diagnostico) Debug.Log("Faro: en este nivel Hope salta " + salto.ToString("0.##") + " (en el Inspector de Hope dice " + hope.alturaSalto.ToString("0.##") + ").", this);
+            hope.alturaSalto = salto;
+        }
         // Cayendo desde muy alto Hope va rápido: con detección continua no atraviesa las repisas
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         camara = FindObjectOfType<CameraFollow>();
@@ -208,7 +247,8 @@ public class FaroFez : MonoBehaviour
             p.Ubicar(this);
             puertas.Add(new Puerta { p = p, pared = p.ParedIndice, u = p.posicion, y = p.altura, yAfuera = p.altura + p.desnivelAfuera });
         }
-        laminas = GetComponentsInChildren<LaminaFaro>(true);   // las de las paredes y el fondo
+        laminasDibujo.RemoveAll(l => l == null || l.render == null);
+        laminas = laminasDibujo.ToArray();   // las de las paredes y el fondo
         foreach (LaminaFaro l in laminas) l.Armar(this);
 
         // 2) Pisos, paredes invisibles, bordes de giro y flechas
@@ -237,12 +277,28 @@ public class FaroFez : MonoBehaviour
         }
         if (hazDeLuz != null) hazDeLuz.SetActive(false);
         IrAlInicio();
+        if (versionArmado < 4)
+            Debug.LogWarning("Faro: este faro está armado con una versión vieja (sin los escalones del montón, sin la linterna y sin 'Tamaño'). " +
+                             "Seleccioná Faro_Nivel3, tocá el botón violeta 'Armar faro con mis dibujos' y guardá la escena.", this);
+        if (diagnostico)
+            Debug.Log("Faro listo: " + repisas.Count + " repisas, " + puertas.Count + " puertas/ventanas, " +
+                      (laminas != null ? laminas.Length : 0) + " láminas, " + flechas.Count + " flechas. Borde afuera en el suelo: " +
+                      Borde(false, 0f).ToString("0.00") + ", adentro: " + Borde(true, 0f).ToString("0.00"), this);
     }
+
+    // ---------------- PARA EL AUDIO ----------------
+    // Qué tan "adentro" suena: 0 = afuera, 1 = adentro. Al pasar por una puerta o ventana
+    // va de un valor al otro durante el pasaje. Lo usan la música, los pasos, los apoyos
+    // y el ambiente del faro (scripts de la carpeta Audio).
+    public float MezclaInteriorAudio { get { return mezclaInterior; } }
+    float mezclaInterior;
+
+    void Awake() { mezclaInterior = empiezaAfuera ? 0f : 1f; }
 
     void IrAlInicio()
     {
         adentro = !empiezaAfuera;
-        MezclaInteriorAudio = adentro ? 1f : 0f;
+        mezclaInterior = adentro ? 1f : 0f;
         vista = vistaInicial;
         angulo = 90f * vista;
         pivote.localRotation = Quaternion.Euler(0f, angulo, 0f);
@@ -315,6 +371,7 @@ public class FaroFez : MonoBehaviour
     // =====================================================================
     void Update()
     {
+        if (diagnostico) Diagnosticar();
         // las flechas flotan un poquito
         float bote = Mathf.Sin(Time.time * 4f) * 0.08f;
         foreach (Flecha f in flechas) f.t.localPosition = f.baseLocal + Vector3.up * bote;
@@ -335,9 +392,9 @@ public class FaroFez : MonoBehaviour
             {
                 bool m1 = !adentro;
                 if (puertasDeFrente)
-                    StartCoroutine(Transicion(m1, vista, p.u, 0, duracionFundido, p.pared, m1 ? p.y : p.yAfuera, p.p));
+                    StartCoroutine(Transicion(m1, VistaDeCara(m1, p.pared), p.u, 0, duracionFundido, p.pared, m1 ? p.y : p.yAfuera));
                 else
-                    StartCoroutine(Transicion(m1, (vista + 2) % 4, m1 ? p.u : -p.u, 2, duracionPuerta, p.pared, float.NaN, p.p));
+                    StartCoroutine(Transicion(m1, (vista + 2) % 4, m1 ? p.u : -p.u, 2, duracionPuerta, p.pared));
                 return;
             }
         }
@@ -376,7 +433,7 @@ public class FaroFez : MonoBehaviour
         foreach (Repisa r in repisas)
             r.col.enabled = r.adentro == adentro && r.vista == vista && PiesArriba(r.col.enabled, pies, y0 + r.top);
         linternaAdentro.enabled = adentro && PiesArriba(linternaAdentro.enabled, pies, y0 + alturaLinterna);
-        balconAfuera.enabled = !adentro && PiesArriba(balconAfuera.enabled, pies, y0 + alturaLinterna);
+        balconAfuera.enabled = !adentro && pisarTechoAfuera && PiesArriba(balconAfuera.enabled, pies, y0 + alturaLinterna);
     }
     static bool PiesArriba(bool estabaPrendida, float pies, float arriba)
     {
@@ -403,9 +460,9 @@ public class FaroFez : MonoBehaviour
         {
             if (puertasDeFrente)
             {
-                // De frente: la puerta se usa desde la vista donde su pared está de frente afuera,
+                // De frente: la puerta se usa desde la vista donde se ve su cara (afuera o adentro),
                 // adentro y afuera en el mismo lugar de la pantalla (cada lado con su altura).
-                if (VistaDePared(false, p.pared) != vista) continue;
+                if (VistaDeCara(adentro, p.pared) != vista) continue;
                 float yP = adentro ? p.y : p.yAfuera;
                 if (Mathf.Abs(pies - yP) < 0.3f && Mathf.Abs(u - p.u) < distanciaPuerta) return p;
                 continue;
@@ -423,7 +480,7 @@ public class FaroFez : MonoBehaviour
     void RevisarBordes()
     {
         if (!girarAlLlegarAlBorde || tiempoDesdeGiro < 0.3f) return;
-        float entrada = Input.GetAxisRaw("Horizontal");
+        float entrada = EntradaHorizontal();
         float B = Borde(adentro, PiesHope()), x0 = pivote.position.x;
         Bounds hb = colHope.bounds;
 
@@ -456,37 +513,116 @@ public class FaroFez : MonoBehaviour
         }
     }
 
-    // Only the first entrance and the final exit cross the acoustic boundary.
-    // Intermediate doors/windows remain inside even if their visual panel flips.
-    float DestinoAudioPuerta(PuertaFaro puerta)
+    // ---------------- PARA QUÉ LADO EMPUJA HOPE ----------------
+    // Se lee lo mismo que usa PlayerController2D para moverla (su "horizontalInput"), así
+    // funciona con cualquier control: teclado, joystick o lo que se le haya agregado.
+    // Si no se puede leer, se usan las flechas, A / D y el eje "Horizontal".
+    System.Reflection.FieldInfo campoEntrada;
+    bool campoBuscado;
+    float EntradaHorizontal()
     {
-        if (puerta == null) return MezclaInteriorAudio;
-        float primera = float.PositiveInfinity, ultima = float.NegativeInfinity;
-        foreach (Puerta p in puertas)
+        if (!campoBuscado)
         {
-            primera = Mathf.Min(primera, p.y);
-            ultima = Mathf.Max(ultima, p.y);
+            campoBuscado = true;
+            campoEntrada = typeof(PlayerController2D).GetField("horizontalInput",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+            if (campoEntrada != null && campoEntrada.FieldType != typeof(float)) campoEntrada = null;
         }
-        bool entrada = Mathf.Abs(puerta.altura - primera) < .05f;
-        bool salidaFinal = Mathf.Abs(puerta.altura - ultima) < .05f;
-        // Reversing through either boundary restores the other acoustic state.
-        if (entrada || salidaFinal) return MezclaInteriorAudio >= .5f ? 0f : 1f;
-        return 1f;
+        float e = 0f;
+        if (campoEntrada != null && hope != null) e = (float)campoEntrada.GetValue(hope);
+        if (Mathf.Abs(e) < 0.5f)
+        {
+            float teclas = 0f;
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) teclas += 1f;
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) teclas -= 1f;
+            if (Mathf.Abs(teclas) > 0.5f) e = teclas;
+            else
+            {
+                try { float eje = Input.GetAxisRaw("Horizontal"); if (Mathf.Abs(eje) > Mathf.Abs(e)) e = eje; }
+                catch (System.Exception) { }
+            }
+        }
+        return e;
     }
+
+    // ---------------- DIAGNÓSTICO ----------------
+    // Si Hope empuja hacia un costado medio segundo y el faro no gira, dice por qué en la Consola
+    // (una vez por empujón). Se apaga destildando "Diagnostico" en Faro_Nivel3.
+    float empujandoSinGirar, xAlEmpujar;
+    bool diagnosticoDicho;
+    float contraBorde; bool contraBordeDicho;
+    void Diagnosticar()
+    {
+        if (hope == null || colHope == null) return;
+        // Aviso aparte: Hope pegada a un borde más de 1 segundo (aunque no se detecte el empujón)
+        {
+            float Bb = Borde(adentro, PiesHope()), x0b = pivote.position.x;
+            Bounds hb0 = colHope.bounds;
+            bool pegada = hb0.max.x >= x0b + Bb - 0.08f || hb0.min.x <= x0b - Bb + 0.08f;
+            if (!pegada || animando) { contraBorde = 0f; contraBordeDicho = false; }
+            else
+            {
+                contraBorde += Time.deltaTime;
+                if (contraBorde > 1f && !contraBordeDicho)
+                {
+                    contraBordeDicho = true;
+                    int ld = hb0.max.x >= x0b + Bb - 0.08f ? 1 : 0;
+                    Debug.Log("Faro: Hope está contra el borde " + (ld == 1 ? "derecho" : "izquierdo") + " hace 1 s. Empuje leído: " +
+                              EntradaHorizontal().ToString("0.00") + " (tiene que ser 1 o -1), en el piso: " + TocaPiso() +
+                              ", bloqueada: " + hope.IsLocked + ", armado: " + bordeArmado[ld] + ", aterrizó empujando: " + bloqueoAterrizaje[ld] +
+                              ", ganado: " + ganado + ", girar al llegar al borde: " + girarAlLlegarAlBorde, this);
+                }
+            }
+        }
+        float entrada = EntradaHorizontal();
+        if (Mathf.Abs(entrada) < 0.5f || animando) { empujandoSinGirar = 0f; diagnosticoDicho = false; return; }
+        float x = hope.transform.position.x;
+        // Se mira cuánto avanzó Hope en ventanas de 0,8 s (contra una pared tiembla un poquito, eso no cuenta)
+        if (empujandoSinGirar == 0f) { xAlEmpujar = x; empujandoSinGirar = Time.deltaTime; return; }
+        empujandoSinGirar += Time.deltaTime;
+        if (empujandoSinGirar < 0.8f) return;
+        bool trabada = Mathf.Abs(x - xAlEmpujar) < 0.3f;
+        xAlEmpujar = x; empujandoSinGirar = Time.deltaTime;
+        if (!trabada || diagnosticoDicho) return;
+        diagnosticoDicho = true;
+
+        int lado = entrada > 0 ? 1 : -1, i = lado > 0 ? 1 : 0;
+        float B = Borde(adentro, PiesHope()), x0 = pivote.position.x;
+        Bounds hb = colHope.bounds;
+        float punta = lado > 0 ? hb.max.x - x0 : -(hb.min.x - x0);
+        string donde = (adentro ? "adentro" : "afuera") + ", vista " + vista + ", pies a " + PiesHope().ToString("0.00");
+        string motivo;
+        if (ganado) motivo = "el nivel ya está ganado (el farol de arriba está prendido).";
+        else if (hope.IsLocked) motivo = "Hope está bloqueada (IsLocked) por otro script.";
+        else if (!girarAlLlegarAlBorde) motivo = "'Girar Al Llegar Al Borde' está destildado.";
+        else if (punta < B - 0.08f)
+        {
+            motivo = "Hope está quieta a " + punta.ToString("0.00") + " del centro y el borde está en " + B.ToString("0.00") + ": algo la frena antes.";
+            Collider2D[] choques = Physics2D.OverlapBoxAll(new Vector2(lado > 0 ? hb.max.x + 0.05f : hb.min.x - 0.05f, hb.center.y), new Vector2(0.1f, hb.size.y * 0.8f), 0f);
+            foreach (Collider2D c in choques)
+                if (c != colHope && c.enabled && !c.isTrigger) motivo += " Choca con: '" + c.name + "' (en " + RutaDe(c.transform) + ").";
+        }
+        else if (!TocaPiso()) motivo = "Hope no está parada sobre algo de la capa 'Piso' (el faro solo gira con Hope en el piso).";
+        else if (bloqueoAterrizaje[i]) motivo = "aterrizó empujando contra el borde: soltá la flecha y volvé a empujar.";
+        else if (!bordeArmado[i]) motivo = "recién giró por este borde: alejate un poco y volvé.";
+        else motivo = "no encontré el motivo (borde " + B.ToString("0.00") + ", punta " + punta.ToString("0.00") + ").";
+        Debug.Log("Faro: no gira hacia la " + (lado > 0 ? "derecha" : "izquierda") + " (" + donde + "): " + motivo, this);
+    }
+    static string RutaDe(Transform t) { string r = t.name; while (t.parent != null) { t = t.parent; r = t.name + "/" + r; } return r; }
 
     // ---------------- GIRO (esquina o puerta) ----------------
     // dk = cuántas vistas gira (±1 en una esquina, 2 en una puerta, 0 en una puerta de frente).
     // paredPuerta = -1 si es una esquina. piesDestino = altura de los pies al llegar (solo puertas de frente).
-    IEnumerator Transicion(bool m1, int k1, float u1, int dk, float duracion, int paredPuerta, float piesDestino = float.NaN, PuertaFaro puertaAudio = null)
+    IEnumerator Transicion(bool m1, int k1, float u1, int dk, float duracion, int paredPuerta, float piesDestino = float.NaN)
     {
         animando = true;
         bool esPuerta = paredPuerta >= 0;
         bool deFrente = esPuerta && dk == 0;
-        float audioDesde = MezclaInteriorAudio;
-        float audioHasta = esPuerta ? DestinoAudioPuerta(puertaAudio) : audioDesde;
         bool m0 = adentro;
         int k0 = vista;
         float a0 = angulo, a1 = angulo + 90f * dk;
+        if (deFrente) a1 = 90f * k1;           // la vista de la misma cara, del otro lado
+        float p0x = UHope();
         // Dónde está Hope en el faro antes y después (para moverla junto con el giro)
         float yPies = PiesHope();
         Vector3 p0 = PuntoDePanel(m0, k0, UHope(), yPies, 0.5f);
@@ -502,7 +638,7 @@ public class FaroFez : MonoBehaviour
         else if (esPuerta) VisibilidadPuerta(m0, paredPuerta);
         else VisibilidadEsquina(k0, k1);
         bool conProfundidad = !esPuerta && ((m0 && m1 && profundidadDeCostado) || (!m0 && !m1 && profundidadAfuera));
-        if (conProfundidad) EmpezarProfundidad();
+        if (conProfundidad) EmpezarProfundidad(m0);
 
         float t = 0f;
         bool segundaMitad = false;
@@ -510,23 +646,29 @@ public class FaroFez : MonoBehaviour
         {
             t += Time.deltaTime / Mathf.Max(0.05f, duracion);
             float e = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t));
-            if (esPuerta) MezclaInteriorAudio = Mathf.Lerp(audioDesde, audioHasta, e);
             float a = Mathf.Lerp(a0, a1, e);
+            if (deFrente) a = t < 0.5f ? a0 : a1;   // puerta de frente: no gira; cambia de vista en lo negro
             pivote.localRotation = Quaternion.Euler(0f, a, 0f);
             Vector3 w = Quaternion.Euler(0f, a, 0f) * Vector3.Lerp(p0, p1, e);
+            if (deFrente) w = new Vector3(Mathf.Lerp(p0x, u1, e), 0f, 0f);
             float fuerza = conProfundidad ? Mathf.Sin(Mathf.PI * Mathf.Clamp01(t)) : 0f;
-            if (conProfundidad) Shader.SetGlobalFloat(IdFuerza, fuerza);
+            if (conProfundidad)
+            {
+                Shader.SetGlobalFloat(IdFuerza, fuerza);
+            }
             // Hope se mueve igual que el rincón donde está parada (con la misma profundidad que las paredes)
             Vector3 hp = hope.transform.position;
             float yHope = deFrente ? Mathf.Lerp(y0Hope, y1Hope, e) : hp.y;
-            hope.transform.position = new Vector3(pivote.position.x + w.x * EscalaProfundidad(w.z, fuerza), yHope, hp.z);
+            hope.transform.position = new Vector3(pivote.position.x + XConProfundidad(w.x, w.z, yPies, fuerza), yHope, hp.z);
             if (camara != null && esPuerta) camara.zoom = Mathf.Lerp(z0, z1, e);
+            if (esPuerta) mezclaInterior = Mathf.Lerp(m0 ? 1f : 0f, m1 ? 1f : 0f, e);
             if (deFrente) Fundido(Mathf.Sin(Mathf.PI * Mathf.Clamp01(t)));
-            if (esPuerta && !segundaMitad && t >= 0.5f)
+            if (!segundaMitad && t >= 0.5f)
             {
                 segundaMitad = true;
                 if (deFrente) VisibilidadDe(m1, k1, false);
-                else VisibilidadPuerta(m1, paredPuerta);
+                else if (esPuerta) VisibilidadPuerta(m1, paredPuerta);
+                else { paredAlrededor = ParedDeVista(m1, k1); MostrarFondo(); }   // esquina: cambia lo que rodea al faro
             }
             yield return null;
         }
@@ -534,12 +676,22 @@ public class FaroFez : MonoBehaviour
         if (deFrente) Fundido(0f);
 
         adentro = m1;
-        MezclaInteriorAudio = audioHasta;
+        mezclaInterior = adentro ? 1f : 0f;
         vista = k1;
         angulo = Mathf.Repeat(a1, 360f);
         pivote.localRotation = Quaternion.Euler(0f, angulo, 0f);
         Vector3 fin = hope.transform.position;
         hope.transform.position = new Vector3(pivote.position.x + u1, deFrente ? y1Hope : fin.y, fin.z);
+        // Esquina: si a la vuelta la plataforma quedó un poquito más alta (los dibujos no coinciden
+        // al píxel), Hope sube a ella en vez de quedar adentro de la tabla y caerse.
+        if (!esPuerta)
+        {
+            float subir = 0f;
+            foreach (Repisa r in repisas)
+                if (r.adentro == m1 && r.vista == k1 && u1 >= r.a - 0.3f && u1 <= r.b + 0.3f &&
+                    r.top > yPies + 0.01f && r.top - yPies <= 0.5f) subir = Mathf.Max(subir, r.top - yPies);
+            if (subir > 0f) hope.transform.position += Vector3.up * (subir + 0.02f);
+        }
         if (camara != null) camara.zoom = z1;
         AplicarModo();
         VisibilidadQuieto();
@@ -616,23 +768,36 @@ public class FaroFez : MonoBehaviour
         Shader.SetGlobalFloat(IdFuerza, 0f);
     }
 
-    void EmpezarProfundidad()
+    static readonly int IdMedidas = Shader.PropertyToID("_FaroMedidas");
+    static readonly int IdLado = Shader.PropertyToID("_FaroLado");
+    static readonly int IdAlto = Shader.PropertyToID("_FaroAlto");
+    float ladoGiro = 1f;
+
+    // Lo mismo que el shader, para un punto del faro en coordenadas del Pivote ya girado
+    // (x de costado, z de profundidad, y altura desde el suelo): dónde queda x en pantalla.
+    float XConProfundidad(float x, float z, float y, float fuerza)
     {
-        // El punto hacia donde se achica todo: el centro del faro, a la altura de los pies de Hope
-        Vector3 c = pivote.position;
-        Shader.SetGlobalVector(IdCentro, new Vector4(c.x, colHope.bounds.min.y, c.z, 0f));
-        Shader.SetGlobalFloat(IdDist, Mathf.Max(1f, distanciaRincon));
-        Shader.SetGlobalFloat(IdSombra, sombraRincon);
-        Shader.SetGlobalFloat(IdRadio, medioAncho * 1.42f);
-        Shader.SetGlobalFloat(IdFuerza, 0f);
+        if (fuerza <= 0f) return x;
+        float d = Mathf.Max(0.05f, perspectivaRincon);
+        float zn = z / Mathf.Max(0.01f, MedioAnchoEn(y));
+        float escala = Mathf.Min(1f, Mathf.Max(0.3f * d, d + ladoGiro) / Mathf.Max(0.3f * d, d + zn));
+        return x * Mathf.Lerp(1f, escala, fuerza);
     }
 
-    // Lo mismo que hace el shader, para mover a Hope junto con su rincón.
-    // atras = qué tan lejos de la cámara está el punto, medido desde el centro del faro.
-    float EscalaProfundidad(float atras, float fuerza)
+    void EmpezarProfundidad(bool enAdentro)
     {
-        float d = Mathf.Max(1f, distanciaRincon);
-        return Mathf.Lerp(1f, d / Mathf.Max(0.5f, d + atras), fuerza);
+        // El centro del faro (hacia donde se angosta lo lejano) y las medidas, para que el shader
+        // sepa a qué distancia está la pared de siempre a cada altura
+        Vector3 c = pivote.position;
+        Shader.SetGlobalVector(IdCentro, new Vector4(c.x, colHope.bounds.min.y, c.z, c.y));
+        Shader.SetGlobalVector(IdMedidas, new Vector4(medioAncho, medioAnchoArriba, alturaLinterna, grosorMuro * 0.5f));
+        Shader.SetGlobalFloat(IdLado, enAdentro ? 1f : -1f);
+        Shader.SetGlobalFloat(IdAlto, profundidadSoloDeCostado ? 0f : 1f);
+        ladoGiro = enAdentro ? 1f : -1f;
+        Shader.SetGlobalFloat(IdDist, Mathf.Max(0.05f, perspectivaRincon));
+        Shader.SetGlobalFloat(IdSombra, sombraRincon);
+        Shader.SetGlobalFloat(IdRadio, medioAncho * 0.42f);   // el rincón está 0,42 medio-anchos más lejos que la pared
+        Shader.SetGlobalFloat(IdFuerza, 0f);
     }
 
     void OnDisable() { Shader.SetGlobalFloat(IdFuerza, 0f); }
@@ -645,7 +810,7 @@ public class FaroFez : MonoBehaviour
         UnityEditor.EditorApplication.delayCall += () =>
         {
             if (this == null || pivote == null) return;
-            foreach (LaminaFaro l in GetComponentsInChildren<LaminaFaro>(true)) l.Armar(this);
+            foreach (LaminaFaro l in laminasDibujo) if (l != null) l.Armar(this);
             foreach (PiezaFaro p in pivote.GetComponentsInChildren<PiezaFaro>(true)) p.Ubicar(this);
             foreach (PuertaFaro p in pivote.GetComponentsInChildren<PuertaFaro>(true)) p.Ubicar(this);
         };
@@ -715,6 +880,7 @@ public class FaroFez : MonoBehaviour
     void VisibilidadQuieto() { VisibilidadDe(adentro, vista, true); }
     void VisibilidadDe(bool modo, int k, bool conFlechas)
     {
+        paredAlrededor = ParedDeVista(modo, k);
         var paredes = new HashSet<int> { ParedDeVista(modo, k) };
         var ocultos = new HashSet<int>();
         if (modo) ocultos.Add((k + 2) % 4);   // la pared de adelante
@@ -758,15 +924,27 @@ public class FaroFez : MonoBehaviour
         foreach (Flecha f in flechas)
             f.t.gameObject.SetActive(conFlechas && f.r.adentro == modo && paredes.Contains(f.r.pared));
         // Láminas (tus dibujos): se ve la de la pared de frente, del lado donde está Hope.
-        // El fondo (cielo, suelo, avión) solo afuera; adentro solo lo de adentro.
+        modoLaminas = modo;
         if (laminas != null)
             foreach (LaminaFaro l in laminas)
-            {
-                if (l.capa == LaminaFaro.Capa.Fondo)
-                    l.Mostrar(l.lado == PiezaFaro.Lado.Ambos || l.EsAdentro == modo);
-                else
+                if (l.capa != LaminaFaro.Capa.Fondo)
                     l.Mostrar(l.EsAdentro == modo && paredes.Contains(l.ParedFisica));
-            }
+        MostrarFondo();
+    }
+
+    // El fondo: el cielo (si es "Ambos", también adentro) y lo que rodea a UNA cara (suelo, avión),
+    // la que está de frente. Al doblar una esquina cambia a mitad del giro.
+    int paredAlrededor = -1;
+    bool modoLaminas;
+    void MostrarFondo()
+    {
+        if (laminas == null) return;
+        foreach (LaminaFaro l in laminas)
+        {
+            if (l.capa != LaminaFaro.Capa.Fondo) continue;
+            if (l.ParedIndice < 0) l.Mostrar(l.lado == PiezaFaro.Lado.Ambos ? !modoLaminas || cieloAdentro : l.EsAdentro == modoLaminas);
+            else l.Mostrar(l.EsAdentro == modoLaminas && l.ParedFisica == paredAlrededor);
+        }
     }
 
     // ---------------- FUNDIDO A NEGRO (puertas de frente) ----------------

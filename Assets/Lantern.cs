@@ -220,14 +220,21 @@ public class Lantern : MonoBehaviour
     // Sin ChaseZone el farol es libre: se prende con E en cualquier momento.
     bool EsLibre { get { return zona == null; } }
 
+    // Checkpoint de cualquier nivel: una vez prendido, no se apaga.
+    bool NoSeApaga()
+    {
+        if (esCheckpointPermanente) return true;
+        return GetComponent<FarolCheckpoint>() != null;
+    }
+
     void Update()
     {
         bool puedePrender = playerEnRango != null && estado == Estado.Off &&
-            !playerEnRango.IsLocked && (EsLibre || zona.EstaActiva);
-        MostrarCartelE(puedePrender && EsLibre && mostrarCartelEncender);
+            !playerEnRango.IsLocked && (EsLibre || (zona != null && zona.EstaActiva) || EsFarolDeVerdad());
+        MostrarCartelE(puedePrender && EsLibre && mostrarCartelEncender && !EsFarolDeVerdad());
         if (!puedePrender) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (HopeControles.Presionada(HopeControles.Accion.Interactuar))
             Light();
     }
 
@@ -260,7 +267,7 @@ public class Lantern : MonoBehaviour
         GameObject textoGO = new GameObject("Texto");
         textoGO.transform.SetParent(cartelE.transform, false);
         Text texto = textoGO.AddComponent<Text>();
-        texto.text = textoCartelE;
+        texto.text = "Encender con " + HopeControles.Nombre(HopeControles.Tecla(HopeControles.Accion.Interactuar, false));
         texto.fontSize = 40;
         texto.alignment = TextAnchor.MiddleCenter;
         texto.color = Color.white;
@@ -395,7 +402,7 @@ public class Lantern : MonoBehaviour
         if (zona != null && zona.Hand != null)
             zona.Hand.NotifyLanternLit(this);
 
-        if (EsLibre && !esCheckpointPermanente && segundosPrendidoLibre > 0f)
+        if (EsLibre && !NoSeApaga() && segundosPrendidoLibre > 0f)
         {
             if (apagadoLibre != null) StopCoroutine(apagadoLibre);
             apagadoLibre = StartCoroutine(ApagarLibre());
@@ -414,7 +421,7 @@ public class Lantern : MonoBehaviour
     {
         yield return new WaitForSeconds(segundosPrendidoLibre);
         apagadoLibre = null;
-        if (estado != Estado.Lit) yield break;
+        if (estado != Estado.Lit || NoSeApaga()) yield break;
         // TurnOff suelta a Hope si esta bloqueada; aca no debe cortarle otra accion.
         PlayerController2D pp = playerEnRango;
         playerEnRango = null;
@@ -431,10 +438,29 @@ public class Lantern : MonoBehaviour
             TerminarEncendido();
     }
 
+    public bool EsFarolDeVerdad()
+    {
+        return gameObject.name == "Farol";
+    }
+
+    public void ApagarSinSoltar()
+    {
+        PlayerController2D pp = playerEnRango;
+        playerEnRango = null;
+        Apagar(true);
+        playerEnRango = pp;
+    }
+
     public void TurnOff()
     {
-        // Checkpoint permanente: la mano hace la animación/explosión pero la luz queda.
-        if (esCheckpointPermanente && estado == Estado.Lit)
+        Apagar(false);
+    }
+
+    void Apagar(bool forzar)
+    {
+        // Checkpoint: la mano de la persecución no lo apaga.
+        // La toma de entrada sí, aunque sea checkpoint.
+        if (!forzar && NoSeApaga() && estado != Estado.Off)
         {
             if (zona != null && zona.Hand != null)
                 zona.Hand.NotifyLightingCancelado(this);
@@ -472,8 +498,8 @@ public class Lantern : MonoBehaviour
 
     public void ResetLantern()
     {
-        // Checkpoint permanente lit: se conserva sin re-animar.
-        if (esCheckpointPermanente && estado == Estado.Lit)
+        // Checkpoint ya prendido: se conserva sin re-animar.
+        if (NoSeApaga() && estado == Estado.Lit)
         {
             MostrarChispita(false);
             if (esBarril)
@@ -525,7 +551,7 @@ public class Lantern : MonoBehaviour
     // Apaga sin ser checkpoint (post-persecución): luz off + chispa on.
     public void ApagarTrasPersecucion()
     {
-        if (esCheckpointPermanente && estado == Estado.Lit)
+        if (NoSeApaga() && estado != Estado.Off)
             return;
         if (encendido != null)
         {

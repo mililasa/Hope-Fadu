@@ -63,7 +63,7 @@ public class LuzFondoInteractiva : MonoBehaviour
         if (prompt != null)
             prompt.gameObject.SetActive(objetivo != null);
 
-        if (objetivo != null && Input.GetKeyDown(KeyCode.E))
+        if (objetivo != null && HopeControles.Presionada(HopeControles.Accion.Interactuar))
             Activar(objetivo);
     }
 
@@ -124,7 +124,7 @@ public class LuzFondoInteractiva : MonoBehaviour
         textGO.transform.SetParent(canvasGO.transform, false);
 
         prompt = textGO.AddComponent<Text>();
-        prompt.text = textoPrompt;
+        prompt.text = HopeControles.Nombre(HopeControles.Tecla(HopeControles.Accion.Interactuar, false)) + " para interactuar";
         prompt.fontSize = 42;
         prompt.alignment = TextAnchor.LowerCenter;
         prompt.color = new Color(1f, 0.92f, 0.65f, 1f);

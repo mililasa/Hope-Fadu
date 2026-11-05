@@ -40,6 +40,6 @@ public sealed class HopeDeathAudio : MonoBehaviour
         // La fuente permanece en Pp al reaparecer: el efecto puede terminar.
         fuente.Stop();
         fuente.volume = volumen;
-        fuente.PlayOneShot(clip);
+        HopeAjustes.Disparo(fuente, clip);
     }
 }

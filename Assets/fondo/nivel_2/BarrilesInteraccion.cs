@@ -144,14 +144,14 @@ public class BarrilesInteraccion : MonoBehaviour
         {
             Barril cerca = BuscarCercano();
             bool puede = cerca != null && !hope.IsLocked && hope.EstaEnSuelo;
-            if (puede && Input.GetKeyDown(KeyCode.E))
+            if (puede && HopeControles.Presionada(HopeControles.Accion.Interactuar))
                 Empezar(cerca);
         }
         else if (activo.fase == Fase.Adentro)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (HopeControles.Presionada(HopeControles.Accion.Izquierda))
                 Continuar(activo, false);
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (HopeControles.Presionada(HopeControles.Accion.Derecha))
                 Continuar(activo, true);
         }
 

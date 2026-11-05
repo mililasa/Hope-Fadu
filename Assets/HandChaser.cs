@@ -121,7 +121,44 @@ public class HandChaser : MonoBehaviour
         colMano = cir;
     }
 
-    public void StartChase(Transform objetivo, ChaseZone zona)
+    public float PresentarApagado(Vector3 punto, float mirarHaciaX)
+    {
+        StopAllCoroutines();
+        estado = Estado.Inactive;
+        player = null;
+        yaAgarro = false;
+        objetivoActual = null;
+        extinguishPedido = false;
+        gameObject.SetActive(true);
+        transform.position = punto;
+        AplicarAlpha(alphaFantasma);
+        FlipHacia(mirarHaciaX - punto.x);
+        const float lento = 0.8f;
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            animator.speed = lento;
+            animator.Play(estadoApaga, 0, 0f);
+            animator.Update(0f);
+        }
+        return DuracionClipApaga() / lento;
+    }
+
+    float DuracionClipApaga()
+    {
+        if (animator == null || animator.runtimeAnimatorController == null) return 1.05f;
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        if (clips == null) return 1.05f;
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[i] != null && clips[i].name.IndexOf("apaga", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return Mathf.Max(0.4f, clips[i].length);
+        }
+        return 1.05f;
+    }
+
+    public void StartChase(Transform objetivo, ChaseZone zona, bool quedarse = false)
     {
         player = objetivo;
         zone = zona;
@@ -139,10 +176,14 @@ public class HandChaser : MonoBehaviour
         currentSpeed = zone != null ? zone.HandIntroSpeed : 1.15f;
         AplicarAlpha(alphaFantasma);
         gameObject.SetActive(true);
-        ColocarFueraDeCamara();
+        if (!quedarse)
+            ColocarFueraDeCamara();
         CambiarEstado(Estado.Chasing);
         if (animator != null)
+        {
+            animator.speed = 1f;
             animator.Play(estadoPersigue, 0, 0f);
+        }
     }
 
     void ColocarFueraDeCamara()

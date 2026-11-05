@@ -124,7 +124,7 @@ public sealed class HopeEnemyAudio : MonoBehaviour
         int i = Random.Range(0, voz.capa.clips.Length);
         if (voz.capa.clips.Length > 1 && i == voz.ultimo) i = (i + Random.Range(1, voz.capa.clips.Length)) % voz.capa.clips.Length;
         voz.ultimo = i;
-        if (voz.capa.clips[i] != null) { voz.fuente.clip = voz.capa.clips[i]; voz.fuente.PlayOneShot(voz.capa.clips[i]); }
+        if (voz.capa.clips[i] != null) { voz.fuente.clip = voz.capa.clips[i]; HopeAjustes.Disparo(voz.fuente, voz.capa.clips[i]); }
     }
     static void Pausa(Voz voz, bool pausa)
     {

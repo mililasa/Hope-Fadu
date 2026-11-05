@@ -47,6 +47,8 @@ public class ChaseZone : MonoBehaviour
     bool zonaActiva;
     bool zonaGanada;
     bool triggerArmado = true;
+    bool cinematicaHecha;
+    bool agujeroCerrando;
     readonly List<Lantern> lanterns = new List<Lantern>();
     GameObject pantallaAviso;
     Text textoAviso;
@@ -145,10 +147,12 @@ public class ChaseZone : MonoBehaviour
             if (l == null)
                 l = go.AddComponent<Lantern>();
             bool esFarol4 = go.name == "Farol (4)";
-            // isFinal: último de la lista (gana la zona). Checkpoint permanente: Farol (4).
-            // Farol (5)/(6) son checkpoints libres (fuera de esta lista).
+            bool esFarolEntrada = go.name == "Farol";
+            // isFinal: último de la lista (gana la zona).
+            // El checkpoint que ya venia marcado, Farol o Farol (4), no se apaga.
             l.isFinal = i == faroles.Count - 1 || esFarol4;
-            l.esCheckpointPermanente = esFarol4;
+            if (esFarol4 || esFarolEntrada || go.GetComponent<FarolCheckpoint>() != null)
+                l.esCheckpointPermanente = true;
             l.AsignarZona(this);
             l.ConfigurarComoBarril(animBarrilPrendiendo, animBarrilPrendido, spriteBarrilApagado);
             lanterns.Add(l);
@@ -186,10 +190,86 @@ public class ChaseZone : MonoBehaviour
         player = pp;
         zonaActiva = true;
         triggerArmado = false;
-        ArrancarPersecucion();
+        if (!cinematicaHecha)
+            StartCoroutine(CinematicaDeEntrada());
+        else
+            ArrancarPersecucion();
+    }
+
+    System.Collections.IEnumerator CinematicaDeEntrada()
+    {
+        Lantern foco = FarolBarril();
+        if (foco == null || foco.EstadoActual == Lantern.Estado.Off)
+        {
+            ArrancarPersecucion();
+            yield break;
+        }
+
+        cinematicaHecha = true;
+        if (player != null)
+            player.BloquearParaBarril();
+
+        CameraFollow camara = null;
+        if (Camera.main != null)
+            camara = Camera.main.GetComponent<CameraFollow>();
+        if (camara != null && foco != null)
+            camara.MirarA(foco.transform);
+
+        float espera = 0f;
+        while (espera < 1.1f)
+        {
+            espera += Time.deltaTime;
+            if (camara == null || foco == null || espera > 0.35f)
+            {
+                Vector2 cam = camara != null ? (Vector2)camara.transform.position : Vector2.zero;
+                Vector2 destino = foco != null ? (Vector2)foco.transform.position : cam;
+                if (Vector2.Distance(cam, destino) < 1.6f)
+                    break;
+            }
+            yield return null;
+        }
+
+        float duracion = 1.05f;
+        if (hand != null && foco != null)
+        {
+            float hacia = player != null ? player.transform.position.x : foco.transform.position.x + 1f;
+            duracion = hand.PresentarApagado(foco.PuntoApagado, hacia);
+        }
+
+        yield return new WaitForSeconds(duracion * 0.45f);
+        if (foco != null && foco.EstadoActual != Lantern.Estado.Off)
+            foco.ApagarSinSoltar();
+        yield return new WaitForSeconds(duracion * 0.55f);
+
+        if (camara != null)
+            camara.VolverAlJugador();
+        if (player != null)
+            player.UnlockMovementYSoltarAnim();
+        ArrancarPersecucion(true);
+    }
+
+    Lantern FarolBarril()
+    {
+        for (int i = 0; i < lanterns.Count; i++)
+        {
+            Lantern l = lanterns[i];
+            if (l != null && l.gameObject.name == "Farol")
+                return l;
+        }
+        for (int i = 0; i < faroles.Count; i++)
+        {
+            if (faroles[i] != null && faroles[i].name == "Farol")
+                return faroles[i].GetComponent<Lantern>();
+        }
+        return null;
     }
 
     void ArrancarPersecucion()
+    {
+        ArrancarPersecucion(false);
+    }
+
+    void ArrancarPersecucion(bool manoSeQueda)
     {
         if (player == null) return;
 
@@ -202,12 +282,15 @@ public class ChaseZone : MonoBehaviour
                 lanterns[i].AsignarZona(this);
         }
 
-        Vector3 spawn = handSpawnPoint != null ? handSpawnPoint.position : transform.position;
         if (hand != null)
         {
             hand.gameObject.SetActive(true);
-            hand.transform.position = spawn;
-            hand.StartChase(player.transform, this);
+            if (!manoSeQueda)
+            {
+                Vector3 spawn = handSpawnPoint != null ? handSpawnPoint.position : transform.position;
+                hand.transform.position = spawn;
+            }
+            hand.StartChase(player.transform, this, manoSeQueda);
         }
 
         EmpezarCierreAgujero();
@@ -215,7 +298,7 @@ public class ChaseZone : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!zonaActiva || player == null) return;
+        if (!agujeroCerrando || !zonaActiva || player == null) return;
         AsegurarGlow();
         if (glowHope == null) return;
 
@@ -238,6 +321,7 @@ public class ChaseZone : MonoBehaviour
 
     void EmpezarCierreAgujero()
     {
+        agujeroCerrando = true;
         tiempoCierreAgujero = 0f;
         escalaAgujeroLista = false;
         AsegurarGlow();
@@ -253,10 +337,17 @@ public class ChaseZone : MonoBehaviour
 
     void RestaurarAgujero()
     {
+        agujeroCerrando = false;
         tiempoCierreAgujero = 0f;
         escalaAgujeroLista = false;
         AsegurarGlow();
         if (glowHope != null) glowHope.factorRadio = 1f;
+        if (Camera.main != null)
+        {
+            CameraFollow camara = Camera.main.GetComponent<CameraFollow>();
+            if (camara != null)
+                camara.VolverAlJugador();
+        }
     }
 
     void CrearAviso()
@@ -355,7 +446,8 @@ public class ChaseZone : MonoBehaviour
         if (player != null) player.VolverAlCheckPoint();
     }
 
-    // Al morir: no re-arma la persecución si ya se ganó; conserva cadáver y Farol (4).
+    // Al morir: no re-arma la persecución si ya se ganó; conserva cadáver, Farol (4)
+    // y la toma de entrada, que no se repite.
     public void ReiniciarPorCheckpoint()
     {
         StopAllCoroutines();

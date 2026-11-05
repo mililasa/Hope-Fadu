@@ -59,7 +59,7 @@ public sealed class HopeStonePlatformAudio : MonoBehaviour
                 int i = Random.Range(0, ajustes.contactos.Length);
                 if (ajustes.contactos.Length > 1 && i == ultimoClip) i = (i + 1) % ajustes.contactos.Length;
                 ultimoClip = i; contacto.volume = ajustes.volumenContacto * cercania;
-                contacto.PlayOneShot(ajustes.contactos[i]);
+                HopeAjustes.Disparo(contacto, ajustes.contactos[i]);
             }
         }
         ultimoSentido = sentido;

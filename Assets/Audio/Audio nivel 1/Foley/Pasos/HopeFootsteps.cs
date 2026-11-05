@@ -82,13 +82,13 @@ public sealed class HopeFootsteps : MonoBehaviour
             ajustes.ataquesAdoquin[indice] != null)
         {
             float nivel = Mathf.Lerp(ajustes.ataqueExterior, ajustes.ataqueInterior, interior);
-            fuente.PlayOneShot(ajustes.ataquesAdoquin[indice], intensidad * nivel);
+            HopeAjustes.Disparo(fuente, ajustes.ataquesAdoquin[indice], intensidad * nivel);
         }
         if (ajustes.reverbsAdoquin != null && indice < ajustes.reverbsAdoquin.Length &&
             ajustes.reverbsAdoquin[indice] != null)
         {
             float nivel = Mathf.Lerp(ajustes.reverbExterior, ajustes.reverbInterior, interior);
-            fuente.PlayOneShot(ajustes.reverbsAdoquin[indice], intensidad * nivel);
+            HopeAjustes.Disparo(fuente, ajustes.reverbsAdoquin[indice], intensidad * nivel);
         }
     }
 }

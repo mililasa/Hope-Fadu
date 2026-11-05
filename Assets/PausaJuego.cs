@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-// Escape/P pausa (pantalla opaca). Cualquier otra tecla reanuda.
+// Pausa con la tecla del menu. Muestra el mismo menu de inicio.
 public class PausaJuego : MonoBehaviour
 {
-    public KeyCode teclaPausa = KeyCode.Escape;
-    [Range(0.5f, 1f)] public float opacidad = 0.85f;
+    public static bool EstaPausado { get; private set; }
 
     bool pausado;
-    GameObject pantalla;
     float timeScaleAntes = 1f;
+    int framePausa;
+    MenuInicio menu;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void AutoCrear()
@@ -20,22 +20,23 @@ public class PausaJuego : MonoBehaviour
         DontDestroyOnLoad(go);
     }
 
-    void Awake()
-    {
-        CrearPantalla();
-        if (pantalla != null) pantalla.SetActive(false);
-    }
-
     void Update()
     {
-        if (!pausado)
+        if (SceneManager.GetActiveScene().name == "Menu")
         {
-            if (Input.GetKeyDown(teclaPausa) || Input.GetKeyDown(KeyCode.P))
-                Pausar();
+            if (pausado) Reanudar();
             return;
         }
 
-        if (Input.anyKeyDown && !Input.GetKeyDown(teclaPausa) && !Input.GetKeyDown(KeyCode.P))
+        if (!pausado && HopeControles.Presionada(HopeControles.Accion.Pausa))
+            Pausar();
+    }
+
+    void LateUpdate()
+    {
+        if (!pausado || Time.frameCount == framePausa) return;
+        if (menu != null && menu.ConsumioPausaEsteFrame) return;
+        if (HopeControles.Presionada(HopeControles.Accion.Pausa))
             Reanudar();
     }
 
@@ -43,61 +44,108 @@ public class PausaJuego : MonoBehaviour
     {
         if (pausado) return;
         pausado = true;
-        timeScaleAntes = Time.timeScale;
+        EstaPausado = true;
+        framePausa = Time.frameCount;
+        timeScaleAntes = Time.timeScale > 0.01f ? Time.timeScale : 1f;
         Time.timeScale = 0f;
-        if (pantalla != null) pantalla.SetActive(true);
+        ActivarBlur(true);
+        AsegurarMenu();
+        if (menu != null) menu.Abrir();
     }
 
     void Reanudar()
     {
         if (!pausado) return;
         pausado = false;
+        EstaPausado = false;
         Time.timeScale = timeScaleAntes > 0.01f ? timeScaleAntes : 1f;
-        if (pantalla != null) pantalla.SetActive(false);
+        ActivarBlur(false);
+        if (menu != null) menu.Ocultar();
     }
 
-    void CrearPantalla()
+    void SalirAlMenu()
     {
-        if (pantalla != null) return;
-        pantalla = new GameObject("PantallaPausa");
-        pantalla.transform.SetParent(transform, false);
-        Canvas canvas = pantalla.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 900;
-        CanvasScaler scaler = pantalla.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        pantalla.AddComponent<GraphicRaycaster>();
+        pausado = false;
+        EstaPausado = false;
+        Time.timeScale = 1f;
+        ActivarBlur(false);
+        if (menu != null)
+        {
+            Destroy(menu.gameObject);
+            menu = null;
+        }
+        SceneManager.LoadScene("Menu");
+    }
 
-        GameObject fondoGO = new GameObject("Fondo");
-        fondoGO.transform.SetParent(pantalla.transform, false);
-        Image fondo = fondoGO.AddComponent<Image>();
-        fondo.color = new Color(0f, 0f, 0f, opacidad);
-        RectTransform fondoRt = fondo.rectTransform;
-        fondoRt.anchorMin = Vector2.zero;
-        fondoRt.anchorMax = Vector2.one;
-        fondoRt.offsetMin = Vector2.zero;
-        fondoRt.offsetMax = Vector2.zero;
+    void AsegurarMenu()
+    {
+        if (menu != null) return;
+        GameObject go = new GameObject("MenuPausa");
+        go.transform.SetParent(transform, false);
+        MenuInicio.MarcarCreacionPausa();
+        menu = go.AddComponent<MenuInicio>();
+        menu.DefinirPausa(Reanudar, SalirAlMenu);
+    }
 
-        GameObject textoGO = new GameObject("Texto");
-        textoGO.transform.SetParent(pantalla.transform, false);
-        Text texto = textoGO.AddComponent<Text>();
-        texto.text = "PAUSA\n\nTocá cualquier tecla para continuar";
-        texto.fontSize = 48;
-        texto.alignment = TextAnchor.MiddleCenter;
-        texto.color = Color.white;
-        Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        if (font == null) font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        texto.font = font;
-        RectTransform textoRt = texto.rectTransform;
-        textoRt.anchorMin = Vector2.zero;
-        textoRt.anchorMax = Vector2.one;
-        textoRt.offsetMin = Vector2.zero;
-        textoRt.offsetMax = Vector2.zero;
+    void ActivarBlur(bool activo)
+    {
+        if (!activo)
+        {
+            if (blur != null) blur.enabled = false;
+            return;
+        }
+        Camera cam = Camera.main;
+        if (cam == null) return;
+        if (blur == null || blur.gameObject != cam.gameObject)
+            blur = cam.GetComponent<HopeBlurPausa>();
+        if (blur == null)
+            blur = cam.gameObject.AddComponent<HopeBlurPausa>();
+        blur.enabled = true;
     }
 
     void OnDestroy()
     {
         if (pausado) Time.timeScale = 1f;
+        if (EstaPausado) EstaPausado = false;
+        ActivarBlur(false);
+    }
+
+    HopeBlurPausa blur;
+}
+
+public class HopeBlurPausa : MonoBehaviour
+{
+    Material material;
+
+    void OnRenderImage(RenderTexture src, RenderTexture dest)
+    {
+        if (!PausaJuego.EstaPausado)
+        {
+            Graphics.Blit(src, dest);
+            return;
+        }
+        if (material == null)
+        {
+            Shader shader = Resources.Load<Shader>("HopeBlur");
+            if (shader != null) material = new Material(shader);
+        }
+        if (material == null)
+        {
+            Graphics.Blit(src, dest);
+            return;
+        }
+        int ancho = Mathf.Max(16, src.width / 2);
+        int alto = Mathf.Max(16, src.height / 2);
+        RenderTexture tmp = RenderTexture.GetTemporary(ancho, alto, 0);
+        material.SetFloat("_Fuerza", 3f);
+        Graphics.Blit(src, tmp, material);
+        material.SetFloat("_Fuerza", 5f);
+        Graphics.Blit(tmp, dest, material);
+        RenderTexture.ReleaseTemporary(tmp);
+    }
+
+    void OnDestroy()
+    {
+        if (material != null) Destroy(material);
     }
 }

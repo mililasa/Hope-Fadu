@@ -85,7 +85,7 @@ public class CinematicaInicio : MonoBehaviour
             IrAlJuego();
             return;
         }
-        if (video.isPlaying && segundosEnPantalla > 0.4f && (Input.anyKeyDown || Input.GetMouseButtonDown(0)))
+        if (video.isPlaying && segundosEnPantalla > 0.4f && Input.GetKeyDown(KeyCode.Space))
             IrAlJuego();
     }
 
@@ -114,6 +114,27 @@ public class CinematicaInicio : MonoBehaviour
         var ajuste = cuadro.AddComponent<AspectRatioFitter>();
         ajuste.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
         ajuste.aspectRatio = 16f / 9f;
+
+        var avisoGo = new GameObject("Skip");
+        avisoGo.transform.SetParent(lienzo.transform, false);
+        var aviso = avisoGo.AddComponent<Text>();
+        Font letra = Resources.Load<Font>("Tiny5-Regular");
+        if (letra == null) letra = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        aviso.font = letra;
+        aviso.text = "SKIP CON ESPACIO";
+        aviso.fontSize = 22;
+        aviso.alignment = TextAnchor.MiddleCenter;
+        aviso.color = new Color(0.90f, 0.78f, 0.98f, 1f);
+        aviso.raycastTarget = false;
+        var avisoRt = aviso.rectTransform;
+        avisoRt.anchorMin = new Vector2(0.5f, 0f);
+        avisoRt.anchorMax = new Vector2(0.5f, 0f);
+        avisoRt.pivot = new Vector2(0.5f, 0f);
+        avisoRt.anchoredPosition = new Vector2(0f, 28f);
+        avisoRt.sizeDelta = new Vector2(700f, 36f);
+        var sombra = avisoGo.AddComponent<Outline>();
+        sombra.effectColor = new Color(0f, 0f, 0f, 0.85f);
+        sombra.effectDistance = new Vector2(1.5f, -1.5f);
     }
 
     static void Estirar(RectTransform rect)

@@ -52,10 +52,10 @@ public sealed class HopeLanternAudio : MonoBehaviour
 
     IEnumerator Secuencia()
     {
-        chispa.PlayOneShot(ajustes.chispa);
+        HopeAjustes.Disparo(chispa, ajustes.chispa);
         yield return new WaitForSeconds(ajustes.retrasoEncendido);
         if (!activo || luz == null || !luz.activeInHierarchy) yield break;
-        encendido.PlayOneShot(ajustes.encendido);
+        HopeAjustes.Disparo(encendido, ajustes.encendido);
         fuego.clip = ajustes.fuego;
         inicioFuego = Time.time;
         fuego.volume = 0f;

@@ -54,6 +54,6 @@ public sealed class HopeLampRattle : MonoBehaviour
         ultimo = indice;
         if (ajustes.sonidos[indice] == null) return;
         fuente.volume = ajustes.volumenCanal;
-        fuente.PlayOneShot(ajustes.sonidos[indice], Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax));
+        HopeAjustes.Disparo(fuente, ajustes.sonidos[indice], Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax));
     }
 }

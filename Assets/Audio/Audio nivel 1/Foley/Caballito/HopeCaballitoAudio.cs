@@ -108,6 +108,18 @@ public sealed class HopeCaballitoAudio : MonoBehaviour
         tiempoAnterior = tiempo;
     }
 
+    // Las animaciones de interacción no pasan por el Animator.
+    public void AvanzarSonido(float desde, float hasta)
+    {
+        if (ajustes == null || resorte == null || ajustes.momentosNormal == null) return;
+        for (int i = 0; i < ajustes.momentosNormal.Length; i++)
+        {
+            float momento = ajustes.momentosNormal[i];
+            if (momento > desde && momento <= hasta)
+                Rechinar();
+        }
+    }
+
     static bool Cruzo(float anterior, float actual, float momento, float ciclo)
     {
         float siguiente = (Mathf.Floor((anterior - momento) / ciclo) + 1f) * ciclo + momento;
@@ -118,8 +130,8 @@ public sealed class HopeCaballitoAudio : MonoBehaviour
     {
         if (ajustes.rechinidos == null || ajustes.rechinidos.Length == 0) return;
         AudioClip clip = ajustes.rechinidos[variante++ % ajustes.rechinidos.Length];
-        if (clip != null) resorte.PlayOneShot(clip);
-        if (ajustes.apoyo != null) soporte.PlayOneShot(ajustes.apoyo);
+        if (clip != null) HopeAjustes.Disparo(resorte, clip);
+        if (ajustes.apoyo != null) HopeAjustes.Disparo(soporte, ajustes.apoyo);
     }
 
     void OnDisable()

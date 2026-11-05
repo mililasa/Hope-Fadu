@@ -48,50 +48,48 @@ Cada repisa guarda su lugar en "Pieza Faro" con números:
 - El botón rojo "Reconstruir faro de ejemplo" borra tus cambios y arma el
   nivel de ejemplo otra vez.
 
-FARO CON TUS DIBUJOS
-1. Tus PNG van en Nivel3_Faro/Dibujos (ya vienen los 4 del frente principal).
+FARO CON TUS DIBUJOS (el que se usa; reemplaza al de ladrillos)
+1. Los PNG van en Nivel3_Faro/Dibujos. Por cada cara (frente, derecha, atras,
+   izquierda) 4 archivos:
+      n3_<cara>_principal_exterior.png              torre de afuera + lo que la rodea
+      n3_<cara>_principal_exterior_plataformas.png  lo que se pisa afuera
+      n3_<cara>_principal_interior.png              pared de adentro
+      n3_<cara>_principal_interior_plataformas.png  lo que se pisa adentro
+   Y además: n3_fondo.png (el cielo) y, si hace falta, n3_<cara>_principal_exterior_reja.png
+   (algo que va DELANTE de Hope, como la reja del balcón).
+   "atras" se puede escribir con o sin tilde. Si falta el PNG de una cara, se usa el del frente.
 2. Abrí Nivel_3, seleccioná Faro_Nivel3 y tocá el botón violeta
    "Armar faro con mis dibujos" (o menú HOPE > Nivel 3 > Armar faro con mis dibujos).
-   Ojo: borra el faro de ejemplo y arma uno nuevo.
+   Ojo: borra el faro que haya y arma uno nuevo.
 3. Guardá la escena y dale Play.
 
+LAS PLATAFORMAS SE LEEN SOLAS: cada borde de arriba plano de los PNG de
+plataformas es un lugar donde Hope se puede parar. Si la diseñadora cambia una
+plataforma, reemplazás el PNG y volvés a tocar el botón violeta. En la Consola
+aparece cuántas encontró en cada cara.
+
+Las caras, caminando hacia la derecha (afuera y adentro igual):
+   frente → derecha → atras → izquierda → frente
+
 Qué arma:
-   Fondo (dibujo)           cielo, suelo y avión: no gira
-   Pivote > Laminas         cada cara con 4 láminas: Torre afuera, Plataformas
-                            afuera, Torre adentro, Plataformas adentro.
-                            Adentro = lo que se ve al entrar por esa cara: va en la
-                            pared de enfrente, del lado de adentro (en el mismo lugar
-                            de la pantalla que afuera). Adentro no se ve el cielo.
-   Pivote > Repisas         (agrupadas por cara, igual que las láminas)
-                            repisas INVISIBLES encima de cada plataforma dibujada
+   Fondo > Cielo            n3_fondo.png, quieto detrás de todo (solo afuera)
+   Fondo > Alrededor ...    lo que rodea a cada cara (suelo, avión, escalera): se ve el
+                            de la cara de frente y cambia a mitad de cada giro
+   Pivote > Laminas         cada cara: Torre afuera, Plataformas afuera, Reja, Torre
+                            adentro, Plataformas adentro
+   Pivote > Repisas         repisas INVISIBLES encima de cada plataforma dibujada
                             (en la ventana Scene: cajas verdes adentro, celestes afuera)
-   Pivote > Puertas         la puerta y las 3 ventanas abiertas de cada pared
+   Pivote > Puertas         la puerta y las ventanas abiertas (la lista está en
+                            Editor/ConstructorFaroDibujo.cs, en píxeles del PNG)
 
-Escala: 97 px de tu dibujo = 1 unidad (la puerta mide 1,5 Hopes). El faro mide
-6 de ancho abajo, 3.5 arriba y 17.8 de alto. Para cambiar el tamaño de todo,
-cambiá PPU en Editor/ConstructorFaroDibujo.cs y volvé a armar el faro.
-
-El recorrido del frente: entrás por la puerta, subís al escalón violeta de
-ayuda (provisorio, no está en tu dibujo) y de ahí al piso 1, escalones
-hasta la ventana 1 (sale al balcón, que por ahora no lleva a ningún lado), o
-seguís adentro al piso 2 y salís por la ventana 2: hamacas, balcón de arriba,
-repisa chica, alféizar de la ventana 3 y salto al techo, donde está el farol.
+Escala: 97 px del dibujo = 1 unidad (la puerta mide 1,5 Hopes). El faro mide
+6 de ancho abajo, 3.5 arriba y 17.8 de alto.
 
 Las ventanas: adentro y afuera están en el mismo lugar de la pantalla. Con ↑
 la pantalla se funde a negro y Hope aparece del otro lado (afuera, parada en el
-alféizar). Cada ventana tiene Altura (pies adentro) y Desnivel Afuera.
+alféizar).
 
-Cambiar un dibujo:
- - Mismo nombre: reemplazá el PNG en Dibujos y listo (cambia en las 4 paredes).
- - Una pared distinta: poné tu PNG nuevo en Dibujos y arrastralo a "Dibujo" en
-   la lámina de esa pared (Pivote > Laminas > Cara Este > Torre afuera, etc.).
- - Si movés una plataforma en el dibujo, mové su repisa invisible (o cambiá
-   Desde / Hasta / Altura). Para una plataforma nueva: duplicá una repisa.
- - Si el faro de un dibujo nuevo tiene otra forma o tamaño, ajustá en
-   Faro_Nivel3: Medio Ancho, Medio Ancho Arriba, Altura Linterna (el techo) y
-   la sección Dibujo (Pixeles Por Unidad, Centro X, Suelo Y).
-
-CAMBIAR LOS DIBUJOS
+CAMBIAR LOS DIBUJOS DEL FARO DE EJEMPLO (el de ladrillos)
 Están en Nivel3_Faro/Texturas. Reemplazá cualquier PNG por tu pixel art con el
 mismo nombre y Unity lo usa:
    pared_adentro, pared_afuera, piedra, suelo     paredes y pisos

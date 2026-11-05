@@ -21,6 +21,7 @@ public class CameraFollow : MonoBehaviour
 
     Camera cam;
     Vector3 velocity;
+    Transform mirada;
     bool yaEncadre;
     Vector3 temblorAplicado;
     float temblorRestante;
@@ -52,6 +53,16 @@ public class CameraFollow : MonoBehaviour
             : Vector3.SmoothDamp(baseActual, desired, ref velocity, smoothTime);
         temblorAplicado = OffsetTemblor();
         transform.position = pos + temblorAplicado;
+    }
+
+    public void MirarA(Transform foco)
+    {
+        mirada = foco;
+    }
+
+    public void VolverAlJugador()
+    {
+        mirada = null;
     }
 
     // Pequeño temblor de cámara. La persecución lo llama cuando la mano apaga un farol.
@@ -104,15 +115,17 @@ public class CameraFollow : MonoBehaviour
             if (pp != null) target = pp.transform;
         }
 
+        Transform foco = mirada != null ? mirada : target;
+
         transform.localScale = Vector3.one;
 
         if (cam != null && cam.orthographic)
             cam.orthographicSize = zoom < 1f ? 5.5f : zoom;
 
-        if (target == null)
+        if (foco == null)
             return new Vector3(0f, 0f, 1f);
 
-        Vector3 desired = target.position + offset;
+        Vector3 desired = foco.position + offset;
         desired.z = -10f;
 
         if (limitarALimites && cam != null && cam.orthographic)

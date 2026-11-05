@@ -166,6 +166,8 @@ public class LuzRelieveEntorno : MonoBehaviour
     {
         if (sr == null) return false;
         if (sr.GetComponent<Lantern>() != null) return true;
+        CaballoEmbrujado caballo = sr.GetComponent<CaballoEmbrujado>();
+        if (caballo != null && caballo.TieneReflejoAmarillo) return true;
         return sr.gameObject.name.StartsWith("Barril");
     }
 

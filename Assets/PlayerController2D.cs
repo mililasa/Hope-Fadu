@@ -310,6 +310,12 @@ public class PlayerController2D : MonoBehaviour
     void Update()
     {
         if (transicionNivel) return;
+        if (PausaJuego.EstaPausado)
+        {
+            horizontalInput = 0f;
+            verticalInput = 0f;
+            return;
+        }
 
         if (movimientoBloqueado)
         {
@@ -318,8 +324,8 @@ public class PlayerController2D : MonoBehaviour
         }
         else
         {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
+            horizontalInput = HopeControles.Horizontal();
+            verticalInput = HopeControles.Vertical();
         }
 
         if (gameObject.scene.name == "SampleScene")
@@ -351,7 +357,8 @@ public class PlayerController2D : MonoBehaviour
         estabaEnPiso = isGrounded;
 
         // En pad: solo rebota la plataforma (altura fija). Afuera: salto / doble salto normal.
-        if (!movimientoBloqueado && Input.GetButtonDown("Jump") && !enEscalera && !sobrePadSalto)
+        bool salto = HopeControles.Presionada(HopeControles.Accion.Saltar) || Input.GetButtonDown("Jump");
+        if (!movimientoBloqueado && salto && !enEscalera && !sobrePadSalto)
         {
             if (isGrounded)
             {

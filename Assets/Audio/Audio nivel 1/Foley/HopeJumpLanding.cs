@@ -119,13 +119,13 @@ public sealed class HopeJumpLanding : MonoBehaviour
         ultimoApoyo = indice;
         fuenteApoyo.volume = apoyos.volumenCanal;
         if (clips[indice] != null)
-            fuenteApoyo.PlayOneShot(clips[indice], apoyos.volumenFragmento);
+            HopeAjustes.Disparo(fuenteApoyo, clips[indice], apoyos.volumenFragmento);
 
         var colas = apoyos.reverbsApoyo;
         if (colas == null || indice >= colas.Length || colas[indice] == null) return;
         float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
         float reverb = Mathf.Lerp(apoyos.reverbApoyoExterior, apoyos.reverbApoyoInterior, interior);
-        fuenteApoyo.PlayOneShot(colas[indice], apoyos.volumenFragmento * reverb);
+        HopeAjustes.Disparo(fuenteApoyo, colas[indice], apoyos.volumenFragmento * reverb);
     }
 
     public void Saltar(bool reproducirSaltoNormal = true, bool dobleSalto = false)
@@ -150,7 +150,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
                     if (clips.Length > 1 && i == ultimoSalto) i = (i + Random.Range(1, clips.Length)) % clips.Length;
                     ultimoSalto = i;
                     fuenteSalto.volume = saltos.volumenCanal;
-                    if (clips[i] != null) fuenteSalto.PlayOneShot(clips[i], saltos.volumenFragmento);
+                    if (clips[i] != null) HopeAjustes.Disparo(fuenteSalto, clips[i], saltos.volumenFragmento);
                 }
                 else Reproducir(fuenteSalto, saltos);
             }
@@ -171,7 +171,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
         if (esNivel2 && ajustesCapaNivel2 != null && ajustesCapaNivel2.sonido != null)
         {
             fuenteCapa.volume = ajustesCapaNivel2.volumenCanal;
-            fuenteCapa.PlayOneShot(ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
+            HopeAjustes.Disparo(fuenteCapa, ajustesCapaNivel2.sonido, ajustesCapaNivel2.volumenFragmento);
         }
         else Reproducir(fuenteCapa, capa);
     }
@@ -185,7 +185,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
         ultimaCapa = indice;
         Vector2 roce = rocesCapa[indice];
         fuenteCapa.pitch = roce.x;
-        fuenteCapa.PlayOneShot(clip, volumen * roce.y);
+        HopeAjustes.Disparo(fuenteCapa, clip, volumen * roce.y);
     }
 
     public void Reiniciar()
@@ -201,6 +201,6 @@ public sealed class HopeJumpLanding : MonoBehaviour
     {
         if (fuente == null || ajustes == null || ajustes.sonido == null) return;
         fuente.volume = ajustes.volumenCanal;
-        fuente.PlayOneShot(ajustes.sonido, ajustes.volumenFragmento);
+        HopeAjustes.Disparo(fuente, ajustes.sonido, ajustes.volumenFragmento);
     }
 }

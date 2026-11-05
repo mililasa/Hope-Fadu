@@ -44,7 +44,7 @@ public sealed class HopeSurfaceMix : ScriptableObject
             if (ajustes != null && ajustes.Probar(fuente, clip, volumen, escena == "Nivel_2"))
                 return;
         }
-        fuente.PlayOneShot(clip, volumen);
+        HopeAjustes.Disparo(fuente, clip, volumen);
     }
 
     bool Probar(AudioSource fuente, AudioClip clip, float volumen, bool nivelDos)
@@ -65,10 +65,10 @@ public sealed class HopeSurfaceMix : ScriptableObject
         {
             if (toma == null || toma.original != clip) continue;
             float ataque = toma.suave != null ? Mathf.Clamp01(superficie.ataque) : 1f;
-            if (ataque > 0f) fuente.PlayOneShot(clip, volumen * ataque);
-            if (ataque < 1f) fuente.PlayOneShot(toma.suave, volumen * (1f - ataque));
+            if (ataque > 0f) HopeAjustes.Disparo(fuente, clip, volumen * ataque);
+            if (ataque < 1f) HopeAjustes.Disparo(fuente, toma.suave, volumen * (1f - ataque));
             if (superficie.reverb > 0f && toma.cola != null)
-                fuente.PlayOneShot(toma.cola, volumen * superficie.reverb);
+                HopeAjustes.Disparo(fuente, toma.cola, volumen * superficie.reverb);
             return true;
         }
         return false;

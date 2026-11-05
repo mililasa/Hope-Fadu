@@ -44,7 +44,7 @@ public sealed class HopeCheckpointAudio : MonoBehaviour
         yield return new WaitForSeconds(Mathf.Max(0f, demora));
         if (!activo || luz == null || !luz.activeInHierarchy) yield break;
         fuente.volume = volumen;
-        fuente.PlayOneShot(clip);
+        HopeAjustes.Disparo(fuente, clip);
     }
     void Update()
     {

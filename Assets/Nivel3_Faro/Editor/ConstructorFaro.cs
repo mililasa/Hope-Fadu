@@ -110,8 +110,13 @@ public static class ConstructorFaro
         faro.medioAncho = 4f; faro.medioAnchoArriba = 4f; faro.grosorMuro = 0.4f;
         faro.salidaRepisa = 1f; faro.salidaTecho = 1f; faro.alturaLinterna = 30f;
         faro.puertasDeFrente = false;
-        Transform fondoViejo = faro.transform.Find("Fondo (dibujo)");
-        if (fondoViejo != null) Undo.DestroyObjectImmediate(fondoViejo.gameObject);
+        foreach (string viejoFondo in new[] { "Fondo (dibujo)", "Fondo" })
+        {
+            Transform fondoViejo = faro.transform.Find(viejoFondo);
+            if (fondoViejo != null) Undo.DestroyObjectImmediate(fondoViejo.gameObject);
+        }
+        faro.laminasDibujo.Clear();
+        faro.versionArmado = 0;
 
         Materiales mats = PrepararMateriales();
         float h = faro.medioAncho, T = faro.grosorMuro, H = faro.alturaLinterna, sale = faro.salidaRepisa;
@@ -279,21 +284,21 @@ public static class ConstructorFaro
     }
 
     // Hope y el checkpoint afuera, frente a la entrada; el farol arriba; la cámara centrada en el faro.
-    internal static void UbicarEscena(FaroFez faro, float alturaFarol)
+    internal static void UbicarEscena(FaroFez faro, float alturaFarol, float xHope = -3f)
     {
         float H = faro.alturaLinterna;
         PlayerController2D pp = Object.FindObjectOfType<PlayerController2D>();
         if (pp != null)
         {
             Undo.RecordObject(pp.transform, "Ubicar Hope");
-            pp.transform.position = new Vector3(-3f, 0.6f, 0f);
+            pp.transform.position = new Vector3(xHope, 0.6f, 0f);
             faro.hope = pp;
         }
         GameObject cp = GameObject.Find("CheckPoint");
         if (cp != null)
         {
             Undo.RecordObject(cp.transform, "Ubicar checkpoint");
-            cp.transform.position = new Vector3(-3f, 0.6f, 0f);
+            cp.transform.position = new Vector3(xHope, 0.6f, 0f);
         }
 
         Lantern farol = faro.farolFinal != null ? faro.farolFinal : Object.FindObjectOfType<Lantern>();
@@ -536,6 +541,13 @@ public class FaroFezEditor : Editor
             "Las repisas invisibles (cajas de líneas en Scene) son las que Hope pisa sobre tus dibujos.\n" +
             "Las flechas de esquina se calculan solas al dar Play.", MessageType.Info);
         if (Application.isPlaying) return;
+        FaroFez f = (FaroFez)target;
+        float escala = f.transform.localScale.x * (f.pivote != null ? f.pivote.localScale.x : 1f);
+        if (Mathf.Abs(escala - 1f) > 0.01f)
+            EditorGUILayout.HelpBox("Este faro está escalado x" + escala.ToString("0.##") + " desde el Transform: los dibujos crecen pero las repisas " +
+                "invisibles no. Tocá el botón violeta: pasa la escala a 'Tamaño' (queda " + (f.tamano * escala).ToString("0.##") + ") y la deja en 1.", MessageType.Warning);
+        else if (Mathf.Abs(f.pixelesPorUnidad * f.tamano - 97f) > 0.5f && f.versionArmado >= 3)
+            EditorGUILayout.HelpBox("Cambiaste 'Tamaño': tocá el botón violeta para que el faro se arme con ese tamaño.", MessageType.Warning);
         GUI.backgroundColor = new Color(0.8f, 0.7f, 1f);
         if (GUILayout.Button("Armar faro con mis dibujos (borra tus cambios)", GUILayout.Height(26)))
         {

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dibujo torre afuera
-  m_Shader: {fileID: 4800000, guid: 345bd4d942726a34b96b8c9143dbc66a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4636c91a9bc0ca846a5247b6052cb88d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9b9403e4f6bbb0841a5f63ce2c6628ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 720542b0b9b287d46a3beae22dbff9e5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
