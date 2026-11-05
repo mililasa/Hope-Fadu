@@ -405,6 +405,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &31212000
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -621,7 +624,7 @@ SpriteRenderer:
   m_SortingLayerID: 1561872467
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c4bc432900da464a95f72f75481c5b5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 41c824062c6f3f24298852be09f33839, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1177,6 +1180,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &158572677
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1504,6 +1510,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7293082, b: 0, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &181825066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3804,6 +3813,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &814528974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4482,6 +4494,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.17
   umbralContornoRelieve: 0.007
   colorBordeRelieve: {r: 1, g: 0.7766011, b: 0, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1054705960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5988,6 +6003,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1484513143
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8043,6 +8061,9 @@ MonoBehaviour:
   brilloBordeRelieve: 1.15
   umbralContornoRelieve: 0.035
   colorBordeRelieve: {r: 1, g: 0.84, b: 0.12, a: 1}
+  ctrlBarrilPrendiendo: {fileID: 0}
+  ctrlBarrilPrendido: {fileID: 0}
+  spriteBarrilApagado: {fileID: 0}
 --- !u!61 &1994154952
 BoxCollider2D:
   m_ObjectHideFlags: 0
