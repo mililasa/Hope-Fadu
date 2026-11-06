@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98622ed178734f9cbb2625a0e49e6aa8, type: 3}
+  m_Name: HopeBarrelHideSettings
+  m_EditorClassIdentifier: 
+  entrada: {fileID: 8300000, guid: 73d9c33722754f0ebbcad0cb212544f0, type: 3}
+  salida: {fileID: 8300000, guid: d2804b44e1984cdda3ea02a4ea31c096, type: 3}
+  salidaFoley: {fileID: 24309001, guid: 672012de8d744817b5538618d228ab93, type: 2}
+  volumenEntrada: 1
+  volumenSalida: 1

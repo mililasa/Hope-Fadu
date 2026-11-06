@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbb4bad6cdb4748b483e70cc4075445, type: 3}
+  m_Name: HopeDeathNarrativeSettings
+  m_EditorClassIdentifier:
+  piano: {fileID: 8300000, guid: a23dc77754e146d8b1a1eb1e15d2dcf1, type: 3}
+  soplo: {fileID: 8300000, guid: f52634e284af4f388fe3d7665d349ff4, type: 3}
+  lampara: {fileID: 8300000, guid: 8375115666104dd3b3f20f64a7478dfb, type: 3}
+  entradaMano: {fileID: 8300000, guid: fc4ee62b7f6a4883a0e1e0148d8a2ad3, type: 3}
+  entradaCaida: {fileID: 8300000, guid: 1c5da9582cb24a37b4a7628c97a8e9c2, type: 3}
+  volumenGeneral: 1
+  volumenPiano: 1
+  volumenSoplo: 0
+  volumenLampara: 1
+  volumenEntrada: 1
+  fondoMusica: 0.08
+  fondoAmbientes: 0.2
+  bajada: 0.025
+  sostener: 1.5
+  recuperacion: 1.2
+  pulsoRoto: {fileID: 8300000, guid: e1f7eace7e064ef18fc11909b192f314, type: 3}
+  electricidadMano: {fileID: 8300000, guid: c2e34fb5fa8048e8ba49c60225505ff4, type: 3}
+  volumenPulsoRoto: 1
+  volumenElectricidadMano: 1
+  fondoMusicaMano: 0.06

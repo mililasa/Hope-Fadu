@@ -131,6 +131,8 @@ public static class ChaseZoneMenu
             sr = Undo.AddComponent<SpriteRenderer>(farol);
         if (sr.sprite == null)
             sr.sprite = PrimerSprite(PathFarolSheet);
+        sr.sortingLayerName = "Foreground";
+        sr.sortingOrder = 2;
 
         Animator anim = farol.GetComponent<Animator>();
         if (anim == null)
@@ -167,7 +169,7 @@ public static class ChaseZoneMenu
             animChispa = Undo.AddComponent<Animator>(chispa);
         if (animChispa.runtimeAnimatorController == null)
             animChispa.runtimeAnimatorController = ctrlChispa;
-        chispa.SetActive(false);
+        chispa.SetActive(true);
 
         Transform luzT = farol.transform.Find("LuzFarol");
         GameObject luz = luzT != null ? luzT.gameObject : null;

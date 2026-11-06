@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfca358333394688959202f3c700abd6, type: 3}
+  m_Name: HopeExplosionSettings
+  m_EditorClassIdentifier: 
+  detonacion: {fileID: 8300000, guid: e89234fbbf9a71b419529803ef47b219, type: 3}
+  energia: {fileID: 8300000, guid: 1614902139922cd4d9f7d9f8bc6ffa1d, type: 3}
+  pintura: {fileID: 8300000, guid: 0d7e40a80ab76494183db0fbb6c2072e, type: 3}
+  volumenGeneral: 0.188
+  volumenDetonacion: 0.755
+  volumenEnergia: 0.079
+  volumenPintura: 0.364
+  distanciaPlena: 4
+  distanciaMaxima: 18
+  panoramaMaximo: 0.5

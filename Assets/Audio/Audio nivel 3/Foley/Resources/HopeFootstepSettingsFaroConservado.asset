@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa6a6f8d3c9544c94419afe8f94a172, type: 3}
+  m_Name: HopeFootstepSettingsFaroConservado
+  m_EditorClassIdentifier: 
+  pasos:
+  - {fileID: 8300000, guid: b9d523d57ae447e29c1e2c357688e073, type: 3}
+  - {fileID: 8300000, guid: 904458dc4bc2482795042edfaf7ab87e, type: 3}
+  - {fileID: 8300000, guid: b24b8d87ad964d1f9127c620bf9f8206, type: 3}
+  - {fileID: 8300000, guid: 6cb9ed85cdd54752a2a6b3fbaf33b340, type: 3}
+  - {fileID: 8300000, guid: f139fd7fce694d8c8f9290d96ad6a069, type: 3}
+  ataquesAdoquin:
+  - {fileID: 8300000, guid: 7e3d9365fe024d55b8f7907d5f7a3474, type: 3}
+  - {fileID: 8300000, guid: d5209f36997a46589deda89b6458a819, type: 3}
+  - {fileID: 8300000, guid: 1ff19766935745c6b591bd1d03ba8bbc, type: 3}
+  - {fileID: 8300000, guid: 2be85e820e634b41bdf31a02def35166, type: 3}
+  - {fileID: 8300000, guid: 3a8e3335120a41a982d12df4deb0fdb9, type: 3}
+  reverbsAdoquin:
+  - {fileID: 8300000, guid: 82f87bdd91104f8ba069817a8e64c405, type: 3}
+  - {fileID: 8300000, guid: 5d9fbf994c9f484285a5d5b2d59cd22c, type: 3}
+  - {fileID: 8300000, guid: 4782500afbc845c79a31600602f554ed, type: 3}
+  - {fileID: 8300000, guid: 7b28936c7a9349b0a82a046bc802f2d5, type: 3}
+  - {fileID: 8300000, guid: 15d8d556ad2b4ccdbce881173009544d, type: 3}
+  ataqueExterior: 0.8
+  ataqueInterior: 0.74
+  reverbExterior: 0
+  reverbInterior: 0.48999998
+  volumenCanal: 0.351
+  volumenFragmentoMin: 0.194984
+  volumenFragmentoMax: 0.25704
+  segundosEntrePasos: 0.45

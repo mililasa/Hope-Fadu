@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629154bd38f94eb88ddff22075569299, type: 3}
+  m_Name: HopeLevel2PlatformSettings
+  m_EditorClassIdentifier:
+  horizontal:
+    metal: {fileID: 8300000, guid: 025283c7a57744e5ba8160c838d4221e, type: 3}
+    servo: {fileID: 8300000, guid: 41ae9acd8239491db05cfe5c0ec0416d, type: 3}
+    electricidad: {fileID: 8300000, guid: 53aacc5e41c240b5b317d95e0a14d4ef, type: 3}
+    inversion: {fileID: 8300000, guid: 7c02448f739d45beb0fd22dc8b2ba07d, type: 3}
+  vertical:
+    metal: {fileID: 8300000, guid: a9059182352544c2906bf965d7b3ac0d, type: 3}
+    servo: {fileID: 8300000, guid: 6c33d31a23ce4f5b85731256287f2501, type: 3}
+    electricidad: {fileID: 8300000, guid: 4fff72e649ac4bf5b1970797f4329f4a, type: 3}
+    inversion: {fileID: 8300000, guid: 60ebd5bc2e34489983d9490a6e7488f9, type: 3}
+  salidaMetal: {fileID: 24300601, guid: 94b537e689b44348ba6da42677fdc9e6, type: 2}
+  salidaServo: {fileID: 24300602, guid: 94b537e689b44348ba6da42677fdc9e6, type: 2}
+  salidaElectricidad: {fileID: 24300603, guid: 94b537e689b44348ba6da42677fdc9e6, type: 2}
+  distanciaPlena: 2
+  distanciaMaxima: 11
+  paneoMaximo: 0.55
+  fadeEntrada: 0.12
+  fadeSalida: 0.4

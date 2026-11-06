@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2a6953a3eb49f5b100921f887c38b1, type: 3}
+  m_Name: HopeHandImpactSettings
+  m_EditorClassIdentifier: 
+  descarga: {fileID: 8300000, guid: 064380c5e6a4bd646b1e86113e5f54a1, type: 3}
+  barrido: {fileID: 8300000, guid: 943bf03b1b8eda548a895182e250f7b1, type: 3}
+  impacto: {fileID: 8300000, guid: 4dffca32b39346444ae7a70051e93ea8, type: 3}
+  temblor: {fileID: 8300000, guid: ad22e3dcbd55fd24ca447d792e3108fb, type: 3}
+  volumenGeneral: 0.65
+  volumenDescarga: 0.4
+  volumenBarrido: 0.85
+  volumenImpacto: 0.5
+  volumenTemblor: 0.42
+  fraccionAviso: 0.2

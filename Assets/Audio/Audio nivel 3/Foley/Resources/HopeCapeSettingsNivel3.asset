@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3e8a3a58655e3f8722f53e57fc8c08, type: 3}
+  m_Name: HopeCapeSettingsNivel3
+  m_EditorClassIdentifier: 
+  activarCapa: 0
+  sonido: {fileID: 8300000, guid: 069358f05489d7e4da285f25d1bcb9fc, type: 3}
+  variaciones: []
+  volumenCanal: 0.1
+  volumenFragmento: 0.45
+  reverbsApoyo: []
+  reverbApoyoExterior: 0.08
+  reverbApoyoInterior: 0.65

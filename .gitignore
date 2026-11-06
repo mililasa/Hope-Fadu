@@ -46,3 +46,8 @@ desktop.ini
 
 # Builds locales
 HOPE_BUILD_*.zip
+
+# Exportaciones locales (no son assets del proyecto)
+/build_web/
+/build_web.zip
+/UpgradeLog.htm

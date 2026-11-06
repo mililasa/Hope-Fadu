@@ -56,6 +56,12 @@ TagManager:
   - name: Foreground
     uniqueID: 1561872467
     locked: 0
+  - name: carteles
+    uniqueID: 1461551545
+    locked: 0
+  - name: cadaver
+    uniqueID: 1564595201
+    locked: 0
   - name: Piso
     uniqueID: 2220181583
     locked: 0

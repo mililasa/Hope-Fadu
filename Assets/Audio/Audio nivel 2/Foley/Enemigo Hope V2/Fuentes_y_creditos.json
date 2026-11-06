@@ -1,0 +1,41 @@
+{
+  "estado": "Prueba de identidad sonora, no integrada en Unity. Cadencia ilustrativa, aun sin sincronizar con animacion.",
+  "duracion_s": 10.6,
+  "pisadas_s": [
+    0.45,
+    1.76,
+    3.03,
+    4.37,
+    5.65,
+    6.97,
+    8.24
+  ],
+  "capas": [
+    "Pisadas",
+    "Respiracion",
+    "Crujidos"
+  ],
+  "pico_dbfs": -9,
+  "fuentes": [
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale – Owen – Character Playset\\HMNBrth_Human, Adult, Male, Breathe, Mouth, Slow,_UberDuo_INHL.wav",
+      "autor": "UberDuo, Inhale Owen Character Playset",
+      "uso": "Respiraciones lentas recortadas, algo mas graves y filtradas."
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle2of9\\InMotionAudio - Torn T-Shirt\\CLOTHRip_CottonRips13_InMotionAudio_TornTShirt.wav",
+      "autor": "InMotionAudio, Torn T-Shirt",
+      "uso": "Crujido breve de tela, filtrado y tenue."
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle6of9\\Pole Position - The Metal Hit Sweeteners Library\\Oil Barrel - HIT - Hammer - Take 2.wav",
+      "autor": "Pole Position, Metal Hit Sweeteners",
+      "uso": "Cuerpo grave de las pisadas, poco nivel."
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Unity projects\\Hope-Fadu-Octubre\\Hope-Fadu\\Assets\\Audio\\Audio nivel 2\\Foley\\Pasos",
+      "uso": "Pasos metalicos existentes del nivel 2: transposicion grave y colas cortas."
+    }
+  ],
+  "creditos": "Conservar licencias de Sonniss GDC 2024 y creditos originales de los pasos N2."
+}

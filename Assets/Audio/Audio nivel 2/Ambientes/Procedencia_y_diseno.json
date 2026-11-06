@@ -1,0 +1,125 @@
+{
+  "fuentes": [
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 1 Hope.wav",
+      "descripcion": "Metal - RATTLE - Shudder Constant - Geofon",
+      "rate": 96000,
+      "duracion_s": 15.650958333333334
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 2 Hope.wav",
+      "descripcion": "",
+      "rate": 44100,
+      "duracion_s": 64.80045351473923
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 3 Hope.Wav",
+      "descripcion": "SEISMIC, Staircase, Metal, Rumble, Rattling, Vibrate, Debris, Clatter, Shake, Judder, Nervous, Earthquake, Tremor, Microseism",
+      "rate": 96000,
+      "duracion_s": 33.40795833333333
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 4 Hope.wav",
+      "descripcion": "Metal Electric Guitar, Whammy Bar Flutter, Clean",
+      "rate": 96000,
+      "duracion_s": 59.50933333333333
+    },
+    {
+      "archivo": "C:\\Users\\user\\Desktop\\Fadu\\Cursada Segundo Cuatri 2026\\Produccion de Video Juegos\\Tp Grupal - Produccion de un video juego\\Diseno Sonoro\\Hope_Audio\\Hope Assets Audio Nivel 2\\Ambientes\\Ambiente 5.wav",
+      "descripcion": "Deep Metallic Hits, Epic, Sub, Bass",
+      "rate": 96000,
+      "duracion_s": 14.506666666666666
+    }
+  ],
+  "archivos_procesados": [
+    {
+      "archivo": "N2_01_Interior_Metalico_Loop.wav",
+      "duracion_s": 14.800958333333334,
+      "pico_dbfs": -7.000000000000001,
+      "rms_dbfs": -22.03006959384132
+    },
+    {
+      "archivo": "N2_02_Presion_Grave_Loop.wav",
+      "duracion_s": 30.100229166666665,
+      "pico_dbfs": -16.12422157929355,
+      "rms_dbfs": -24.0
+    },
+    {
+      "archivo": "N2_03_Temblor_Estructura_01.wav",
+      "duracion_s": 6.5,
+      "pico_dbfs": -8.000000000000002,
+      "rms_dbfs": -25.359971787050014
+    },
+    {
+      "archivo": "N2_03_Temblor_Estructura_02.wav",
+      "duracion_s": 6.5,
+      "pico_dbfs": -8.000000000000004,
+      "rms_dbfs": -24.341001111777697
+    },
+    {
+      "archivo": "N2_03_Temblor_Estructura_03.wav",
+      "duracion_s": 4.957958333333333,
+      "pico_dbfs": -8.000000000000002,
+      "rms_dbfs": -24.452463965117985
+    },
+    {
+      "archivo": "N2_04_Resonancia_Electrica_01.wav",
+      "duracion_s": 3.1,
+      "pico_dbfs": -7.0,
+      "rms_dbfs": -38.729001014855655
+    },
+    {
+      "archivo": "N2_04_Resonancia_Electrica_02.wav",
+      "duracion_s": 3.1,
+      "pico_dbfs": -7.000000000000001,
+      "rms_dbfs": -32.55649528194533
+    },
+    {
+      "archivo": "N2_04_Resonancia_Electrica_03.wav",
+      "duracion_s": 3.1,
+      "pico_dbfs": -7.0,
+      "rms_dbfs": -37.1746232058386
+    },
+    {
+      "archivo": "N2_04_Resonancia_Electrica_04.wav",
+      "duracion_s": 3.1,
+      "pico_dbfs": -7.0,
+      "rms_dbfs": -41.18174146813023
+    },
+    {
+      "archivo": "N2_05_Golpe_Guerra_Exterior_01.wav",
+      "duracion_s": 2.72,
+      "pico_dbfs": -5.000000000000002,
+      "rms_dbfs": -25.82801203963203
+    },
+    {
+      "archivo": "N2_05_Golpe_Guerra_Exterior_02.wav",
+      "duracion_s": 2.72,
+      "pico_dbfs": -5.0,
+      "rms_dbfs": -24.91354332832349
+    },
+    {
+      "archivo": "N2_05_Golpe_Guerra_Exterior_03.wav",
+      "duracion_s": 2.72,
+      "pico_dbfs": -5.0,
+      "rms_dbfs": -25.828730415829
+    }
+  ],
+  "recortes_inicio_s": {
+    "N2_03_Temblor_Estructura_01.wav": 5.6,
+    "N2_03_Temblor_Estructura_02.wav": 13.3,
+    "N2_03_Temblor_Estructura_03.wav": 28.45,
+    "N2_04_Resonancia_Electrica_01.wav": 0.0,
+    "N2_04_Resonancia_Electrica_02.wav": 13.65,
+    "N2_04_Resonancia_Electrica_03.wav": 27.8,
+    "N2_04_Resonancia_Electrica_04.wav": 51.75,
+    "N2_05_Golpe_Guerra_Exterior_01.wav": 1.215,
+    "N2_05_Golpe_Guerra_Exterior_02.wav": 5.965,
+    "N2_05_Golpe_Guerra_Exterior_03.wav": 9.065
+  },
+  "criterio": "01 interior metalico y 02 presion durante todo el nivel. 04 resonancias electricas localizadas con mas actividad en el centro. 05 golpes amortiguados e impredecibles sugieren guerra exterior; 03 responde 120 ms despues como vibracion del edificio. Sin bucle repetitivo de explosiones ni las cinco capas permanentemente al maximo.",
+  "tratamiento_graves": "Fuente 02 concentrada a 26 Hz: subida una octava a ~52 Hz, saturacion suave para armonicos y filtro 35-350 Hz. 01 filtrada desde 105 Hz para dejar espacio a la presion. 03 filtrada 38-900 Hz.",
+  "preview_peak_dbfs": -10.044922155822956,
+  "preview_rms_dbfs": -26.61311485259204,
+  "nota": "La maqueta es representativa. En Unity, intervalos, variantes, sectores y panoramas varian durante el juego. Falta evaluacion auditiva por el usuario en la mezcla real."
+}

@@ -21,7 +21,13 @@ public class CameraFollow : MonoBehaviour
 
     Camera cam;
     Vector3 velocity;
+    Transform mirada;
     bool yaEncadre;
+    Vector3 temblorAplicado;
+    float temblorRestante;
+    float temblorDuracion;
+    float temblorAmplitud;
+    float temblorSemilla;
 
     void Awake()
     {
@@ -41,10 +47,54 @@ public class CameraFollow : MonoBehaviour
         Vector3 desired = PosicionDeseada();
         if (desired.z > 0f) return;
 
-        if (smoothTime <= 0.0001f)
-            transform.position = desired;
-        else
-            transform.position = Vector3.SmoothDamp(transform.position, desired, ref velocity, smoothTime);
+        Vector3 baseActual = transform.position - temblorAplicado;
+        Vector3 pos = smoothTime <= 0.0001f
+            ? desired
+            : Vector3.SmoothDamp(baseActual, desired, ref velocity, smoothTime);
+        temblorAplicado = OffsetTemblor();
+        transform.position = pos + temblorAplicado;
+    }
+
+    public void MirarA(Transform foco)
+    {
+        mirada = foco;
+    }
+
+    public void VolverAlJugador()
+    {
+        mirada = null;
+    }
+
+    // Pequeño temblor de cámara. La persecución lo llama cuando la mano apaga un farol.
+    public void Temblar(float duracion = 0.24f, float amplitud = 0.07f)
+    {
+        if (duracion <= 0f || amplitud <= 0f) return;
+        if (temblorRestante <= 0f)
+            temblorSemilla = Random.Range(0f, 50f);
+        temblorDuracion = Mathf.Max(temblorDuracion, duracion);
+        temblorRestante = Mathf.Max(temblorRestante, duracion);
+        temblorAmplitud = Mathf.Max(temblorAmplitud, amplitud);
+    }
+
+    Vector3 OffsetTemblor()
+    {
+        if (temblorRestante <= 0f)
+            return Vector3.zero;
+
+        float dur = Mathf.Max(0.05f, temblorDuracion);
+        float queda = temblorRestante / dur;
+        temblorRestante -= Time.deltaTime;
+        float t = Time.time * 36f + temblorSemilla;
+        float x = (Mathf.PerlinNoise(t, 0.17f) - 0.5f) * 2f;
+        float y = (Mathf.PerlinNoise(0.17f, t * 1.3f) - 0.5f) * 2f;
+        float amp = temblorAmplitud * Mathf.Clamp01(queda);
+        if (temblorRestante <= 0f)
+        {
+            temblorRestante = 0f;
+            temblorDuracion = 0f;
+            temblorAmplitud = 0f;
+        }
+        return new Vector3(x * amp, y * amp * 0.55f, 0f);
     }
 
     void EncadrarYa()
@@ -65,15 +115,17 @@ public class CameraFollow : MonoBehaviour
             if (pp != null) target = pp.transform;
         }
 
+        Transform foco = mirada != null ? mirada : target;
+
         transform.localScale = Vector3.one;
 
         if (cam != null && cam.orthographic)
             cam.orthographicSize = zoom < 1f ? 5.5f : zoom;
 
-        if (target == null)
+        if (foco == null)
             return new Vector3(0f, 0f, 1f);
 
-        Vector3 desired = target.position + offset;
+        Vector3 desired = foco.position + offset;
         desired.z = -10f;
 
         if (limitarALimites && cam != null && cam.orthographic)

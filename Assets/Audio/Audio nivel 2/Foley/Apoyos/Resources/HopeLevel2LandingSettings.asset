@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0117d04da53a446bbda602e3667e3b21, type: 3}
+  m_Name: HopeLevel2LandingSettings
+  m_EditorClassIdentifier: 
+  apoyos:
+  - {fileID: 8300000, guid: 415d6e44fd4d49b98eb7c3d1ed700a5c, type: 3}
+  - {fileID: 8300000, guid: 53e5c8cfc84c49aca95cd267574f6911, type: 3}
+  - {fileID: 8300000, guid: 6f81ba785b25426ca716fbbfb590bf62, type: 3}
+  - {fileID: 8300000, guid: 42189e2f27fa4946a1e9d1f6bcd3d44c, type: 3}
+  - {fileID: 8300000, guid: 924753ee975b47d58c7be05833429ca6, type: 3}
+  salida: {fileID: 24309000, guid: 672012de8d744817b5538618d228ab93, type: 2}
+  habilitado: 1
+  volumen: 0.261
+  minimoTiempoEnAire: 0.1
+  ignorarAlReiniciar: 0.2

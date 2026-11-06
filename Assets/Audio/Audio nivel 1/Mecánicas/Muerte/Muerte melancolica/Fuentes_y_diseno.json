@@ -1,0 +1,19 @@
+{
+  "sources": [
+    "C:\\Users\\user\\Desktop\\Unity projects\\Hope-Fadu-Octubre\\Hope-Fadu\\Assets\\Audio\\Audio nivel 1\\Foley\\L\u00e1mpara\\Resources\\05_Lampara_asa_1.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle1of9\\InMotionAudio - Mask Foley\\FOLYMisc_FabricMask_Movement06_InMotionAudio_MaskFoley.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle9of9\\UberDuo - Inhale \u2013 Owen \u2013 Character Playset\\HMNBrth_Human, Adult, Male, Exhale, Mouth, Dying_UberDuo_INHL_09.wav",
+    "C:\\Users\\user\\Desktop\\Sonnis GDC 2024\\Sonniss.com-GDC2024-GameAudioBundle6of9\\Rescopic Sound - Distinct Whooshes\\WHSH_Airy-Whoosh Wind Gust 11_RSCPC_DW.wav"
+  ],
+  "piano": "Sintesis original derivada del piano suave del nivel 2. Notas A4-F4-D4, pequena desafinacion de parcial.",
+  "duration": 2.8,
+  "format": "PCM24 mono 48 kHz",
+  "layers": [
+    "01_Piano_Cierre",
+    "02_Soplo_Se_Apaga",
+    "03_Lampara_Fragil",
+    "04_Entrada_Mano",
+    "05_Entrada_Caida"
+  ],
+  "common_gain": 2.057489115385143
+}

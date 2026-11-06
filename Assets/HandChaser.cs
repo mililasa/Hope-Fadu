@@ -66,8 +66,11 @@ public class HandChaser : MonoBehaviour
         if (animator != null)
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         AsegurarToqueChico();
-        if (GetComponent<HopeHandImpactAudio>() == null) gameObject.AddComponent<HopeHandImpactAudio>();
-        if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
+        if (HopeLegacyAudioPolicy.Permitir(this))
+        {
+            if (GetComponent<HopeHandImpactAudio>() == null) gameObject.AddComponent<HopeHandImpactAudio>();
+            if (GetComponent<HopeHandAudio>() == null) gameObject.AddComponent<HopeHandAudio>();
+        }
         if (sr != null)
         {
             colorBase = sr.color;
@@ -118,7 +121,44 @@ public class HandChaser : MonoBehaviour
         colMano = cir;
     }
 
-    public void StartChase(Transform objetivo, ChaseZone zona)
+    public float PresentarApagado(Vector3 punto, float mirarHaciaX)
+    {
+        StopAllCoroutines();
+        estado = Estado.Inactive;
+        player = null;
+        yaAgarro = false;
+        objetivoActual = null;
+        extinguishPedido = false;
+        gameObject.SetActive(true);
+        transform.position = punto;
+        AplicarAlpha(alphaFantasma);
+        FlipHacia(mirarHaciaX - punto.x);
+        const float lento = 0.8f;
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            animator.speed = lento;
+            animator.Play(estadoApaga, 0, 0f);
+            animator.Update(0f);
+        }
+        return DuracionClipApaga() / lento;
+    }
+
+    float DuracionClipApaga()
+    {
+        if (animator == null || animator.runtimeAnimatorController == null) return 1.05f;
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        if (clips == null) return 1.05f;
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[i] != null && clips[i].name.IndexOf("apaga", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return Mathf.Max(0.4f, clips[i].length);
+        }
+        return 1.05f;
+    }
+
+    public void StartChase(Transform objetivo, ChaseZone zona, bool quedarse = false)
     {
         player = objetivo;
         zone = zona;
@@ -136,26 +176,37 @@ public class HandChaser : MonoBehaviour
         currentSpeed = zone != null ? zone.HandIntroSpeed : 1.15f;
         AplicarAlpha(alphaFantasma);
         gameObject.SetActive(true);
-        ColocarArribaDetras();
+        if (!quedarse)
+            ColocarFueraDeCamara();
         CambiarEstado(Estado.Chasing);
         if (animator != null)
+        {
+            animator.speed = 1f;
             animator.Play(estadoPersigue, 0, 0f);
+        }
     }
 
-    void ColocarArribaDetras()
+    void ColocarFueraDeCamara()
     {
         if (player == null) return;
-        float dir = 1f;
-        Lantern primera = PrimeraLinterna();
-        if (primera != null)
-            dir = Mathf.Sign(primera.transform.position.x - player.position.x);
+        float dir = zone != null ? DireccionPersecucion() : 1f;
         if (Mathf.Abs(dir) < 0.01f) dir = 1f;
 
+        Camera cam = Camera.main;
+        float centroX = player.position.x;
+        float medioAncho = 6f;
+        if (cam != null)
+        {
+            centroX = cam.transform.position.x;
+            if (cam.orthographic)
+                medioAncho = cam.orthographicSize * Mathf.Max(1f, cam.aspect);
+        }
+
         Vector3 p = transform.position;
-        p.y = YConDedosA(alturaDedos);
-        if (Mathf.Abs(p.x - player.position.x) < 3.5f)
-            p.x = player.position.x - dir * 5f;
+        p.y = player.position.y + alturaDedos;
+        p.x = centroX - dir * (medioAncho + 1.6f);
         transform.position = p;
+        FlipHacia(dir);
     }
 
     void UbicarToqueEnDedos()
@@ -233,6 +284,9 @@ public class HandChaser : MonoBehaviour
         yaPasoPrimera = true;
         if (l.isFinal)
         {
+            // Cadáver solo con Farol (4) (checkpoint permanente).
+            if (l.esCheckpointPermanente && zone != null)
+                zone.OnUltimoBarrilPrendido(player != null ? player.GetComponent<PlayerController2D>() : null);
             CambiarEstado(Estado.Leaving);
             return;
         }
@@ -330,18 +384,27 @@ public class HandChaser : MonoBehaviour
 
     void RevisarFarolesSaltados()
     {
-        if (zone == null || zone.Lanterns == null || zone.Lanterns.Count == 0) return;
+        if (zone == null || zone.Lanterns == null || zone.Lanterns.Count == 0 || player == null) return;
         float dir = DireccionPersecucion();
+        Rigidbody2D rbPlayer = player.GetComponent<Rigidbody2D>();
+        float velX = rbPlayer != null ? rbPlayer.velocity.x : 0f;
+        // Hope puede cruzar el barril; la aceleración extra recién suma cuando se aleja.
+        float umbralPaso = 2.4f;
+        float velMinimaAlejarse = 0.35f;
+
         for (int i = 0; i < zone.Lanterns.Count; i++)
         {
             Lantern l = zone.Lanterns[i];
             if (l == null || l.isFinal || farolesUsados.Contains(l) || farolesSaltados.Contains(l)) continue;
             if (l.EstadoActual != Lantern.Estado.Off) continue;
-            if ((player.position.x - l.transform.position.x) * dir <= 1.1f) continue;
+
+            float pasado = (player.position.x - l.transform.position.x) * dir;
+            if (pasado <= umbralPaso) continue;
+            if (velX * dir < velMinimaAlejarse) continue;
 
             farolesSaltados.Add(l);
             yaPasoPrimera = true;
-            currentSpeed = Mathf.Max(currentSpeed, zone.HandBaseSpeed) + zone.VelocidadExtraPorFarolSaltado;
+            // Sin boost instantáneo: ActualizarChase usa farolesSaltados.Count para acelerar.
         }
     }
 
@@ -471,6 +534,7 @@ public class HandChaser : MonoBehaviour
     {
         if (extinguishPedido) return;
         extinguishPedido = true;
+        ExplosionesChase.ReproducirEn(objetivoActual);
         if (animator != null)
             animator.Play(estadoApaga, 0, 0f);
         StartCoroutine(ApagarPorTiempo());
@@ -510,6 +574,16 @@ public class HandChaser : MonoBehaviour
         if (golpeAudio != null) golpeAudio.Golpear();
         if (objetivoActual != null)
             objetivoActual.TurnOff();
+        TemblarCamara();
+    }
+
+    void TemblarCamara()
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return;
+        CameraFollow follow = cam.GetComponent<CameraFollow>();
+        if (follow != null)
+            follow.Temblar(0.3f, 0.12f);
     }
 
     // Animation Event: ultimo frame de mano_apaga_vela.

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa6a6f8d3c9544c94419afe8f94a172, type: 3}
+  m_Name: HopeFootstepSettings
+  m_EditorClassIdentifier: 
+  pasos:
+  - {fileID: 8300000, guid: ad384b8c2b789f743a75c5c7fc5c63ac, type: 3}
+  - {fileID: 8300000, guid: f24fe6756bb62a44bb3ade4e2b7429d4, type: 3}
+  - {fileID: 8300000, guid: fbcac05a447cf304ca4a2525e394915d, type: 3}
+  - {fileID: 8300000, guid: 07cb6247b25a3074d8e25c32b531967c, type: 3}
+  - {fileID: 8300000, guid: 2d03ac01d207bdd4fb8356864e4ba0ee, type: 3}
+  volumenCanal: 0.219
+  volumenFragmentoMin: 0.194984
+  volumenFragmentoMax: 0.25704
+  segundosEntrePasos: 0.45

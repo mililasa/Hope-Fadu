@@ -1,0 +1,6 @@
+Audio del enemigo gigante del nivel 2.
+Resources/HopeEnemyAudioSettings: cuatro capas independientes, habilitar, volumen, distancia plena/maxima, entrada/salida en fade, solo al detectar y solo en movimiento.
+Pisadas y crujidos: cuatro variaciones sin repeticion inmediata, siguen el desplazamiento horizontal. Distancia entre pasos editable. Para una caminata futura: Usar Eventos De Animacion y llamar PasoDeAnimacion en HopeEnemyAudio.
+Respiracion: tres gestos a intervalos aleatorios editables.
+Zumbido: sigue PersiguiendoParaAudio, la deteccion real del enemigo; se retira al esconderse Hope.
+Fuentes separadas bajo cada enemigo durante Play. Pisadas/respiracion/crujidos al premix Foley N2; zumbido al bus Mecanicas. Pausa y desactivacion detienen el avance sonoro.

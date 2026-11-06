@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: adcdb3587dce4b01bc7ae6025ffe7416
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 7
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 0.7
+    conversionMode: 0
+    preloadAudioData: 1
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: hope-webgl-1
+  assetBundleName: 
+  assetBundleVariant: 
