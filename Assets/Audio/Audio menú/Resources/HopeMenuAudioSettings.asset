@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a00e14b10c4954b6934a7094ea786a, type: 3}
   m_Name: HopeMenuAudioSettings
   m_EditorClassIdentifier: 
-  volumenChispa: 0.32
-  volumenChispaJugar: 0.32
-  volumenCheckpoint: 0.22
-  volumenGas: 0.18
-  volumenMusica: 0.6
+  volumenChispa: 0.368
+  volumenChispaJugar: 0.368
+  volumenCheckpoint: 0.259
+  volumenGas: 0.268
+  volumenMusica: 1
   volumenIntro: 1
   motivoMano: {fileID: 8300000, guid: 1b0c71f278c36c44d9cb7883732533fb, type: 3}
-  volumenMano: 0.5
+  volumenMano: 1
   silencioMinimo: 4
   silencioMaximo: 7
   duracionMotivo: 2.8
