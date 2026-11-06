@@ -79,8 +79,14 @@ public class LanternGlow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.L)) Alternar();
+        if (EsLuzDeHope())
+            encendida = true;
         ActualizarRelleno();
+    }
+
+    bool EsLuzDeHope()
+    {
+        return name == "Oscuridad" && transform.parent != null && transform.parent.name == "Pp";
     }
 
     void OnDestroy()

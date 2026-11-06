@@ -3,7 +3,7 @@ using UnityEngine;
 // ============================================================================
 // PUERTA O VENTANA DEL FARO
 // Va adentro de "Pivote". Tiene dos dibujos hijos: la cara de adentro y la de
-// afuera. Si Hope está parada al lado y aprieta ↑, pasa al otro lado de la
+// afuera. Si Hope está parada al lado y aprieta E (interactuar), pasa al otro lado de la
 // pared (la cámara da media vuelta).
 //
 // Su lugar se guarda con números, igual que las repisas:

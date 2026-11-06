@@ -99,7 +99,7 @@ public static class ConstructorFaro
         EditorSceneManager.SaveScene(escena);
         Selection.activeGameObject = go;
         EditorUtility.DisplayDialog("Nivel 3",
-            "Listo: se creó Nivel_3 con el faro.\n\nDale Play:\n← → mover · Espacio saltar\n↑ entrar o salir por puertas y ventanas\n" +
+            "Listo: se creó Nivel_3 con el faro.\n\nDale Play:\n← → mover · Espacio saltar\nE entrar o salir por puertas y ventanas\n" +
             "Caminá contra el borde para doblar la esquina\nE prende el farol de arriba", "Dale");
     }
 
@@ -554,6 +554,9 @@ public class FaroFezEditor : Editor
             if (EditorUtility.DisplayDialog("Faro", "Se borra el Pivote con todas las repisas y puertas, y se arma el faro con tus PNG de Nivel3_Faro/Dibujos. ¿Seguro?", "Armar", "Cancelar"))
                 ConstructorFaroDibujo.Construir((FaroFez)target);
         }
+        GUI.backgroundColor = UnityEngine.Color.white;
+        PisosFaroEditor.DibujarSeccion(f);
+        EditorGUILayout.Space();
         GUI.backgroundColor = new Color(1f, 0.75f, 0.75f);
         if (GUILayout.Button("Reconstruir faro de ejemplo (borra tus cambios)", GUILayout.Height(26)))
         {

@@ -53,7 +53,7 @@ public static class ConstructorFaroDibujo
     static readonly PiezaFaro.Cara[] CARAS = { PiezaFaro.Cara.Norte, PiezaFaro.Cara.Oeste, PiezaFaro.Cara.Sur, PiezaFaro.Cara.Este };
 
     // ------------------------------------------------------------------
-    // PUERTAS Y VENTANAS ABIERTAS (por las que se pasa con ↑), en píxeles del PNG:
+    // PUERTAS Y VENTANAS ABIERTAS (por las que se pasa con E), en píxeles del PNG:
     //   columna del centro, fila de los pies ADENTRO y fila de los pies AFUERA.
     // Tienen que tener algo para pisar de los dos lados (el piso, un escalón, el alféizar).
     // Las tapiadas no van acá: son solo dibujo.

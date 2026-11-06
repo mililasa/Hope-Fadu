@@ -116,6 +116,8 @@ public class PiezaFaro : MonoBehaviour
     void OnDrawGizmos()
     {
         if (tipo != Tipo.Repisa || GetComponent<Renderer>() != null) return;
+        FaroFez faro = GetComponentInParent<FaroFez>();
+        if (faro != null && faro.pisosConEdge) return;   // con pisos dibujados estas no se usan: no se dibujan
         Gizmos.color = EsAdentro ? new Color(0.4f, 1f, 0.5f, 0.9f) : new Color(0.4f, 0.85f, 1f, 0.9f);
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawWireCube(Vector3.zero, Vector3.one);

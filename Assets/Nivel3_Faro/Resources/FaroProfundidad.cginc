@@ -10,6 +10,7 @@
 //   - Como se achica hacia los pies de Hope, el piso donde está parada queda derecho.
 // Con _FaroAlto = 0 solo se achica de costado (en X).
 //
+// Con _FaroForma = 0 las paredes no se mueven: solo se oscurece el rincón.
 // Con _FaroFuerza = 0 (todo el tiempo, menos durante un giro) no cambia nada.
 
 #ifndef FARO_PROFUNDIDAD_INCLUDED
@@ -21,6 +22,7 @@ float  _FaroLado;     // +1 = el giro es adentro (la pared está lejos), -1 = af
 float  _FaroAlto;     // 0 = solo de costado, 1 = también en Y
 float  _FaroDist;     // "perspectivaRincon", en medios anchos: menos = el rincón se aleja más
 float  _FaroFuerza;   // 0 = nada, 1 = efecto completo (a mitad del giro)
+float  _FaroForma;    // 1 = el rincón se aleja (se deforma); 0 = no se mueve nada, solo la sombra
 float  _FaroSombra;   // cuánto se oscurece el rincón (0 a 1)
 float  _FaroRadio;    // cuánto más lejos que la pared tiene que estar algo para quedar en sombra del todo
 
@@ -37,7 +39,7 @@ float4 FaroPosicion(float4 vertice, out float luz)
     // Lo que está a la distancia de la pared de siempre (o más cerca) queda igual: la torre no se abre.
     // Lo que está más lejos (el rincón) se achica hacia el centro del faro y hacia los pies de Hope.
     float escala = min(1.0, max(0.3 * d, d + _FaroLado) / max(0.3 * d, d + z));
-    float e = lerp(1.0, escala, _FaroFuerza);
+    float e = lerp(1.0, escala, _FaroFuerza * _FaroForma);
     p.x = _FaroCentro.x + (p.x - _FaroCentro.x) * e;
     if (_FaroAlto > 0.5) p.y = _FaroCentro.y + (p.y - _FaroCentro.y) * e;
     float pared = _FaroLado * medio - _FaroMedidas.w;
