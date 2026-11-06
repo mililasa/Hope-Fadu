@@ -5,6 +5,7 @@ using System.Collections;
 public sealed class HopeLanternAudio : MonoBehaviour
 {
     public HopeLanternSettings ajustes;
+    HopeLanternSettings ajustesFuego;
     AudioSource chispa, encendido, fuego, cuerpoBarril;
     Transform oyente;
     GameObject luz;
@@ -43,6 +44,18 @@ public sealed class HopeLanternAudio : MonoBehaviour
             Debug.LogWarning("Hope: faltan clips o ajustes de faroles.", this);
             return;
         }
+        ajustesFuego = ajustes;
+        if (gameObject.scene.name == "SampleScene" &&
+            objetivo.TryGetComponent<Lantern>(out var farol) && farol.EsBarril)
+        {
+            var barriles = Resources.Load<HopeLanternSettings>("HopeLevel2LanternSettings");
+            if (barriles != null && barriles.fuego != null && barriles.cuerpoBarril != null)
+            {
+                ajustesFuego = barriles;
+                if (cuerpoBarril == null)
+                    cuerpoBarril = Fuente("F - Faroles resonancia del barril", true);
+            }
+        }
         luz = objetivo;
         oyente = jugador;
         activo = true;
@@ -56,13 +69,13 @@ public sealed class HopeLanternAudio : MonoBehaviour
         yield return new WaitForSeconds(ajustes.retrasoEncendido);
         if (!activo || luz == null || !luz.activeInHierarchy) yield break;
         HopeAjustes.Disparo(encendido, ajustes.encendido);
-        fuego.clip = ajustes.fuego;
+        fuego.clip = ajustesFuego.fuego;
         inicioFuego = Time.time;
         fuego.volume = 0f;
         fuego.Play();
-        if (cuerpoBarril != null && ajustes.cuerpoBarril != null)
+        if (cuerpoBarril != null && ajustesFuego.cuerpoBarril != null)
         {
-            cuerpoBarril.clip = ajustes.cuerpoBarril;
+            cuerpoBarril.clip = ajustesFuego.cuerpoBarril;
             cuerpoBarril.volume = 0f;
             cuerpoBarril.Play();
         }
@@ -83,14 +96,19 @@ public sealed class HopeLanternAudio : MonoBehaviour
         float pan = Mathf.Clamp((transform.position.x - oyente.position.x) / Mathf.Max(0.1f, ajustes.alcance), -0.7f, 0.7f);
         chispa.volume = ajustes.volumenChispa * nivel;
         encendido.volume = ajustes.volumenEncendido * nivel;
-        float entrada = Mathf.Clamp01((Time.time - inicioFuego) / Mathf.Max(0.01f, ajustes.entradaFuego));
-        float nivelFuego = cuerpoBarril != null ? Mathf.SmoothStep(0f, 1f, nivel) : nivel;
-        fuego.volume = ajustes.volumenFuego * nivelFuego * entrada;
-        chispa.panStereo = encendido.panStereo = fuego.panStereo = pan;
+        float rangoFuego = Mathf.Max(.1f, ajustesFuego.alcance - ajustesFuego.distanciaPlena);
+        float nivelFuego = 1f - Mathf.Clamp01((distancia - ajustesFuego.distanciaPlena) / rangoFuego);
+        if (ajustesFuego.cuerpoBarril != null) nivelFuego = Mathf.SmoothStep(0f, 1f, nivelFuego);
+        float entrada = Mathf.Clamp01((Time.time - inicioFuego) / Mathf.Max(.01f, ajustesFuego.entradaFuego));
+        fuego.volume = ajustesFuego.volumenFuego * nivelFuego * entrada;
+        chispa.panStereo = encendido.panStereo = pan;
+        float panFuego = Mathf.Clamp((transform.position.x - oyente.position.x) /
+            Mathf.Max(.1f, ajustesFuego.alcance), -.7f, .7f);
+        fuego.panStereo = panFuego;
         if (cuerpoBarril != null)
         {
-            cuerpoBarril.volume = ajustes.volumenCuerpoBarril * nivelFuego * entrada;
-            cuerpoBarril.panStereo = pan;
+            cuerpoBarril.volume = ajustesFuego.volumenCuerpoBarril * nivelFuego * entrada;
+            cuerpoBarril.panStereo = panFuego;
         }
     }
 

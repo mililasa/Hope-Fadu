@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: HopeEnemyAudioSettings
   m_EditorClassIdentifier: 
   pisadas:
-    habilitada: 0
+    habilitada: 1
     clips:
     - {fileID: 8300000, guid: 2c55de34c86a4f72bb85e2abd66ac8dc, type: 3}
     - {fileID: 8300000, guid: 9114534156934f2d90d032ee07db7aec, type: 3}
     - {fileID: 8300000, guid: 12d9017bcaea4ed79d481c9d155c9c54, type: 3}
     - {fileID: 8300000, guid: 1d492e15900247cdb833da1708ee11bc, type: 3}
     salida: {fileID: 24309002, guid: 672012de8d744817b5538618d228ab93, type: 2}
-    volumen: 0.436
+    volumen: 0.48
     distanciaPlena: 3
     distanciaMaxima: 12
     entrada: 0.12
@@ -68,7 +68,7 @@ MonoBehaviour:
     salidaFade: 1.05
     soloAlDetectar: 1
     soloEnMovimiento: 0
-  distanciaEntrePasos: 1.95
+  distanciaEntrePasos: 1
   usarEventosDeAnimacion: 0
   intervaloRespiracionMin: 2.4
   intervaloRespiracionMax: 3.3

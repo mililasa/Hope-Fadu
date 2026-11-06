@@ -6,6 +6,7 @@ public sealed class HopeMusicTransition : MonoBehaviour
 {
     enum Estado { Ninguno, Salida, Espera, Entrada }
     static HopeMusicTransition instancia;
+    static string ultimaEscena;
     Estado estado;
     AudioSource fuente;
     HopeMusicSettings musica;
@@ -34,11 +35,21 @@ public sealed class HopeMusicTransition : MonoBehaviour
     static void Preparar()
     {
         instancia = null;
+        ultimaEscena = null;
         SceneManager.sceneLoaded -= AlCargar; SceneManager.sceneLoaded += AlCargar;
     }
     static void AlCargar(Scene escena, LoadSceneMode modo)
     {
-        if (instancia == null || modo == LoadSceneMode.Additive) return;
+        if (modo == LoadSceneMode.Additive) return;
+        string anterior = ultimaEscena;
+        ultimaEscena = escena.name;
+        if (anterior == "Nivel_2" && escena.name == "Nivel_3" &&
+            (instancia == null || instancia.estado != Estado.Espera || instancia.destino != escena.name))
+        {
+            var puente = Obtener();
+            puente.IniciarCambio(anterior, escena.name);
+        }
+        if (instancia == null) return;
         var t = instancia;
         if (t.estado == Estado.Espera && escena.name == t.destino)
         {
@@ -67,12 +78,17 @@ public sealed class HopeMusicTransition : MonoBehaviour
         var go = new GameObject("Musica de salida - continua entre niveles"); go.transform.SetParent(transform, false);
         fuente = go.AddComponent<AudioSource>(); fuente.playOnAwake = false;
         fuente.loop = true; fuente.clip = musica.pasoDeNivel; fuente.spatialBlend = 0; fuente.dopplerLevel = 0;
+        EnrutarFuente();
+        fuente.volume = 0;
+        return true;
+    }
+
+    void EnrutarFuente()
+    {
         var mixer = Resources.Load<UnityEngine.Audio.AudioMixer>("HopeMixerTransiciones");
         var grupos = mixer != null ? mixer.FindMatchingGroups("Master") : null;
         if (grupos != null && grupos.Length > 0) fuente.outputAudioMixerGroup = grupos[0];
         else HopeAudioRouting.Asignar(fuente, HopeAudioBus.Musica);
-        fuente.volume = 0;
-        return true;
     }
     void ReproducirSiHaceFalta()
     {
@@ -107,13 +123,24 @@ public sealed class HopeMusicTransition : MonoBehaviour
                 if (heredada == null) continue;
                 if (t.fuente != null && t.fuente != heredada) Destroy(t.fuente.gameObject);
                 heredada.transform.SetParent(t.transform, false); t.fuente = heredada;
+                t.EnrutarFuente();
                 break;
             }
         }
-        if (!t.AsegurarFuente()) return;
-        t.ReproducirSiHaceFalta();
-        t.origen = actual.name; t.destino = siguiente; t.nivel = 1;
-        t.fuente.volume = t.musica.volumenPaso; t.estado = Estado.Espera;
+        t.IniciarCambio(actual.name, siguiente);
+    }
+
+    void IniciarCambio(string escenaOrigen, string siguiente)
+    {
+        if (!AsegurarFuente() || musica == null) return;
+        if (escenaOrigen == "Nivel_2" && (estado != Estado.Salida || origen != escenaOrigen))
+            fuente.Stop();
+        ReproducirSiHaceFalta();
+        origen = escenaOrigen;
+        destino = siguiente;
+        nivel = 1;
+        fuente.volume = musica.volumenPaso;
+        estado = Estado.Espera;
     }
     void Update()
     {

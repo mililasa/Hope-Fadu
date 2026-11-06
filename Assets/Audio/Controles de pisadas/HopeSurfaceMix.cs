@@ -75,7 +75,7 @@ public sealed class HopeSurfaceMix : ScriptableObject
             {
                 var faro = ajustes.nivel3;
                 bool metal = nivelMaterial == 2;
-                var superficie = metal ? faro.metalSeco ?? ajustes.metalNivel2 : ajustes.tierraNivel1;
+                var superficie = metal ? ajustes.metalNivel2 : ajustes.tierraNivel1;
                 if (ProbarSuperficie(superficie, fuente, clip, volumen,
                     metal ? faro.ataqueMetal : faro.ataqueTierra,
                     metal ? faro.reverbMetal : faro.reverbTierra))

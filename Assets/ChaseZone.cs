@@ -230,15 +230,21 @@ public class ChaseZone : MonoBehaviour
         }
 
         float duracion = 1.05f;
+        HopeHandImpactAudio golpeAudio = null;
         if (hand != null && foco != null)
         {
             float hacia = player != null ? player.transform.position.x : foco.transform.position.x + 1f;
             duracion = hand.PresentarApagado(foco.PuntoApagado, hacia);
+            golpeAudio = hand.GetComponent<HopeHandImpactAudio>();
+            if (golpeAudio != null) golpeAudio.PrepararGolpe(duracion * 0.45f);
         }
 
         yield return new WaitForSeconds(duracion * 0.45f);
         if (foco != null && foco.EstadoActual != Lantern.Estado.Off)
+        {
+            if (golpeAudio != null) golpeAudio.Golpear();
             foco.ApagarSinSoltar();
+        }
         yield return new WaitForSeconds(duracion * 0.55f);
 
         if (camara != null)
