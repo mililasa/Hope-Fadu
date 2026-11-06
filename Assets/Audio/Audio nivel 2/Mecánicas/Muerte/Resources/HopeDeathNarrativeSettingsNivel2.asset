@@ -17,9 +17,9 @@ MonoBehaviour:
   lampara: {fileID: 8300000, guid: 8375115666104dd3b3f20f64a7478dfb, type: 3}
   entradaMano: {fileID: 8300000, guid: fc4ee62b7f6a4883a0e1e0148d8a2ad3, type: 3}
   entradaCaida: {fileID: 8300000, guid: 1c5da9582cb24a37b4a7628c97a8e9c2, type: 3}
-  pulsoRoto: {fileID: 8300000, guid: 80c83403b71340b69e6c5841a1150637, type: 3}
-  electricidadMano: {fileID: 8300000, guid: ffc49f8bc5474d2399e111a99994a0a6, type: 3}
-  pianoRoto: {fileID: 8300000, guid: dc4919bb30bb4ee2a3ab8794abeb915b, type: 3}
+  pulsoRoto: {fileID: 8300000, guid: 7f85fcfddf004110b19741f095dee535, type: 3}
+  electricidadMano: {fileID: 8300000, guid: 06ed3ce2ac0740d99a0d52ad19f96333, type: 3}
+  pianoRoto: {fileID: 0}
   volumenPianoRoto: 1
   volumenPulsoRoto: 1
   volumenElectricidadMano: 1
@@ -34,3 +34,5 @@ MonoBehaviour:
   bajada: 0.025
   sostener: 1.5
   recuperacion: 1.2
+  roturaLampara: {fileID: 8300000, guid: f21eed54576c4ebeb1fa70c46d8140bf, type: 3}
+  volumenRoturaLampara: 1

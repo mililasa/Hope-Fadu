@@ -16,6 +16,7 @@ public class CinematicaInicio : MonoBehaviour
 
     UnityEngine.Audio.AudioMixerGroup salidaAudio;
     AudioClip audioIntro;
+    float volumenIntro = 1f;
     AudioSource voz;
     VideoPlayer video;
     RenderTexture textura;
@@ -23,7 +24,7 @@ public class CinematicaInicio : MonoBehaviour
     bool yendoAlJuego;
     float segundosEnPantalla;
 
-    public static void Reproducir(UnityEngine.Audio.AudioMixerGroup salidaAudio = null, AudioClip audioIntro = null)
+    public static void Reproducir(UnityEngine.Audio.AudioMixerGroup salidaAudio = null, AudioClip audioIntro = null, float volumenIntro = 1f)
     {
         if (enCurso) return;
         enCurso = true;
@@ -31,6 +32,7 @@ public class CinematicaInicio : MonoBehaviour
         var intro = go.AddComponent<CinematicaInicio>();
         intro.salidaAudio = salidaAudio;
         intro.audioIntro = audioIntro;
+        intro.volumenIntro = volumenIntro;
     }
 
     void Start()
@@ -55,6 +57,7 @@ public class CinematicaInicio : MonoBehaviour
         voz.playOnAwake = false;
         voz.spatialBlend = 0f;
         voz.outputAudioMixerGroup = salidaAudio;
+        voz.volume = volumenIntro;
         try
         {
             if (audioIntro != null) voz.clip = audioIntro;

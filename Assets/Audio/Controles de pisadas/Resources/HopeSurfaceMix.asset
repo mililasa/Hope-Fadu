@@ -114,3 +114,48 @@ MonoBehaviour:
     - original: {fileID: 8300000, guid: 924753ee975b47d58c7be05833429ca6, type: 3}
       suave: {fileID: 8300000, guid: 74f9915dea2a4056a0de3af9a145f428, type: 3}
       cola: {fileID: 8300000, guid: 3e85bbba8a6246558c591b232f3ed511, type: 3}
+  nivel3:
+    ataqueMetal: 1
+    reverbMetal: 0
+    ataqueTierra: 1
+    reverbTierra: 0
+    ataquePiedra: 0.74
+    reverbPiedra: 0.48999998
+    ataqueApoyos: 1
+    reverbApoyosExterior: 0.08
+    reverbApoyosInterior: 0.65
+    apoyosSuaves:
+    - original: {fileID: 8300000, guid: dfe65f334c92406a87d1e288fe69c776, type: 3}
+      suave: {fileID: 8300000, guid: 0e2d2975b850462d986c6fc03849dad8, type: 3}
+    - original: {fileID: 8300000, guid: 98b0550d831e4783bff12042d9439704, type: 3}
+      suave: {fileID: 8300000, guid: 42a06643852c43ab9ec40f8351e3405a, type: 3}
+    - original: {fileID: 8300000, guid: 7babc33f8e024b0b9a4d732642e37329, type: 3}
+      suave: {fileID: 8300000, guid: 60e5e039ebf343b583f46c585b109739, type: 3}
+    - original: {fileID: 8300000, guid: 7be59030b4554a52a4448125eae83c64, type: 3}
+      suave: {fileID: 8300000, guid: ce0d3b9f1ec54feaa46332a473935ccf, type: 3}
+    - original: {fileID: 8300000, guid: 7b7f7ba990f143d4bd5e09675d61b314, type: 3}
+      suave: {fileID: 8300000, guid: 891194ed243a44fa98627d8bacc1de4b, type: 3}
+    metalSeco:
+      ataque: 1
+      reverb: 0
+      tomas:
+      - original: {fileID: 8300000, guid: 56f3d0eb5ab94625913c35461305d155, type: 3}
+        suave: {fileID: 8300000, guid: 2b54d493d8bc4537a7f18e1c1990bc70, type: 3}
+        cola: {fileID: 8300000, guid: a8a063668fe840c286456e89e4650668, type: 3}
+        seco: {fileID: 8300000, guid: 9b5325c997574f1689482fdc6356dfcf, type: 3}
+      - original: {fileID: 8300000, guid: 0caa4dac374145ebb80d9d7dfba9643e, type: 3}
+        suave: {fileID: 8300000, guid: 979e37b5e70c42abbd30c5bc47bd54b0, type: 3}
+        cola: {fileID: 8300000, guid: ebac1be2759a4d7799b3d26baf883a8a, type: 3}
+        seco: {fileID: 8300000, guid: abf2843d092e4d6c8b300caff3b3361d, type: 3}
+      - original: {fileID: 8300000, guid: 2dadd34c9151457e8a15d738e3087fec, type: 3}
+        suave: {fileID: 8300000, guid: c532633cb95c40949e4eb4a7524e34de, type: 3}
+        cola: {fileID: 8300000, guid: 62a635b911ff4bf6b182fc113a0699ae, type: 3}
+        seco: {fileID: 8300000, guid: 112541635cdc4fefaf7fa52af59e5225, type: 3}
+      - original: {fileID: 8300000, guid: d486eb706c25488190d1a4b173ae120a, type: 3}
+        suave: {fileID: 8300000, guid: a6f989c80c3c4459a0e00c1f2d4b7053, type: 3}
+        cola: {fileID: 8300000, guid: e04523c908ea463484d6514fe8ac6c21, type: 3}
+        seco: {fileID: 8300000, guid: 8bbb3d5f401d4fc78dd1af669465e9a0, type: 3}
+      - original: {fileID: 8300000, guid: 4ad8ae8532864fdbb21edc9807d2e4e2, type: 3}
+        suave: {fileID: 8300000, guid: df4b99a2e7864e479fd0850c97cab54b, type: 3}
+        cola: {fileID: 8300000, guid: 32238085f4064503b146ec359469a01a, type: 3}
+        seco: {fileID: 8300000, guid: 883c6df64e4046c6a900e5f59c84cc32, type: 3}
