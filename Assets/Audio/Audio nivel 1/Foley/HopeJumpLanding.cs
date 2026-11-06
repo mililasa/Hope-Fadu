@@ -13,6 +13,10 @@ public sealed class HopeJumpLanding : MonoBehaviour
     bool esNivel1, esNivel3;
     int ultimoSalto = -1, ultimoApoyo = -1;
     FaroFez faro;
+    HopeFootsteps pisadas;
+    HopeFoleyClipSettings apoyosTierra;
+    HopeLevel2LandingSettings apoyosMetal;
+    int ultimoApoyoMetal = -1;
     int ultimaCapa = -1;
     static readonly Vector2[] rocesCapa =
     {
@@ -58,7 +62,13 @@ public sealed class HopeJumpLanding : MonoBehaviour
 
     void Start()
     {
-        if (esNivel3) faro = FindObjectOfType<FaroFez>();
+        if (esNivel3)
+        {
+            faro = FindObjectOfType<FaroFez>();
+            pisadas = GetComponent<HopeFootsteps>();
+            apoyosTierra = Resources.Load<HopeFoleyClipSettings>("HopeLandingSettings");
+            apoyosMetal = Resources.Load<HopeLevel2LandingSettings>("HopeLevel2LandingSettings");
+        }
     }
 
     AudioSource Crear(string nombre)
@@ -101,6 +111,28 @@ public sealed class HopeJumpLanding : MonoBehaviour
 
     void ReproducirApoyo()
     {
+        if (esNivel3 && pisadas != null)
+        {
+            var superficie = pisadas.SuperficieActual();
+            if (superficie == HopeFootsteps.Superficie.Tierra && apoyosTierra != null)
+            {
+                fuenteApoyo.volume = apoyosTierra.volumenCanal;
+                HopeSurfaceMix.Reproducir(fuenteApoyo, apoyosTierra.sonido, apoyosTierra.volumenFragmento, 1);
+                return;
+            }
+            if (superficie == HopeFootsteps.Superficie.Metal && apoyosMetal != null &&
+                apoyosMetal.apoyos != null && apoyosMetal.apoyos.Length > 0)
+            {
+                int cantidad = apoyosMetal.apoyos.Length;
+                int toma = Random.Range(0, cantidad);
+                if (cantidad > 1 && toma == ultimoApoyoMetal)
+                    toma = (toma + Random.Range(1, cantidad)) % cantidad;
+                ultimoApoyoMetal = toma;
+                fuenteApoyo.volume = apoyosMetal.volumen;
+                HopeSurfaceMix.Reproducir(fuenteApoyo, apoyosMetal.apoyos[toma], 1f, 2);
+                return;
+            }
+        }
         var clips = apoyos != null ? apoyos.variaciones : null;
         if (!esNivel3 || clips == null || clips.Length == 0)
         {
@@ -118,13 +150,25 @@ public sealed class HopeJumpLanding : MonoBehaviour
             indice = (indice + Random.Range(1, clips.Length)) % clips.Length;
         ultimoApoyo = indice;
         fuenteApoyo.volume = apoyos.volumenCanal;
-        if (clips[indice] != null)
-            HopeAjustes.Disparo(fuenteApoyo, clips[indice], apoyos.volumenFragmento);
+        var controles = HopeSurfaceMix.Nivel3;
+        AudioClip clip = clips[indice];
+        if (clip != null)
+        {
+            AudioClip suave = null;
+            if (controles != null && controles.apoyosSuaves != null)
+                foreach (var toma in controles.apoyosSuaves)
+                    if (toma != null && toma.original == clip) { suave = toma.suave; break; }
+            float ataque = suave != null ? controles.ataqueApoyos : 1f;
+            if (ataque > 0f) HopeAjustes.Disparo(fuenteApoyo, clip, apoyos.volumenFragmento * ataque);
+            if (ataque < 1f) HopeAjustes.Disparo(fuenteApoyo, suave, apoyos.volumenFragmento * (1f - ataque));
+        }
 
         var colas = apoyos.reverbsApoyo;
         if (colas == null || indice >= colas.Length || colas[indice] == null) return;
         float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
-        float reverb = Mathf.Lerp(apoyos.reverbApoyoExterior, apoyos.reverbApoyoInterior, interior);
+        float reverb = Mathf.Lerp(
+            controles != null ? controles.reverbApoyosExterior : apoyos.reverbApoyoExterior,
+            controles != null ? controles.reverbApoyosInterior : apoyos.reverbApoyoInterior, interior);
         HopeAjustes.Disparo(fuenteApoyo, colas[indice], apoyos.volumenFragmento * reverb);
     }
 

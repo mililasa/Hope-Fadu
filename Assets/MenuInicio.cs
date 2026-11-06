@@ -19,7 +19,107 @@ public class MenuInicio : MonoBehaviour
     }
 
     [SerializeField] UnityEngine.Audio.AudioMixerGroup salidaAudioMenu;
+    [SerializeField] UnityEngine.Audio.AudioMixerGroup salidaMusicaMenu, salidaEfectosMenu;
     [SerializeField] AudioClip audioIntro;
+    [SerializeField] AudioClip chispaMenu;
+    [SerializeField, Range(0f, 1f)] float volumenChispaMenu = .32f;
+    AudioSource fuenteChispaMenu;
+    [SerializeField] AudioClip checkpointJugar, gasJugar;
+    [SerializeField, Range(0f, 1f)] float volumenGasJugar = .18f;
+    [SerializeField, Range(0f, 1f)] float volumenCheckpointJugar = .22f;
+    [SerializeField] AudioClip musicaMenu;
+    [SerializeField, Range(0f, 1f)] float volumenMusicaMenu = .22f;
+    AudioSource fuenteMusicaMenu;
+    [SerializeField] HopeMenuAudioSettings ajustesAudioMenu;
+    AudioSource fuenteManoMenu;
+    Coroutine rutinaManoMenu;
+
+    void IniciarManoMenu()
+    {
+        if (ajustesAudioMenu == null || ajustesAudioMenu.motivoMano == null || rutinaManoMenu != null)
+            return;
+        if (fuenteManoMenu == null)
+        {
+            fuenteManoMenu = gameObject.AddComponent<AudioSource>();
+            fuenteManoMenu.playOnAwake = false;
+            fuenteManoMenu.spatialBlend = 0f;
+            fuenteManoMenu.outputAudioMixerGroup = salidaMusicaMenu != null ? salidaMusicaMenu : salidaAudioMenu;
+        }
+        rutinaManoMenu = StartCoroutine(MotivoManoIntermitente());
+    }
+
+    System.Collections.IEnumerator MotivoManoIntermitente()
+    {
+        while (!saliendo)
+        {
+            float minimo = Mathf.Max(0f, ajustesAudioMenu.silencioMinimo);
+            float maximo = Mathf.Max(minimo, ajustesAudioMenu.silencioMaximo);
+            yield return new WaitForSecondsRealtime(Random.Range(minimo, maximo));
+            var clip = ajustesAudioMenu.motivoMano;
+            if (clip == null || ajustesAudioMenu.volumenMano <= 0f) continue;
+
+            float duracion = Mathf.Clamp(ajustesAudioMenu.duracionMotivo, .1f, clip.length);
+            float fundido = Mathf.Clamp(ajustesAudioMenu.fundidoMotivo, .01f, duracion * .5f);
+            fuenteManoMenu.clip = clip;
+            fuenteManoMenu.volume = 0f;
+            fuenteManoMenu.Play();
+            float inicio = Time.unscaledTime;
+            while (Time.unscaledTime - inicio < duracion)
+            {
+                float tiempo = Time.unscaledTime - inicio;
+                float mezcla = Mathf.Clamp01(Mathf.Min(tiempo, duracion - tiempo) / fundido);
+                fuenteManoMenu.volume = ajustesAudioMenu.volumenMano * Mathf.SmoothStep(0f, 1f, mezcla);
+                yield return null;
+            }
+            fuenteManoMenu.Stop();
+        }
+        rutinaManoMenu = null;
+    }
+
+    void DetenerManoMenu()
+    {
+        if (rutinaManoMenu != null) StopCoroutine(rutinaManoMenu);
+        rutinaManoMenu = null;
+        if (fuenteManoMenu != null) fuenteManoMenu.Stop();
+    }
+
+    void IniciarMusicaMenu()
+    {
+        if (gameObject.scene.name != "Menu" || musicaMenu == null) return;
+        if (fuenteMusicaMenu == null)
+        {
+            fuenteMusicaMenu = gameObject.AddComponent<AudioSource>();
+            fuenteMusicaMenu.playOnAwake = false;
+            fuenteMusicaMenu.spatialBlend = 0f;
+            fuenteMusicaMenu.loop = true;
+            fuenteMusicaMenu.outputAudioMixerGroup = salidaMusicaMenu != null ? salidaMusicaMenu : salidaAudioMenu;
+        }
+        fuenteMusicaMenu.clip = musicaMenu;
+        fuenteMusicaMenu.volume = ajustesAudioMenu != null ? ajustesAudioMenu.volumenMusica : volumenMusicaMenu;
+        fuenteMusicaMenu.Play();
+    }
+
+    void SonarChispaMenu(bool jugar)
+    {
+        float volumen = volumenChispaMenu;
+        if (ajustesAudioMenu != null)
+            volumen = jugar ? ajustesAudioMenu.volumenChispaJugar : ajustesAudioMenu.volumenChispa;
+        SonarEfectoMenu(chispaMenu, volumen);
+    }
+
+    void SonarEfectoMenu(AudioClip clip, float volumen)
+    {
+        if (!Application.isPlaying || esPausa || clip == null) return;
+        if (fuenteChispaMenu == null)
+        {
+            fuenteChispaMenu = gameObject.AddComponent<AudioSource>();
+            fuenteChispaMenu.playOnAwake = false;
+            fuenteChispaMenu.spatialBlend = 0f;
+            fuenteChispaMenu.outputAudioMixerGroup = salidaEfectosMenu != null ? salidaEfectosMenu : salidaAudioMenu;
+        }
+        fuenteChispaMenu.PlayOneShot(clip, volumen);
+    }
+
 
     [Header("Posicion")]
     [Tooltip("Centro de Jugar / Configuracion / Salir, en pixeles desde el centro de la pantalla. Y negativo los baja.")]
@@ -154,6 +254,8 @@ public class MenuInicio : MonoBehaviour
             DestruirMenusViejos(null);
             LimpiarReferencias();
             PrepararJuego();
+            IniciarMusicaMenu();
+            if (gameObject.scene.name == "Menu") IniciarManoMenu();
             return;
         }
         if (saliendoDelEditor) return;
@@ -168,6 +270,8 @@ public class MenuInicio : MonoBehaviour
 
     void OnDisable()
     {
+        DetenerManoMenu();
+        if (fuenteMusicaMenu != null) fuenteMusicaMenu.Stop();
         if (Application.isPlaying) return;
         DestruirMenusViejos(null);
         LimpiarReferencias();
@@ -213,6 +317,9 @@ public class MenuInicio : MonoBehaviour
             LeerTeclaNueva();
             return;
         }
+        if (fuenteMusicaMenu != null && ajustesAudioMenu != null)
+            fuenteMusicaMenu.volume = ajustesAudioMenu.volumenMusica;
+
         DestruirMenusViejos(cartel);
         if (cartel == null) juegoListo = false;
         PrepararJuego();
@@ -930,6 +1037,7 @@ public class MenuInicio : MonoBehaviour
             {
                 if (EventSystem.current != null)
                     EventSystem.current.SetSelectedGameObject(null);
+                SonarChispaMenu(click == Jugar);
                 click();
             });
         }
@@ -1010,7 +1118,11 @@ public class MenuInicio : MonoBehaviour
         if (saliendo) return;
         saliendo = true;
         if (cartel != null) cartel.SetActive(false);
-        CinematicaInicio.Reproducir(salidaAudioMenu, audioIntro);
+        DetenerManoMenu();
+        if (fuenteMusicaMenu != null) fuenteMusicaMenu.Stop();
+        SonarEfectoMenu(checkpointJugar, ajustesAudioMenu != null ? ajustesAudioMenu.volumenCheckpoint : volumenCheckpointJugar);
+        SonarEfectoMenu(gasJugar, ajustesAudioMenu != null ? ajustesAudioMenu.volumenGas : volumenGasJugar);
+        CinematicaInicio.Reproducir(salidaAudioMenu, audioIntro, ajustesAudioMenu != null ? ajustesAudioMenu.volumenIntro : 1f);
     }
 
     void Salir()

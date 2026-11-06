@@ -166,8 +166,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a91c3b7d2f4a6480b6c1e9f3d70425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  salidaAudioMenu: {fileID: 24309100, guid: 06bc0d2a42bbdd74489cee593689a6ac, type: 2}
+  salidaAudioMenu: {fileID: 24300102, guid: 304fad2a86864bc7a20b02ca77173a0b, type: 2}
+  ajustesAudioMenu: {fileID: 11400000, guid: 56fc2e005d2c428d95b6a11aa52b2285, type: 2}
+  salidaMusicaMenu: {fileID: 24300101, guid: 304fad2a86864bc7a20b02ca77173a0b, type: 2}
+  salidaEfectosMenu: {fileID: 24300103, guid: 304fad2a86864bc7a20b02ca77173a0b, type: 2}
   audioIntro: {fileID: 8300000, guid: da23af58d8e94581991c08330e7c9f5a, type: 3}
+  chispaMenu: {fileID: 8300000, guid: d06ac83fcf5beb643a937de79ce39e6d, type: 3}
+  volumenChispaMenu: 0.32
+  musicaMenu: {fileID: 8300000, guid: b99f433e476040528fe71f70a87960b5, type: 3}
+  volumenMusicaMenu: 0.22
+  checkpointJugar: {fileID: 8300000, guid: cb54b682b8718364da70736e6dce22af, type: 3}
+  volumenCheckpointJugar: 0.22
+  gasJugar: {fileID: 8300000, guid: 14a579135f0e4cb9820f9427e292cd47, type: 3}
+  volumenGasJugar: 0.18
   posicionBotones: {x: 0, y: -300}
   posicionPopup: {x: 460, y: -140}
   verPopupEnEditor: 0
