@@ -15,7 +15,7 @@ public sealed class HopeFootsteps : MonoBehaviour
     readonly ContactPoint2D[] contactos = new ContactPoint2D[12];
     public enum Superficie { Piedra, Tierra, Metal }
     Superficie superficieAnterior;
-    int ultimaTierra = -1, ultimoMetal = -1;
+    int ultimaTierra = -1;
     Vector3 anterior;
     float recorrido;
     bool primerPasoEmitido;
@@ -129,14 +129,6 @@ public sealed class HopeFootsteps : MonoBehaviour
 
     void ReproducirPaso(Superficie superficie)
     {
-        if (superficie == Superficie.Metal && metal != null && metal.pasos != null && metal.pasos.Length > 0)
-        {
-            // Compensa la atenuacion del fader de metal del nivel 2.
-            fuente.volume = .46f;
-            HopeSurfaceMix.Reproducir(fuente, metal.pasos[Elegir(metal.pasos, ref ultimoMetal)],
-                Random.Range(metal.intensidadMinima, metal.intensidadMaxima), 2);
-            return;
-        }
         if (superficie == Superficie.Tierra && tierra != null && tierra.pasos != null && tierra.pasos.Length > 0)
         {
             fuente.volume = tierra.volumenCanal;
@@ -151,7 +143,7 @@ public sealed class HopeFootsteps : MonoBehaviour
         fuente.volume = ajustes.volumenCanal;
         float intensidad = Random.Range(ajustes.volumenFragmentoMin, ajustes.volumenFragmentoMax);
         HopeSurfaceMix.Reproducir(fuente, ajustes.pasos[indice], intensidad);
-        float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
+        float interior = superficie != Superficie.Metal && faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
         var controles = esFaro ? HopeSurfaceMix.Nivel3 : null;
         if (ajustes.ataquesAdoquin != null && indice < ajustes.ataquesAdoquin.Length &&
             ajustes.ataquesAdoquin[indice] != null)
@@ -159,7 +151,7 @@ public sealed class HopeFootsteps : MonoBehaviour
             float nivel = Mathf.Lerp(ajustes.ataqueExterior, controles != null ? controles.ataquePiedra : ajustes.ataqueInterior, interior);
             HopeAjustes.Disparo(fuente, ajustes.ataquesAdoquin[indice], intensidad * nivel);
         }
-        if (ajustes.reverbsAdoquin != null && indice < ajustes.reverbsAdoquin.Length &&
+        if (superficie != Superficie.Metal && ajustes.reverbsAdoquin != null && indice < ajustes.reverbsAdoquin.Length &&
             ajustes.reverbsAdoquin[indice] != null)
         {
             float nivel = Mathf.Lerp(ajustes.reverbExterior, controles != null ? controles.reverbPiedra : ajustes.reverbInterior, interior);

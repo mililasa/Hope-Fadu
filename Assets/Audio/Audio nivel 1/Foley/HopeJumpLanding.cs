@@ -15,8 +15,6 @@ public sealed class HopeJumpLanding : MonoBehaviour
     FaroFez faro;
     HopeFootsteps pisadas;
     HopeFoleyClipSettings apoyosTierra;
-    HopeLevel2LandingSettings apoyosMetal;
-    int ultimoApoyoMetal = -1;
     int ultimaCapa = -1;
     static readonly Vector2[] rocesCapa =
     {
@@ -67,7 +65,6 @@ public sealed class HopeJumpLanding : MonoBehaviour
             faro = FindObjectOfType<FaroFez>();
             pisadas = GetComponent<HopeFootsteps>();
             apoyosTierra = Resources.Load<HopeFoleyClipSettings>("HopeLandingSettings");
-            apoyosMetal = Resources.Load<HopeLevel2LandingSettings>("HopeLevel2LandingSettings");
         }
     }
 
@@ -111,27 +108,18 @@ public sealed class HopeJumpLanding : MonoBehaviour
 
     void ReproducirApoyo()
     {
+        var superficie = esNivel3 && pisadas != null
+            ? pisadas.SuperficieActual()
+            : HopeFootsteps.Superficie.Piedra;
         if (esNivel3 && pisadas != null)
         {
-            var superficie = pisadas.SuperficieActual();
             if (superficie == HopeFootsteps.Superficie.Tierra && apoyosTierra != null)
             {
                 fuenteApoyo.volume = apoyosTierra.volumenCanal;
                 HopeSurfaceMix.Reproducir(fuenteApoyo, apoyosTierra.sonido, apoyosTierra.volumenFragmento, 1);
                 return;
             }
-            if (superficie == HopeFootsteps.Superficie.Metal && apoyosMetal != null &&
-                apoyosMetal.apoyos != null && apoyosMetal.apoyos.Length > 0)
-            {
-                int cantidad = apoyosMetal.apoyos.Length;
-                int toma = Random.Range(0, cantidad);
-                if (cantidad > 1 && toma == ultimoApoyoMetal)
-                    toma = (toma + Random.Range(1, cantidad)) % cantidad;
-                ultimoApoyoMetal = toma;
-                fuenteApoyo.volume = apoyosMetal.volumen;
-                HopeSurfaceMix.Reproducir(fuenteApoyo, apoyosMetal.apoyos[toma], 1f, 2);
-                return;
-            }
+
         }
         var clips = apoyos != null ? apoyos.variaciones : null;
         if (!esNivel3 || clips == null || clips.Length == 0)
@@ -163,6 +151,7 @@ public sealed class HopeJumpLanding : MonoBehaviour
             if (ataque < 1f) HopeAjustes.Disparo(fuenteApoyo, suave, apoyos.volumenFragmento * (1f - ataque));
         }
 
+        if (superficie == HopeFootsteps.Superficie.Metal) return;
         var colas = apoyos.reverbsApoyo;
         if (colas == null || indice >= colas.Length || colas[indice] == null) return;
         float interior = faro != null ? Mathf.Clamp01(faro.MezclaInteriorAudio) : 0f;
