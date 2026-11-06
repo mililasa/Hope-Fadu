@@ -120,7 +120,7 @@ public class CaballoEmbrujado : MonoBehaviour
     {
         if (sprite == null) sprite = GetComponent<SpriteRenderer>();
         if (sprite == null) return;
-        sprite.sortingLayerName = "Default";
+        sprite.sortingLayerName = "Foreground";
         sprite.enabled = true;
     }
 

@@ -17,11 +17,11 @@ public class Lantern : MonoBehaviour
     [Tooltip("Cuantas veces se ve la chispita antes de soltar a Hope. Mas = mas tension.")]
     public float ciclosChispita = 2f;
     [Tooltip("Cartel que aparece al acercarse a un farol libre. Desactivar en Farol (5)/(6).")]
-    public bool mostrarCartelEncender = true;
+    public bool mostrarCartelEncender = false;
     [Tooltip("Cartel que aparece al acercarse a un farol que no es de una ChaseZone.")]
     public string textoCartelE = "Encender con E";
     [Tooltip("Segundos que queda prendido un farol que no es de una ChaseZone antes de apagarse solo (0 = no se apaga).")]
-    public float segundosPrendidoLibre = 6f;
+    public float segundosPrendidoLibre = 0f;
     [Header("Reflejo propio (no usa el grosor del escenario)")]
     [Tooltip("Fuerza del volumen. Es el valor final, no se multiplica por el del piso.")]
     [Range(0f, 3f)] public float intensidadRelieve = 1f;
@@ -42,7 +42,6 @@ public class Lantern : MonoBehaviour
     Estado estado = Estado.Off;
     Coroutine encendido;
     GameObject cartelE;
-    Coroutine apagadoLibre;
     bool esBarril;
     [SerializeField] RuntimeAnimatorController ctrlBarrilPrendiendo;
     [SerializeField] RuntimeAnimatorController ctrlBarrilPrendido;
@@ -231,7 +230,7 @@ public class Lantern : MonoBehaviour
     {
         bool puedePrender = playerEnRango != null && estado == Estado.Off &&
             !playerEnRango.IsLocked && (EsLibre || (zona != null && zona.EstaActiva) || EsFarolDeVerdad());
-        MostrarCartelE(puedePrender && EsLibre && mostrarCartelEncender && !EsFarolDeVerdad());
+        MostrarCartelE(false);
         if (!puedePrender) return;
 
         if (HopeControles.Presionada(HopeControles.Accion.Interactuar))
@@ -402,11 +401,7 @@ public class Lantern : MonoBehaviour
         if (zona != null && zona.Hand != null)
             zona.Hand.NotifyLanternLit(this);
 
-        if (EsLibre && !NoSeApaga() && segundosPrendidoLibre > 0f)
-        {
-            if (apagadoLibre != null) StopCoroutine(apagadoLibre);
-            apagadoLibre = StartCoroutine(ApagarLibre());
-        }
+        // Una vez prendido, el farol queda prendido. No se apaga solo.
     }
 
     void RegistrarCheckpoint()
@@ -415,18 +410,6 @@ public class Lantern : MonoBehaviour
         if (pp == null) pp = FindObjectOfType<PlayerController2D>();
         if (pp != null)
             pp.MarcarCheckpoint(transform);
-    }
-
-    IEnumerator ApagarLibre()
-    {
-        yield return new WaitForSeconds(segundosPrendidoLibre);
-        apagadoLibre = null;
-        if (estado != Estado.Lit || NoSeApaga()) yield break;
-        // TurnOff suelta a Hope si esta bloqueada; aca no debe cortarle otra accion.
-        PlayerController2D pp = playerEnRango;
-        playerEnRango = null;
-        TurnOff();
-        playerEnRango = pp;
     }
 
     // Animation Event del clip farolprendido (el dibujo ya quedo prendido).
